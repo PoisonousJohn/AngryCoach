@@ -1,3 +1,6 @@
 [submodule "material"]
 	path = material
 	url = git@github.com:papyros/qml-material.git
+[submodule "thirdParty/jenson"]
+	path = thirdParty/jenson
+	url = https://github.com/hrobeers/jenson.git
