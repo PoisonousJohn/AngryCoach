@@ -4,6 +4,7 @@
 #include <QStandardPaths>
 #include <QJsonDocument>
 #include <QFile>
+#include <QDir>
 #include "Calories.h"
 #include "jenson.h"
 
@@ -11,8 +12,14 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QString dataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    QFile dataFile(dataPath + '/' + "data.json" );
+    QDir dataDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
+    if (!dataDir.exists() && !dataDir.mkdir(dataDir.absolutePath()))
+    {
+        qDebug() << "Failed to create data dir" << dataDir.absolutePath();
+        return 1;
+    }
+
+    QFile dataFile(dataDir.absolutePath() + '/' + "data.json" );
 
     if (!dataFile.open(QIODevice::ReadWrite))
     {
