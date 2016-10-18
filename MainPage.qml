@@ -71,17 +71,6 @@ Page {
                                 implicitWidth: window.width / repeater.model.count - dp(parameters.spacing * 2)
                                 indeterminate: false
                                 value: model.value / model.maxValue
-                                style: MaterialStyle.ProgressBarStyle {
-                                    background: Rectangle {
-                                       radius: 2
-                                       color: "red"
-                                       border.color: "gray"
-                                       border.width: 1
-                                       implicitWidth: 200000
-                                       implicitHeight: 24
-                                    }
-                                }
-
                             }
 
                             Label {

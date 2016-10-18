@@ -6,7 +6,7 @@ import Material 0.2
 ApplicationWindow {
     id: window
     theme.primaryColor: "indigo"
-    initialPage: MainPage {}
+    initialPage: AddCategory {}
     ListModel {
         id: dummyModel
         ListElement {

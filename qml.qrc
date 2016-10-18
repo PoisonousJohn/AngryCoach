@@ -3,5 +3,7 @@
         <file>main.qml</file>
         <file>Test.qml</file>
         <file>MainPage.qml</file>
+        <file>RoundedProgressBarStyle.qml</file>
+        <file>AddCategory.qml</file>
     </qresource>
 </RCC>
