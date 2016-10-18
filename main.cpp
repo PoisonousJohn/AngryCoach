@@ -5,6 +5,7 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <QDir>
+#include <QTextStream>
 #include "Calories.h"
 #include "jenson.h"
 
@@ -21,11 +22,13 @@ int main(int argc, char *argv[])
 
     QFile dataFile(dataDir.absolutePath() + '/' + "data.json" );
 
-    if (!dataFile.open(QIODevice::ReadWrite))
+    if (!dataFile.open(QIODevice::ReadWrite | QIODevice::Truncate))
     {
         qDebug() << "Failed to open write file" << dataFile.fileName();
         return 1;
     }
+
+    qDebug() << "data file: " << dataFile.fileName();
 
     QQmlApplicationEngine engine;
     engine.addImportPath("material/src");
@@ -39,6 +42,10 @@ int main(int argc, char *argv[])
 
     QJsonDocument doc;
     doc.setObject(jenson::JenSON::serialize(&calories));
+    {
+        QTextStream stream(&dataFile);
+        stream << doc.toJson();
+    }
 
     return app.exec();
 }

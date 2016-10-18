@@ -7,7 +7,9 @@ CONFIG += c++11
 SOURCES += $$PWD/thirdParty/jenson/src/*.cpp \
     Ingredient.cpp \
     Food.cpp \
-    Calories.cpp
+    Calories.cpp \
+    DataManager.cpp \
+    DayLog.cpp
 SOURCES += main.cpp
 
 RESOURCES += qml.qrc
@@ -27,4 +29,6 @@ include(deployment.pri)
 HEADERS += \
     Ingredient.h \
     Food.h \
-    Calories.h
+    Calories.h \
+    DataManager.h \
+    DayLog.h
