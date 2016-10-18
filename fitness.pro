@@ -18,8 +18,8 @@ INCLUDEPATH += $$PWD/thirdParty
 INCLUDEPATH += $$PWD/thirdParty/jenson/src
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-#QML_IMPORT_PATH += $$PWD/material/src
-#QML2_IMPORT_PATH += $$PWD/material/src
+QML_IMPORT_PATH += $$PWD/material/src
+QML2_IMPORT_PATH += $$PWD/material/src
 
 message("import path" $$QML2_IMPORT_PATH)
 
