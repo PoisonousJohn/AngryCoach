@@ -7,26 +7,26 @@ Page {
     id: addCategory
     title: qsTr("Add category")
 
-
     ColumnLayout {
-        anchors.verticalCenterOffset: dp(20)
-        anchors.verticalCenter: parent.top
+        anchors.top: parent.top
+        anchors.topMargin: dp(40)
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.margins: dp(20)
         TextField {
+            placeholderText: qsTr("Enter category name")
             Layout.fillWidth: true
             height: dp(40)
-            helperText: qsTr("Enter category name")
         }
     }
 
+    StandardActionButton {
+        AwesomeIcon {
+           name: "plus"
+           color: Theme.dark.textColor
+           anchors.centerIn: parent
+        }
 
-    ActionButton {
-        anchors.horizontalCenter: parent.right
-        anchors.verticalCenter: parent.bottom
-        anchors.horizontalCenterOffset: dp(-height)
-        anchors.verticalCenterOffset: dp(-width)
     }
 
 

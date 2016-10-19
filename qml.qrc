@@ -5,5 +5,8 @@
         <file>MainPage.qml</file>
         <file>RoundedProgressBarStyle.qml</file>
         <file>AddCategory.qml</file>
+        <file>StandardActionButton.qml</file>
+        <file>CategoriesList.qml</file>
+        <file>AddFood.qml</file>
     </qresource>
 </RCC>
