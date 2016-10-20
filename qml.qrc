@@ -8,5 +8,6 @@
         <file>StandardActionButton.qml</file>
         <file>CategoriesList.qml</file>
         <file>AddFood.qml</file>
+        <file>GridTextFieldStyle.qml</file>
     </qresource>
 </RCC>
