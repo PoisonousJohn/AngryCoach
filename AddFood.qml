@@ -5,9 +5,30 @@ import Material.ListItems 0.1
 import Material.Extras 0.1
 
 Page {
+    title: qsTr("Add food")
+
+    ListModel {
+        id: dummyModel
+        ListElement {
+            name: "Calories"
+            placeholder: "required"
+        }
+        ListElement {
+            name: "Proteins"
+            placeholder: "required"
+        }
+        ListElement {
+            name: "Carbs"
+            placeholder: "required"
+        }
+        ListElement {
+            name: "Fats"
+            placeholder: "required"
+        }
+    }
 
     TextForm {
-        model: 3
+        model: dummyModel
     }
 
     StandardActionButton {
