@@ -7,23 +7,31 @@ import Material.Extras 0.1
 Page {
     title: qsTr("Add food")
 
+    IntValidator {
+        id: intValidator
+    }
+
     ListModel {
         id: dummyModel
         ListElement {
             name: "Calories"
             placeholder: "required"
+//            validator: intValidator
         }
         ListElement {
             name: "Proteins"
             placeholder: "required"
+//            validator: intValidator
         }
         ListElement {
             name: "Carbs"
             placeholder: "required"
+//            validator: intValidator
         }
         ListElement {
             name: "Fats"
             placeholder: "required"
+//            validator: intValidator
         }
     }
 
@@ -32,10 +40,6 @@ Page {
     }
 
     StandardActionButton {
-        onClicked: {
-           nav.open()
-        }
-
         AwesomeIcon {
             anchors.centerIn: parent
             name: "plus"
