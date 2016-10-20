@@ -16,52 +16,73 @@ Page {
         }
 
         Card {
-            height: grid.height
             anchors { left: parent.left; right: parent.right }
-            GridLayout {
-                id: grid
-                columns: 2
-                anchors {
-                    left: parent.left;
-                    right: parent.right;
-                    rightMargin: dp(20);
-                    leftMargin: dp(20);
-                }
 
-                Label {
-                    text: qsTr("Title")
-                    Layout.minimumWidth: parent.width * 0.3
-                }
+            ColumnLayout {
+                id: basicList
+                anchors.fill: parent
+                Repeater {
+                    anchors.fill: parent
+                    model: 3
 
-                TextField {
-                    Layout.alignment: Qt.AlignRight
-                    Layout.fillWidth: true
-                    placeholderText: qsTr("required")
-                    horizontalAlignment: TextInput.AlignRight
-                    showBorder: false
-                    style: GridTextFieldStyle{
-                        placeholderHorizontalAlignment: TextInput.AlignRight
+//                    delegate:  Rectangle {
+//                        color: "red"
+//                        width: 100
+//                        height: 100
+//                    }
+                     Standard {
+                         anchors.left: parent.left
+                         anchors.right: parent.right
+                        height: 100
+                        text: "test text" + model.index
+                        valueText: "value text"
                     }
-
-                }
-                Label {
-                    text: qsTr("Title")
-                    Layout.minimumWidth: parent.width * 0.3
-                }
-
-                TextField {
-                    Layout.alignment: Qt.AlignRight
-                    Layout.fillWidth: true
-                    placeholderText: qsTr("required")
-                    horizontalAlignment: TextInput.AlignRight
-                    showBorder: false
-                    style: GridTextFieldStyle{
-                        placeholderHorizontalAlignment: TextInput.AlignRight
-                    }
-
                 }
 
             }
+
+
+//            Repeater {
+//                anchors {
+//                    left: parent.left;
+//                    right: parent.right;
+//                }
+//                model: 3
+//                delegate:  Standard {
+//                    text: "test text"
+//                    valueText: "value text"
+//                }
+//            }
+
+//            GridLayout {
+//                id: grid
+//                columns: 2
+//                anchors {
+//                    left: parent.left;
+//                    right: parent.right;
+//                    rightMargin: dp(20);
+//                    leftMargin: dp(20);
+//                }
+
+//                Label {
+//                    text: qsTr("Title")
+//                    Layout.minimumWidth: parent.width * 0.3
+//                }
+
+//                TextField {
+//                    Layout.alignment: Qt.AlignRight
+//                    Layout.fillWidth: true
+//                    placeholderText: qsTr("required")
+//                    horizontalAlignment: TextInput.AlignRight
+//                    showBorder: false
+//                    style: GridTextFieldStyle{
+//                        placeholderHorizontalAlignment: TextInput.AlignRight
+//                    }
+
+//                }
+
+
+//            }
 
         }
 
