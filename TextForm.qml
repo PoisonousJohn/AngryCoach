@@ -36,6 +36,10 @@ ColumnLayout {
                         placeholderText: model.hasOwnProperty("placeholder")
                                                 ? model.placeholder
                                                 : undefined
+                        validator: model.hasOwnProperty("validator")
+                                                ? model.validator
+                                                : undefined
+
                         width: basicList.width * 0.5
                         anchors.verticalCenter: parent.verticalCenter
                         style: GridTextFieldStyle {
