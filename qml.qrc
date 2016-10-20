@@ -9,5 +9,6 @@
         <file>CategoriesList.qml</file>
         <file>AddFood.qml</file>
         <file>GridTextFieldStyle.qml</file>
+        <file>TextForm.qml</file>
     </qresource>
 </RCC>
