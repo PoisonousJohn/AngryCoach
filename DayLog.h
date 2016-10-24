@@ -11,7 +11,7 @@ class DayLog : public QObject
 public:
     DayLog(QObject* parent = 0);
     // QVariantList of Calories class
-    JENSON_PROPERTY_GETSET(QVariantList, Records)
+    JENSON_PROPERTY_GETSET(QVariantList, Calories)
 };
 
 SERIALIZABLE(DayLog, DayLog)

@@ -4,6 +4,10 @@ import Material 0.2
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
 
 Page {
+    AddFood {
+        id: addFood
+    }
+
     id: mainPage
     title: "Application Name"
     data: Item {
@@ -94,7 +98,14 @@ Page {
             anchors.verticalCenter: parent.bottom
             anchors.horizontalCenterOffset: dp(-width)
             anchors.verticalCenterOffset: dp(-height)
-            iconName: "plus"
+            onClicked: {
+                pageStack.push(addFood)
+            }
+
+            AwesomeIcon {
+                name: "plus"
+                anchors.centerIn: parent
+            }
         }
 
     }

@@ -2,8 +2,13 @@
 #define DATAMANAGER_H
 
 #include <QObject>
+#include <QHash>
 #include <QDate>
+#include <QUuid>
+#include <QFile>
+class AppData;
 class DayLog;
+class Food;
 
 class DataManager : public QObject
 {
@@ -13,6 +18,17 @@ public:
 
     DayLog* getDayLog(QDate date);
     DayLog* getTodayLog();
+    const QHash<QUuid, QVariant> *getFood() const;
+    void addFood(Food* food);
+    Q_INVOKABLE void addFood(const QVariantMap& data);
+
+private: // members
+    AppData* _data;
+    QFile* _dataFile;
+
+private: // methods
+    void load();
+    void save();
 
 signals:
 

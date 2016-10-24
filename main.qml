@@ -6,7 +6,7 @@ import Material 0.2
 ApplicationWindow {
     id: window
     theme.primaryColor: "indigo"
-    initialPage: AddFood {}
+    initialPage: MainPage {}
     ListModel {
         id: dummyModel
         ListElement {

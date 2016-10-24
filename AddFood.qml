@@ -12,34 +12,49 @@ Page {
     }
 
     ListModel {
-        id: dummyModel
+        id: fieldsModel
         ListElement {
+            fieldName: "name"
+            name: "Name"
+            placeholder: "required"
+            value: ""
+        }
+        ListElement {
+            fieldName: "totalCalories"
             name: "Calories"
             placeholder: "required"
-//            validator: intValidator
+            value: ""
         }
         ListElement {
+            fieldName: "proteins"
             name: "Proteins"
             placeholder: "required"
-//            validator: intValidator
+            value: ""
         }
         ListElement {
+            fieldName: "carbs"
             name: "Carbs"
             placeholder: "required"
-//            validator: intValidator
+            value: ""
         }
         ListElement {
+            fieldName: "fats"
             name: "Fats"
             placeholder: "required"
-//            validator: intValidator
+            value: ""
         }
     }
 
     TextForm {
-        model: dummyModel
+        id: form
+        model: fieldsModel
     }
 
     StandardActionButton {
+        onClicked: {
+           dataManager.addFood(form.formData());
+        }
+
         AwesomeIcon {
             anchors.centerIn: parent
             name: "plus"

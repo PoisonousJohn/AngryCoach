@@ -11,7 +11,7 @@ class Calories : public QObject
 public:
     Q_INVOKABLE Calories(QObject* parent = 0);
 
-    JENSON_PROPERTY_GETSET(int, totalCalories)
+    JENSON_PROPERTY_GETSET(int, TotalCalories)
     JENSON_PROPERTY_GETSET(int, Carbs)
     JENSON_PROPERTY_GETSET(int, Proteins)
     JENSON_PROPERTY_GETSET(int, Fats)
