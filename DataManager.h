@@ -7,9 +7,10 @@
 #include <QUuid>
 #include <QFile>
 #include "CustomQHashSerializer.h"
-class AppData;
 class DayLog;
 class Food;
+class AppData;
+class FoodMap;
 
 class DataManager : public QObject
 {
@@ -17,21 +18,28 @@ class DataManager : public QObject
 public:
     explicit DataManager(QObject *parent = 0);
 
+    Q_PROPERTY(QObject* food READ food NOTIFY foodChanged)
+
     DayLog* getDayLog(QDate date);
     DayLog* getTodayLog();
-    const SerializableHash<Food> *getFood() const;
+    QObject* food();
+    FoodMap* getFood();
     void addFood(Food* food);
     Q_INVOKABLE void addFood(const QVariantMap& data);
 
+
 private: // members
-    AppData* _data;
-    QFile* _dataFile;
+    AppData* _data = nullptr;
+    QFile* _dataFile = nullptr;
 
 private: // methods
     void load();
     void save();
+    void initNewSave();
 
 signals:
+
+    void foodChanged();
 
 public slots:
 };

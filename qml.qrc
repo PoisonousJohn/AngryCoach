@@ -10,5 +10,8 @@
         <file>AddFood.qml</file>
         <file>GridTextFieldStyle.qml</file>
         <file>TextForm.qml</file>
+        <file>SimpleList.qml</file>
+        <file>SearchList.qml</file>
+        <file>DayStatsCard.qml</file>
     </qresource>
 </RCC>

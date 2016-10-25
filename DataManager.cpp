@@ -25,7 +25,12 @@ DayLog *DataManager::getTodayLog()
 
 }
 
-const SerializableHash<Food> *DataManager::getFood() const
+QObject *DataManager::food()
+{
+    return static_cast<QObject*>(_data->Food());
+}
+
+FoodMap* DataManager::getFood()
 {
     return _data->Food();
 }
@@ -34,15 +39,12 @@ void DataManager::addFood(Food *food)
 {
    food->setId(QUuid::createUuid().toString());
    qDebug() << "Added food with id " << food->Id();
-   _data->Food()->getHash().insert(food->Id(), food);
+   _data->Food()->insert(food->Id(), food);
+   emit foodChanged();
 }
 
 void DataManager::addFood(const QVariantMap &data)
 {
-    if (_data->Food() == nullptr)
-    {
-        _data->setFood(new FoodMap());
-    }
    auto food = new Food();
    food->setName(data["name"].toString());
    auto calories = new Calories();
@@ -66,13 +68,31 @@ void DataManager::load()
 
     _dataFile = new QFile(dataDir.absolutePath() + '/' + "data.json", this);
 
-    if (!_dataFile->open(QIODevice::ReadWrite | QIODevice::Truncate))
+    if (!_dataFile->open(QIODevice::ReadWrite))
     {
         throw std::exception();
     }
     qDebug() << "data file path" << _dataFile->fileName();
 
-   _data = new AppData();
+    QJsonParseError* err = nullptr;
+    auto jDoc = QJsonDocument::fromJson(_dataFile->readAll(), err);
+    if (err != nullptr)
+    {
+        qDebug() << "Failed to parse json";
+        initNewSave();
+    }
+    else
+    {
+        try {
+            auto jObj = jDoc.object();
+            _data = jenson::JenSON::deserialize<AppData>(&jObj).release();
+
+        } catch (const std::exception& ex){
+            initNewSave();
+            qDebug() << "Error deserializing save" << ex.what();
+        }
+
+    }
 }
 
 void DataManager::save()
@@ -86,4 +106,13 @@ void DataManager::save()
     }
 
     qDebug() << "Data manager saved";
+}
+
+void DataManager::initNewSave()
+{
+    _data = new AppData();
+    if (_data->Food() == nullptr)
+    {
+        _data->setFood(new FoodMap());
+    }
 }

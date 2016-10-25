@@ -7,10 +7,6 @@ import Material.Extras 0.1
 Page {
     title: qsTr("Add food")
 
-    IntValidator {
-        id: intValidator
-    }
-
     ListModel {
         id: fieldsModel
         ListElement {
@@ -45,19 +41,23 @@ Page {
         }
     }
 
-    TextForm {
-        id: form
-        model: fieldsModel
-    }
-
-    StandardActionButton {
-        onClicked: {
-           dataManager.addFood(form.formData());
+    data: Item {
+        anchors.fill: parent
+        TextForm {
+            id: form
+            model: fieldsModel
         }
 
-        AwesomeIcon {
-            anchors.centerIn: parent
-            name: "plus"
+        StandardActionButton {
+            onClicked: {
+               dataManager.addFood(form.formData());
+            }
+
+            AwesomeIcon {
+                anchors.centerIn: parent
+                name: "plus"
+            }
         }
     }
+
 }

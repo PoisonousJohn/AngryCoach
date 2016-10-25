@@ -1,12 +1,8 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QDebug>
-#include <QStandardPaths>
-#include <QJsonDocument>
 #include <QQmlContext>
-#include <QFile>
-#include <QDir>
-#include <QTextStream>
+#include <QMap>
 #include "Calories.h"
 #include "jenson.h"
 #include "DataManager.h"
@@ -14,29 +10,15 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-
-//    QDir dataDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
-//    if (!dataDir.exists() && !dataDir.mkdir(dataDir.absolutePath()))
-//    {
-//        qDebug() << "Failed to create data dir" << dataDir.absolutePath();
-//        return 1;
-//    }
-
-//    QFile dataFile(dataDir.absolutePath() + '/' + "data.json" );
-
-//    if (!dataFile.open(QIODevice::ReadWrite | QIODevice::Truncate))
-//    {
-//        qDebug() << "Failed to open write file" << dataFile.fileName();
-//        return 1;
-//    }
-
-//    qDebug() << "data file: " << dataFile.fileName();
-
     QQmlApplicationEngine engine;
+
+    QVariantMap testMap;
+    testMap.insert("test value 1", "ttt");
 
     engine.addImportPath("material/src");
     QPM_INIT(engine)
     engine.rootContext()->setContextProperty("dataManager", new DataManager());
+    engine.rootContext()->setContextProperty("testMap", testMap);
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
 //    Calories calories;
