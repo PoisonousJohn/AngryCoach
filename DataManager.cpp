@@ -25,20 +25,24 @@ DayLog *DataManager::getTodayLog()
 
 }
 
-const QHash<QUuid, QVariant> *DataManager::getFood() const
+const SerializableHash<Food> *DataManager::getFood() const
 {
-    return &_data->food();
+    return _data->Food();
 }
 
 void DataManager::addFood(Food *food)
 {
-   food->setId(QUuid::createUuid());
+   food->setId(QUuid::createUuid().toString());
    qDebug() << "Added food with id " << food->Id();
-   _data->food().insert(food->Id(), QVariant::fromValue(food));
+   _data->Food()->getHash().insert(food->Id(), food);
 }
 
 void DataManager::addFood(const QVariantMap &data)
 {
+    if (_data->Food() == nullptr)
+    {
+        _data->setFood(new FoodMap());
+    }
    auto food = new Food();
    food->setName(data["name"].toString());
    auto calories = new Calories();
@@ -74,6 +78,7 @@ void DataManager::load()
 void DataManager::save()
 {
     QJsonDocument doc;
+    _dataFile->resize(0);
     doc.setObject(jenson::JenSON::serialize(_data));
     {
         QTextStream stream(_dataFile);

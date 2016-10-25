@@ -6,6 +6,7 @@
 #include <QDate>
 #include <QUuid>
 #include <QFile>
+#include "CustomQHashSerializer.h"
 class AppData;
 class DayLog;
 class Food;
@@ -18,7 +19,7 @@ public:
 
     DayLog* getDayLog(QDate date);
     DayLog* getTodayLog();
-    const QHash<QUuid, QVariant> *getFood() const;
+    const SerializableHash<Food> *getFood() const;
     void addFood(Food* food);
     Q_INVOKABLE void addFood(const QVariantMap& data);
 
