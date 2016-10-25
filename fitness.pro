@@ -34,4 +34,5 @@ HEADERS += \
     DataManager.h \
     DayLog.h \
     JensonHelper.h \
-    AppData.h
+    AppData.h \
+    CustomQHashSerializer.h
