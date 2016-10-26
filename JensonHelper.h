@@ -1,6 +1,9 @@
 #ifndef JENSONHELPER_H
 #define JENSONHELPER_H
 
+#include <QFile>
+#include "jenson.h"
+
 #define STANDARD_GETSET(TYPE, MEMBERNAME) \
     private: TYPE _##MEMBERNAME; \
     public: \
@@ -35,5 +38,11 @@
 #define QOBJECT_PROPERTY_GETSET(TYPE, MEMBERNAME) \
     Q_PROPERTY(TYPE* MEMBERNAME READ MEMBERNAME WRITE set##MEMBERNAME) \
     QOBJECT_GETSET(TYPE, MEMBERNAME)
+
+template <typename T>
+sptr<T> deserializeFromFile(QFile* file)
+{
+
+}
 
 #endif // JENSONHELPER_H

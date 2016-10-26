@@ -6,6 +6,7 @@
 #include <QDate>
 #include <QUuid>
 #include <QFile>
+#include <QDir>
 #include "CustomQHashSerializer.h"
 class DayLog;
 class Food;
@@ -27,6 +28,7 @@ public:
     void addFood(Food* food);
     Q_INVOKABLE void addFood(const QVariantMap& data);
 
+    static QDir getDataDir();
 
 private: // members
     AppData* _data = nullptr;

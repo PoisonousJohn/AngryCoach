@@ -11,11 +11,11 @@ public:
     DayLogCache(QDate date);
 
     DayLog *getLog() const;
-    void setLog(DayLog *value);
+    void setLog(DayLog *value);    
 
 private:
-    QFile* file = nullptr;
-    DayLog* log = nullptr;
+    QFile* _file = nullptr;
+    DayLog* _log = nullptr;
 };
 
 

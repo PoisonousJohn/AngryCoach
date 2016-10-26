@@ -57,6 +57,11 @@ void DataManager::addFood(const QVariantMap &data)
    save();
 }
 
+QDir DataManager::getDataDir()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+}
+
 void DataManager::load()
 {
     QDir dataDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation));
