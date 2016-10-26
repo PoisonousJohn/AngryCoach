@@ -4,14 +4,17 @@
 #include <QObject>
 #include <QVariantList>
 #include "jenson.h"
+#include "JensonHelper.h"
 
 class DayLog : public QObject
 {
     Q_OBJECT
 public:
     DayLog(QObject* parent = 0);
-    // QVariantList of Calories class
-    JENSON_PROPERTY_GETSET(QVariantList, Calories)
+    // food ids
+    STANDARD_PROPERTY_GETSET(QStringList, EatenFood)
+//     QVariantList of Calories class
+//    JENSON_PROPERTY_GETSET(QVariantList, Calories)
 };
 
 SERIALIZABLE(DayLog, DayLog)

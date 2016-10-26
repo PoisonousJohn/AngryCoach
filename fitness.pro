@@ -10,7 +10,9 @@ SOURCES += $$PWD/thirdParty/jenson/src/*.cpp \
     Calories.cpp \
     DataManager.cpp \
     DayLog.cpp \
-    AppData.cpp
+    AppData.cpp \
+    FoodMap.cpp \
+    DayLogCache.cpp
 SOURCES += main.cpp
 
 RESOURCES += qml.qrc
@@ -35,4 +37,6 @@ HEADERS += \
     DayLog.h \
     JensonHelper.h \
     AppData.h \
-    CustomQHashSerializer.h
+    CustomQHashSerializer.h \
+    FoodMap.h \
+    DayLogCache.h
