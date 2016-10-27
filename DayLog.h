@@ -15,6 +15,8 @@ public:
     STANDARD_PROPERTY_GETSET(QStringList, EatenFood)
 //     QVariantList of Calories class
 //    JENSON_PROPERTY_GETSET(QVariantList, Calories)
+signals:
+    void updated();
 };
 
 SERIALIZABLE(DayLog, DayLog)

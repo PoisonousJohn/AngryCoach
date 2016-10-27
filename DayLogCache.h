@@ -8,10 +8,12 @@ class DayLog;
 
 class DayLogCache {
 public:
-    DayLogCache(QDate date);
-
+    DayLogCache(const QDate& date);
+    ~DayLogCache();
     DayLog *getLog() const;
-    void setLog(DayLog *value);    
+
+private:
+    void load();
 
 private:
     QFile* _file = nullptr;

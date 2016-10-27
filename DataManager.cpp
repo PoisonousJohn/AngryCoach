@@ -15,14 +15,21 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 
 }
 
-DayLog *DataManager::getDayLog(QDate date)
+DayLog *DataManager::getDayLog(const QDate& date)
 {
+    auto result = _dayLogCache.find(date);
+    if (result != _dayLogCache.end())
+    {
+        return (*result)->getLog();
+    }
 
+    _dayLogCache.insert(date, QSharedPointer<DayLogCache>::create(date));
+    return _dayLogCache[date]->getLog();
 }
 
 DayLog *DataManager::getTodayLog()
 {
-
+    return getDayLog(QDate::currentDate());
 }
 
 QObject *DataManager::food()

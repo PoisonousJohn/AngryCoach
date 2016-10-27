@@ -4,10 +4,12 @@
 #include <QObject>
 #include <QHash>
 #include <QDate>
-#include <QUuid>
 #include <QFile>
 #include <QDir>
+#include <QSharedPointer>
 #include "CustomQHashSerializer.h"
+#include "DayLogCache.h"
+
 class DayLog;
 class Food;
 class AppData;
@@ -21,7 +23,7 @@ public:
 
     Q_PROPERTY(QObject* food READ food NOTIFY foodChanged)
 
-    DayLog* getDayLog(QDate date);
+    DayLog* getDayLog(const QDate& date);
     DayLog* getTodayLog();
     QObject* food();
     FoodMap* getFood();
@@ -33,6 +35,7 @@ public:
 private: // members
     AppData* _data = nullptr;
     QFile* _dataFile = nullptr;
+    QHash<QDate, QSharedPointer<DayLogCache>> _dayLogCache;
 
 private: // methods
     void load();
