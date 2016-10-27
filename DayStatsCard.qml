@@ -3,6 +3,11 @@ import QtQuick.Layouts 1.1
 import Material 0.3
 
 Card {
+    Component.onCompleted: {
+        var log = dataManager.todayLog;
+        console.log(log);
+    }
+
     anchors.left: parent.left
     anchors.right: parent.right
     height: stats.height + dp(40)

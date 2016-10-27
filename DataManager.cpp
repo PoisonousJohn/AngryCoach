@@ -6,6 +6,7 @@
 #include "DataManager.h"
 #include "Food.h"
 #include "AppData.h"
+#include "DayLog.h"
 
 DataManager::DataManager(QObject *parent) : QObject(parent)
 {
@@ -15,19 +16,20 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 
 }
 
-DayLog *DataManager::getDayLog(const QDate& date)
+QObject *DataManager::getDayLog(const QDate& date)
 {
     auto result = _dayLogCache.find(date);
     if (result != _dayLogCache.end())
     {
-        return (*result)->getLog();
+        DayLog* log = (*result)->getLog();
+        return static_cast<QObject*>(log);
     }
 
     _dayLogCache.insert(date, QSharedPointer<DayLogCache>::create(date));
     return _dayLogCache[date]->getLog();
 }
 
-DayLog *DataManager::getTodayLog()
+QObject *DataManager::getTodayLog()
 {
     return getDayLog(QDate::currentDate());
 }

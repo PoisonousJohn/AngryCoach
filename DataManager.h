@@ -22,9 +22,10 @@ public:
     explicit DataManager(QObject *parent = 0);
 
     Q_PROPERTY(QObject* food READ food NOTIFY foodChanged)
+    Q_PROPERTY(QObject* todayLog READ getTodayLog)
 
-    DayLog* getDayLog(const QDate& date);
-    DayLog* getTodayLog();
+    Q_INVOKABLE QObject* getDayLog(const QDate& date);
+    QObject* getTodayLog();
     QObject* food();
     FoodMap* getFood();
     void addFood(Food* food);

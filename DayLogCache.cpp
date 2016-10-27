@@ -6,7 +6,7 @@
 
 DayLogCache::DayLogCache(const QDate &date)
 {
-    _file = new QFile(DataManager::getDataDir().path() + "/" + date.toString());
+    _file = new QFile(DataManager::getDataDir().path() + "/" + date.toString(Qt::ISODate) + ".log");
     qDebug() << "DayLogCache for date" << date << "initialized with file" << _file;
     if (_file->exists())
     {
