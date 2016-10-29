@@ -13,7 +13,7 @@ Page {
         id: searchFood
         title: qsTr("Choose food")
         visible: false
-        model: dataManager.food.list
+        model: dataManager.food
         defaultModelField: "Name"
         StandardActionButton {
             AwesomeIcon {

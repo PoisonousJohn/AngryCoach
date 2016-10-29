@@ -16,27 +16,16 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 
 }
 
-QObject *DataManager::getDayLog(const QDate& date)
+DayLog* DataManager::getDayLog(const QDate& date)
 {
     auto result = _dayLogCache.find(date);
     if (result != _dayLogCache.end())
     {
-        DayLog* log = (*result)->getLog();
-        return static_cast<QObject*>(log);
+        return result.value()->getLog();
     }
 
     _dayLogCache.insert(date, QSharedPointer<DayLogCache>::create(date));
     return _dayLogCache[date]->getLog();
-}
-
-QObject *DataManager::getTodayLog()
-{
-    return getDayLog(QDate::currentDate());
-}
-
-QObject *DataManager::food()
-{
-    return static_cast<QObject*>(_data->Food());
 }
 
 FoodMap* DataManager::getFood()
@@ -49,7 +38,6 @@ void DataManager::addFood(Food *food)
    food->setId(QUuid::createUuid().toString());
    qDebug() << "Added food with id " << food->Id();
    _data->Food()->insert(food->Id(), food);
-   emit foodChanged();
 }
 
 void DataManager::addFood(const QVariantMap &data)
