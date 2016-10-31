@@ -50,7 +50,8 @@ Page {
 
         StandardActionButton {
             onClicked: {
-               dataManager.addFood(form.formData());
+                dataManager.addFood(form.formData());
+                pageStack.pop()
             }
 
             AwesomeIcon {

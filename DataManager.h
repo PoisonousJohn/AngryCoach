@@ -25,6 +25,7 @@ public:
     FoodMap* getFood();
     void addFood(Food* food);
     void addFood(const QVariantMap& data);
+    void addFoodToLog(const QDate& date, const QString& foodId);
 
     static QDir getDataDir();
 
@@ -37,9 +38,11 @@ private: // methods
     void load();
     void save();
     void initNewSave();
+    QSharedPointer<DayLogCache> getDayLogCache(const QDate& date);
 
 
 public slots:
+    void saveDayLog(const QDate& date);
 };
 
 #endif // DATAMANAGER_H

@@ -2,7 +2,7 @@
 #define DAYLOG_H
 
 #include <QObject>
-#include <QVariantList>
+#include <QStringList>
 #include "jenson.h"
 #include "JensonHelper.h"
 
@@ -10,11 +10,10 @@ class DayLog : public QObject
 {
     Q_OBJECT
 public:
-    DayLog(QObject* parent = 0);
+    Q_INVOKABLE DayLog(QObject* parent = 0);
     // food ids
     STANDARD_PROPERTY_GETSET(QStringList, EatenFood)
-//     QVariantList of Calories class
-//    JENSON_PROPERTY_GETSET(QVariantList, Calories)
+    void addFood(const QString& foodId);
 signals:
     void updated();
 };

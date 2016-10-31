@@ -15,6 +15,12 @@ Page {
         visible: false
         model: dataManager.food
         defaultModelField: "Name"
+        onItemSelected: {
+            console.log("Adding food to log: " + item["Id"] + " for date " + dayLog.day);
+            dataManager.addFoodToLog(dayLog.day, item["Id"])
+            pageStack.pop()
+        }
+
         StandardActionButton {
             AwesomeIcon {
                 anchors.centerIn: parent
@@ -31,7 +37,20 @@ Page {
     title: "Application Name"
     data: Item {
         anchors.fill: parent
-        DayStatsCard {}
+
+        ColumnLayout {
+//            anchors.fill: parent
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+
+            DayStatsCard {}
+            FoodDayLog {
+                id: dayLog
+            }
+        }
+
 
         ActionButton {
             anchors.horizontalCenter: parent.right

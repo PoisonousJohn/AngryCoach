@@ -13,5 +13,6 @@
         <file>SimpleList.qml</file>
         <file>SearchList.qml</file>
         <file>DayStatsCard.qml</file>
+        <file>FoodDayLog.qml</file>
     </qresource>
 </RCC>

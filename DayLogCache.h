@@ -12,8 +12,11 @@ public:
     ~DayLogCache();
     DayLog *getLog() const;
 
+    void save();
+
 private:
     void load();
+    void initEmptyLog();
 
 private:
     QFile* _file = nullptr;

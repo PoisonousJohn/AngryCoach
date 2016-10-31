@@ -7,15 +7,12 @@ import Material.ListItems 0.1
 ColumnLayout {
     id: simpleList
 
-    Component.onCompleted: {
-        console.log(listView.model)
-    }
-
     property string defaultModelValue: "name"
     property int itemHeight: 100
     property alias title: header.text
     property alias delegate: listView.delegate
     property alias model: listView.model
+    signal itemClicked(int modelIndex);
 
     anchors.left: parent.left
     anchors.right: parent.right
@@ -32,7 +29,14 @@ ColumnLayout {
         anchors.right: parent.right
         height: count * itemHeight
         delegate: BaseListItem {
+            id: listDelegate
+            property int modelIndex: index
             implicitHeight: 100
+            onClicked: {
+//                console.log("current index " + modelIndex)
+                itemClicked(modelIndex)
+            }
+
             Text {
                 anchors.left: parent.left
                 anchors.right: parent.right

@@ -8,6 +8,7 @@ Page {
 
     property alias model: list.model
     property alias defaultModelField: list.defaultModelValue
+    signal itemSelected(var item)
 
     actions: [
         Action {
@@ -32,5 +33,8 @@ Page {
     data: SimpleList {
         id: list
         title: searchList.title
+        onItemClicked: {
+            itemSelected(model[modelIndex])
+        }
     }
 }

@@ -18,14 +18,7 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 
 DayLog* DataManager::getDayLog(const QDate& date)
 {
-    auto result = _dayLogCache.find(date);
-    if (result != _dayLogCache.end())
-    {
-        return result.value()->getLog();
-    }
-
-    _dayLogCache.insert(date, QSharedPointer<DayLogCache>::create(date));
-    return _dayLogCache[date]->getLog();
+    return getDayLogCache(date)->getLog();
 }
 
 FoodMap* DataManager::getFood()
@@ -52,6 +45,11 @@ void DataManager::addFood(const QVariantMap &data)
    food->setFoodCalories(calories);
    addFood(food);
    save();
+}
+
+void DataManager::addFoodToLog(const QDate &date, const QString &foodId)
+{
+    getDayLog(date)->addFood(foodId);
 }
 
 QDir DataManager::getDataDir()
@@ -117,4 +115,27 @@ void DataManager::initNewSave()
     {
         _data->setFood(new FoodMap());
     }
+}
+
+QSharedPointer<DayLogCache> DataManager::getDayLogCache(const QDate &date)
+{
+    auto result = _dayLogCache.find(date);
+    if (result != _dayLogCache.end())
+    {
+        return result.value();
+    }
+
+    auto cache = QSharedPointer<DayLogCache>::create(date);
+    _dayLogCache.insert(date, cache);
+
+    connect(cache->getLog(), &DayLog::updated, [date, this]() {
+        saveDayLog(date);
+    });
+
+    return getDayLogCache(date);
+}
+
+void DataManager::saveDayLog(const QDate &date)
+{
+    getDayLogCache(date)->save();
 }
