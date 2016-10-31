@@ -45,7 +45,10 @@ Page {
                 right: parent.right
             }
 
-            DayStatsCard {}
+            DayStatsCard {
+                model: dayLog.model
+            }
+
             FoodDayLog {
                 id: dayLog
             }

@@ -7,24 +7,24 @@ ApplicationWindow {
     id: window
     theme.primaryColor: "indigo"
     initialPage: MainPage {}
-    ListModel {
-        id: dummyModel
-        ListElement {
-            name: "carbs"
-            value: 100
-            maxValue: 300
-        }
-        ListElement {
-            name: "protein"
-            value: 50
-            maxValue: 300
-        }
-        ListElement {
-            name: "fat"
-            value: 200
-            maxValue: 300
-        }
-    }
+//    ListModel {
+//        id: dummyModel
+//        ListElement {
+//            name: "carbs"
+//            value: 100
+//            maxValue: 300
+//        }
+//        ListElement {
+//            name: "protein"
+//            value: 50
+//            maxValue: 300
+//        }
+//        ListElement {
+//            name: "fat"
+//            value: 200
+//            maxValue: 300
+//        }
+//    }
 
     visible: true
     width: 480

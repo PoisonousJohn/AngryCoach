@@ -14,5 +14,7 @@
         <file>SearchList.qml</file>
         <file>DayStatsCard.qml</file>
         <file>FoodDayLog.qml</file>
+        <file>ProgressBarWithNameAndDesc.qml</file>
+        <file>SimpleContextMenu.qml</file>
     </qresource>
 </RCC>

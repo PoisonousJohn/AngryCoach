@@ -30,9 +30,14 @@ Page {
        }
     }
 
-    data: SimpleList {
+    SimpleList {
         id: list
         title: searchList.title
+        anchors {
+            bottom: parent.bottom
+            top: parent.top
+        }
+
         onItemClicked: {
             itemSelected(model[modelIndex])
         }

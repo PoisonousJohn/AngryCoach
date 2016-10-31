@@ -6,6 +6,7 @@ import Material.ListItems 0.1
 
 Card {
     property date day: new Date()
+    property alias model: listview.model
     implicitHeight: content.implicitHeight
     anchors {
         left: parent.left
