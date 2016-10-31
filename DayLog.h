@@ -14,6 +14,7 @@ public:
     // food ids
     STANDARD_PROPERTY_GETSET(QStringList, EatenFood)
     void addFood(const QString& foodId);
+    void removeFood(int index);
 signals:
     void updated();
 };

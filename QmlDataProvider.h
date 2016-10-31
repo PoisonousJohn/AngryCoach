@@ -17,6 +17,7 @@ public:
     // returns list of Food*
     Q_INVOKABLE QVariantList getDayLog(const QDate& date);
     Q_INVOKABLE void addFoodToLog(const QDate& date, const QString& foodId);
+    Q_INVOKABLE void removeFoodFromLog(const QDate& date, int index);
     QVariantList getFood();
 
 signals:

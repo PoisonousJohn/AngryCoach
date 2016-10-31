@@ -52,6 +52,11 @@ void DataManager::addFoodToLog(const QDate &date, const QString &foodId)
     getDayLog(date)->addFood(foodId);
 }
 
+void DataManager::removeFoodFromLog(const QDate &date, int index)
+{
+    getDayLog(date)->removeFood(index);
+}
+
 QDir DataManager::getDataDir()
 {
     return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);

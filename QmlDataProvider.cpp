@@ -38,6 +38,12 @@ void QmlDataProvider::addFoodToLog(const QDate &date, const QString &foodId)
     emit dayLogChanged(date);
 }
 
+void QmlDataProvider::removeFoodFromLog(const QDate &date, int index)
+{
+    _dataManager->removeFoodFromLog(date, index);
+    emit dayLogChanged(date);
+}
+
 QVariantList QmlDataProvider::getFood()
 {
     return _dataManager->getFood()->getList();

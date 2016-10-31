@@ -26,6 +26,7 @@ public:
     void addFood(Food* food);
     void addFood(const QVariantMap& data);
     void addFoodToLog(const QDate& date, const QString& foodId);
+    void removeFoodFromLog(const QDate& date, int index);
 
     static QDir getDataDir();
 
