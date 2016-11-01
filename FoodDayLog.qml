@@ -6,7 +6,7 @@ import Material.ListItems 0.1
 
 Card {
     property date day: dataManager.selectedDate
-    implicitHeight: content.implicitHeight
+    implicitHeight: content.implicitHeight - dp(3)
     anchors {
         left: parent.left
         right: parent.right
@@ -39,6 +39,7 @@ Card {
 
         ListView {
             id: listview
+            clip: true
             model: dataManager.getDayLog(dataManager.selectedDate)
             anchors {
                 left: parent.left
@@ -47,6 +48,8 @@ Card {
             implicitHeight: dp(100)
             visible: count > 0
             delegate: Standard {
+                elevation: 1
+                z: -10
                 id: listViewDelegate
                 property var food: getFood()
                 function getFood() {

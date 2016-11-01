@@ -8,6 +8,7 @@ Page {
 
     property alias model: list.model
     property alias defaultModelField: list.defaultModelValue
+    property alias listView: list
     signal itemSelected(var item)
 
     actions: [

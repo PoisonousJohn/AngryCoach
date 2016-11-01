@@ -29,6 +29,7 @@ ColumnLayout {
 
     ListView {
         id: listView
+        clip: true
         anchors {
            top: header.visible ? header.bottom : parent.top
            bottom: parent.bottom

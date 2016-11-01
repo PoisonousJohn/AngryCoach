@@ -10,6 +10,7 @@ import Material 0.3
   * 3. Deleting of food item
   * 4. Day switching
   * 5. Body index formula
+  * 6. Search by food name
   */
 
 ApplicationWindow {
