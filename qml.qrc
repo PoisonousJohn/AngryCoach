@@ -16,5 +16,8 @@
         <file>FoodDayLog.qml</file>
         <file>ProgressBarWithNameAndDesc.qml</file>
         <file>SimpleContextMenu.qml</file>
+        <file>ChooseFoodAmount.qml</file>
+        <file>TwoColorProgressCircle.qml</file>
+        <file>ChooseFood.qml</file>
     </qresource>
 </RCC>

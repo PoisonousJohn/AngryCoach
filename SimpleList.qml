@@ -36,16 +36,11 @@ ColumnLayout {
            right: parent.right
         }
 
-//        anchors.left: parent.left
-//        anchors.right: parent.right
-//        implicitHeight: count * itemHeight
-//        height: parent.implicitHeight
         delegate: BaseListItem {
             id: listDelegate
             property int modelIndex: index
             height: itemHeight
             onClicked: {
-//                console.log("current index " + modelIndex)
                 itemClicked(modelIndex)
             }
 
@@ -55,7 +50,6 @@ ColumnLayout {
                 anchors.margins: 16 * Units.dp
                 anchors.verticalCenter: parent.verticalCenter
                 text: {
-//                    console.log(modelData)
                     return defaultModelValue.length > 0 ? modelData[defaultModelValue] : modelData;
                 }
                 onContentWidthChanged: {

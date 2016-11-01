@@ -13,7 +13,8 @@ SOURCES += $$PWD/thirdParty/jenson/src/*.cpp \
     AppData.cpp \
     FoodMap.cpp \
     DayLogCache.cpp \
-    QmlDataProvider.cpp
+    QmlDataProvider.cpp \
+    FoodAmount.cpp
 SOURCES += main.cpp
 
 RESOURCES += qml.qrc
@@ -41,4 +42,8 @@ HEADERS += \
     CustomQHashSerializer.h \
     FoodMap.h \
     DayLogCache.h \
-    QmlDataProvider.h
+    QmlDataProvider.h \
+    FoodAmount.h
+
+DISTFILES += \
+    TwoColorProgressCircle.qml

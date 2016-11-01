@@ -20,7 +20,7 @@ Dropdown {
 //            anchors.fill: parent
 //            color: "red"
 //        }
-
+        defaultModelValue: ""
         id: menuList
         height: maxHeight
         itemHeight: dp(30)

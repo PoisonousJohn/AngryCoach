@@ -5,8 +5,7 @@ import Material 0.3
 import Material.ListItems 0.1
 
 Card {
-    property date day: new Date()
-    property alias model: listview.model
+    property date day: dataManager.selectedDate
     implicitHeight: content.implicitHeight
     anchors {
         left: parent.left
@@ -16,6 +15,11 @@ Card {
     Connections {
         target: dataManager
         onDayLogChanged: {
+            if (date.getTime() !== dataManager.selectedDate.getTime())
+            {
+                return;
+            }
+
             listview.model = dataManager.getDayLog(date)
         }
     }
@@ -35,19 +39,31 @@ Card {
 
         ListView {
             id: listview
+            model: dataManager.getDayLog(dataManager.selectedDate)
             anchors {
                 left: parent.left
                 right: parent.right
             }
             implicitHeight: dp(100)
-            model: dataManager.getDayLog(day)
+            visible: count > 0
             delegate: Standard {
+                id: listViewDelegate
+                property var food: getFood()
+                function getFood() {
+                    var food = dataManager.getFoodById(modelData["FoodId"]);
+                    console.log("ttt: food: " + food + " for food id: " + modelData["FoodId"]);
+                    return food
+                }
+
                 onPressAndHold: {
                     deleteDialog.itemIndex = index;
                     deleteDialog.show();
                 }
-                text: modelData["Name"]
-                valueText: modelData["FoodCalories"]["TotalCalories"] + qsTr(" kcal")
+                text: food["Name"]
+                valueText:
+                {
+                    modelData["Amount"] + qsTr(" g") + " (" + (food["FoodCalories"]["TotalCalories"] * (modelData["Amount"] / 100) ) + qsTr(" kcal") + ")"
+                }
             }
         }
 

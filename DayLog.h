@@ -11,9 +11,9 @@ class DayLog : public QObject
     Q_OBJECT
 public:
     Q_INVOKABLE DayLog(QObject* parent = 0);
-    // food ids
-    STANDARD_PROPERTY_GETSET(QStringList, EatenFood)
-    void addFood(const QString& foodId);
+    // list of FoodAmount
+    JENSON_PROPERTY_GETSET(QVariantList, EatenFood)
+    void addFood(const QString& foodId, float foodAmount);
     void removeFood(int index);
 signals:
     void updated();

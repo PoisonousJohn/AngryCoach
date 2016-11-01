@@ -42,9 +42,9 @@ void DayLogCache::save()
     }
 
     QJsonDocument doc;
-    _file->resize(0);
     doc.setObject(jenson::JenSON::serialize(_log));
     {
+        _file->resize(0);
         QTextStream stream(_file);
         stream << doc.toJson();
     }

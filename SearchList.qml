@@ -39,7 +39,7 @@ Page {
         }
 
         onItemClicked: {
-            itemSelected(model[modelIndex])
+            itemSelected(searchList.model[modelIndex])
         }
     }
 }

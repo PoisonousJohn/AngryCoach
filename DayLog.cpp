@@ -1,13 +1,18 @@
 #include <QDebug>
 #include "DayLog.h"
+#include "FoodAmount.h"
 
 DayLog::DayLog(QObject *parent) : QObject(parent)
 {
 }
 
-void DayLog::addFood(const QString &foodId)
+void DayLog::addFood(const QString &foodId, float foodAmount)
 {
-    _EatenFood.append(foodId);
+    auto amount = new FoodAmount();
+    amount->setAmount(foodAmount);
+    amount->setFoodId(foodId);
+    auto val = QVariant::fromValue(amount);
+    _EatenFood.append(val);
     emit updated();
 }
 

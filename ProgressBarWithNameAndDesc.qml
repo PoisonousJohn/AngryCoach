@@ -18,6 +18,7 @@ ColumnLayout {
     ProgressBar {
         id: progressBar
         implicitWidth: parent.width
+        maximumValue: 1
         indeterminate: false
         //                        value: model.value / model.maxValue
 //        value: card[key] / 100

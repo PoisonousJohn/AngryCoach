@@ -6,7 +6,7 @@ import Material.ListItems 0.1
 Card {
 
     id: card
-    property var model;
+    property var __model: dataManager.getDayLog(dataManager.selectedDate);
     property int totalCalories;
     property int carbs;
     property int fats;
@@ -17,21 +17,40 @@ Card {
     property int maxFats: 100;
     property int maxProteins: 100;
 
-    onModelChanged: {
-
+    function updateStats()
+    {
         totalCalories = 0;
         carbs = 0;
         fats = 0;
         proteins = 0;
 
-        for (var i = 0; i < model.length; ++i)
+        for (var i = 0; i < __model.length; ++i)
         {
-            console.log(model[i]);
-            totalCalories += model[i]["FoodCalories"]["TotalCalories"];
-            carbs += model[i]["FoodCalories"]["Carbs"];
-            fats += model[i]["FoodCalories"]["Fats"];
-            proteins += model[i]["FoodCalories"]["Proteins"];
+            var foodId = __model[i]["FoodId"];
+            var food = dataManager.getFoodById(foodId);
+            var amountFactor = __model[i]["Amount"] / 100;
+            totalCalories += food["FoodCalories"]["TotalCalories"] * amountFactor;
+            carbs += food["FoodCalories"]["Carbs"] * amountFactor;
+            fats += food["FoodCalories"]["Fats"] * amountFactor;
+            proteins += food["FoodCalories"]["Proteins"] * amountFactor;
         }
+    }
+
+    Connections {
+        target: dataManager
+        onDayLogChanged: {
+            if (date.getTime() !== dataManager.selectedDate.getTime())
+            {
+                return;
+            }
+
+            __model = dataManager.getDayLog(dataManager.selectedDate);
+            updateStats();
+        }
+    }
+
+    on__ModelChanged: {
+        updateStats();
     }
 
     anchors.left: parent.left
@@ -43,7 +62,7 @@ Card {
         model: ListModel {
             ListElement
             {
-                name: qsTr("Setup day goal")
+                Name: qsTr("Setup day goal")
             }
         }
 
@@ -80,10 +99,6 @@ Card {
             id: totalStats
             spacing: dp(50)
             anchors.horizontalCenter: parent.horizontalCenter
-//            Text {
-//                text: totalCalories + "\n EATEN"
-//                horizontalAlignment: Text.AlignHCenter
-//            }
             Rectangle {
                 color: Palette.colors["grey"]["300"]
                 radius: width * 0.5
@@ -99,17 +114,10 @@ Card {
                     }
                     anchors.centerIn: parent
                     indeterminate: false
-                    value: totalCalories / maxTotalCalories
+                    value: Math.min(totalCalories / maxTotalCalories, 1)
                     dashThickness: dp(8)
                 }
             }
-
-//            Text {
-//                width: 300
-//                text: "0\n BURNED"
-//                horizontalAlignment: Text.AlignHCenter
-//            }
-
         }
         RowLayout {
             property int itemWidth: card.width / 3 -spacing
@@ -124,19 +132,19 @@ Card {
             ProgressBarWithNameAndDesc {
                 width: parameters.itemWidth
                 name: "Carbs"
-                progressBarValue: card.carbs / maxCarbs
+                progressBarValue: Math.min(1, carbs / maxCarbs)
                 description: " g"
             }
             ProgressBarWithNameAndDesc {
                 width: parameters.itemWidth
                 name: "Proteins"
-                progressBarValue: card.proteins / maxProteins
+                progressBarValue: Math.min(1, proteins / maxProteins)
                 description: " g"
             }
             ProgressBarWithNameAndDesc {
                 width: parameters.itemWidth
                 name: "Fats"
-                progressBarValue: card.fasts / maxFats
+                progressBarValue: Math.min(1, fats / maxFats)
                 description: " g"
             }
 

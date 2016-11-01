@@ -21,11 +21,13 @@ class DataManager : public QObject
 public:
     explicit DataManager(QObject *parent = 0);
 
-    DayLog* getDayLog(const QDate& date);
     FoodMap* getFood();
     void addFood(Food* food);
     void addFood(const QVariantMap& data);
-    void addFoodToLog(const QDate& date, const QString& foodId);
+    void removeFood(const QString& foodId);
+
+    DayLog* getDayLog(const QDate& date);
+    void addFoodToLog(const QDate& date, const QString& foodId, float foodAmount);
     void removeFoodFromLog(const QDate& date, int index);
 
     static QDir getDataDir();

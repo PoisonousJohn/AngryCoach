@@ -19,18 +19,14 @@ public:
 
     }
 
-    virtual void insert(QString key, ItemPtr item)
+    virtual void insert(const QString& key, ItemPtr item)
     {
        _hash.insert(key, QVariant::fromValue(item));
     }
 
-
-    Hash* getHashQML() {
-        return &_hash;
-    }
-
-    Hash& getHash() {
-        return _hash;
+    virtual void remove(const QString& key)
+    {
+        _hash.remove(key);
     }
 
     Q_INVOKABLE const Hash& getHash() const {

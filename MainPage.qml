@@ -9,28 +9,17 @@ Page {
         visible: false
     }
 
-    SearchList {
-        id: searchFood
-        title: qsTr("Choose food")
+    ChooseFoodAmount {
+        id: chooseFoodAmount
         visible: false
-        model: dataManager.food
-        defaultModelField: "Name"
-        onItemSelected: {
-            console.log("Adding food to log: " + item["Id"] + " for date " + dayLog.day);
-            dataManager.addFoodToLog(dayLog.day, item["Id"])
-            pageStack.pop()
+        onConfirmed: {
+            dataManager.addFoodToLog(dayLog.day, food["Id"], amount);
+            pageStack.pop();
         }
+    }
 
-        StandardActionButton {
-            AwesomeIcon {
-                anchors.centerIn: parent
-                name: "plus"
-            }
-
-            onClicked: {
-                pageStack.push(addFood)
-            }
-        }
+    ChooseFood {
+        id: searchFood
     }
 
     id: mainPage
@@ -46,11 +35,11 @@ Page {
             }
 
             DayStatsCard {
-                model: dayLog.model
             }
 
             FoodDayLog {
                 id: dayLog
+                day: dataManager.selectedDate
             }
         }
 

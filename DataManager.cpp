@@ -47,9 +47,14 @@ void DataManager::addFood(const QVariantMap &data)
    save();
 }
 
-void DataManager::addFoodToLog(const QDate &date, const QString &foodId)
+void DataManager::removeFood(const QString &foodId)
 {
-    getDayLog(date)->addFood(foodId);
+    _data->Food()->remove(foodId);
+}
+
+void DataManager::addFoodToLog(const QDate &date, const QString &foodId, float foodAmount)
+{
+    getDayLog(date)->addFood(foodId, foodAmount);
 }
 
 void DataManager::removeFoodFromLog(const QDate &date, int index)
