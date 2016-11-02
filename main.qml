@@ -11,6 +11,8 @@ import Material 0.3
   * 4. Day switching
   * 5. Body index formula
   * 6. Search by food name
+  * 7. Field validation on adding food
+  * 8. Field validation on adding log
   */
 
 ApplicationWindow {

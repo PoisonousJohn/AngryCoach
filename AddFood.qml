@@ -39,6 +39,12 @@ Page {
             placeholder: "required"
             value: ""
         }
+        ListElement {
+            fieldName: "weight"
+            name: "Weight"
+            placeholder: "required"
+            value: ""
+        }
     }
 
     data: Item {

@@ -19,6 +19,10 @@ SearchList {
             onClicked: {
                 listView.itemClicked(modelIndex)
             }
+            onPressAndHold: {
+                deleteDialog.foodId = modelData["Id"];
+                deleteDialog.show();
+            }
 
             Text {
                 anchors.left: parent.left
@@ -62,5 +66,16 @@ SearchList {
         onClicked: {
             pageStack.push(addFood)
         }
+    }
+
+    Dialog {
+        property string foodId;
+        onAccepted: {
+            dataManager.removeFood(foodId)
+        }
+
+        id: deleteDialog
+        title: qsTr("Delete item?")
+        text: qsTr("Do you really want to delete this item?")
     }
 }

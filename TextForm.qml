@@ -28,11 +28,13 @@ ColumnLayout {
 
         ColumnLayout {
             id: basicList
+            spacing: 0
             anchors { left: parent.left; right: parent.right }
             Repeater {
                 id: repeater
                 model: 4
                 delegate: Standard {
+                    elevation: 1
                     property alias value: textField.text
                     anchors.left: parent.left
                     anchors.right: parent.right

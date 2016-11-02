@@ -43,25 +43,16 @@ QVariantList QmlDataProvider::getDayLog(const QDate &date)
     auto dayLog = _dataManager->getDayLog(date);
     auto foodMap = _dataManager->getFood();
     auto& foodHash = foodMap->getHash();
-    QStringList invalidIds;
     for (QVariant& foodVariant : dayLog->EatenFood())
     {
         auto foodAmount = qvariant_cast<FoodAmount*>(foodVariant);
         QString foodId = foodAmount->FoodId();
+        // filter out deleted food
         auto food = foodHash.find(foodId);
         if (food != foodHash.end())
         {
             list.append(foodVariant);
         }
-        else
-        {
-            invalidIds.append(foodId);
-        }
-    }
-
-    for (auto& invalidId : invalidIds)
-    {
-        foodMap->remove(invalidId);
     }
 
     return list;
