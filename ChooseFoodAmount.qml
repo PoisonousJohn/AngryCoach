@@ -17,7 +17,7 @@ Page {
         },
     }
 
-    property int totalWeight;
+    property double totalWeight;
 
     onFoodChanged: {
         console.log("Food changed: " + food["Name"]);
@@ -29,9 +29,10 @@ Page {
     }
 
     StandardActionButton {
-        backgroundColor: Palette.colors["green"]["A700"]
+        enabled: Number.fromLocaleString(Qt.locale(), amount.text) > 0
+        backgroundColor: enabled ? Palette.colors["green"]["A700"] : Palette.colors["grey"]["500"]
         onClicked: {
-            confirmed(parseFloat(amount.text));
+            confirmed(Number.fromLocaleString(Qt.locale(), amount.text));
             pageStack.pop();
         }
 
@@ -58,16 +59,14 @@ Page {
             }
 
             ColumnLayout {
-//                anchors.left: mainInfo.right
                 anchors.right: parent.right
-//                anchors.verticalCenter: parent.verticalCenter
                 anchors.rightMargin: dp(10)
                 anchors.top: parent.top
                 anchors.topMargin: dp(50)
 
                 Label {
                     Layout.alignment: Qt.AlignCenter
-                    text: food.FoodCalories.TotalCalories + qsTr(" kkcal")
+                    text: food.FoodCalories.TotalCalories.toFixed(2) + qsTr(" kkcal")
                     style: "title"
                 }
 
@@ -76,7 +75,7 @@ Page {
                     Repeater {
                         model: nutritionModel
                         delegate:  Label {
-                            text: qsTr(modelData) + ": " + Math.round(food["FoodCalories"][modelData]) + qsTr(" g")
+                            text: qsTr(modelData) + ": " + food["FoodCalories"][modelData].toFixed(2) + qsTr(" g")
                         }
                     }
 
@@ -109,6 +108,10 @@ Page {
                         id: amount
                         text: "100"
                         implicitWidth: dp(50)
+                        validator: DoubleValidator {
+                            decimals: 2
+                            bottom: 0
+                        }
                     }
 
                     Label {
@@ -154,14 +157,22 @@ Page {
                         }
 
                         delegate: TwoColorProgressCircle {
-                            property double percent: Math.min(1, food["FoodCalories"][modelData] / totalWeight)
+                            property double percent: {
+                                if (totalWeight === 0)
+                                {
+                                    return 0;
+                                }
+
+                                var result = food["FoodCalories"][modelData] / totalWeight;
+                                return Math.min(1.0, result);
+                            }
+
                             width: dp(110)
                             height: dp(110)
                             dashThickness: dp(10)
                             value: percent
                             Label {
                                 text: {
-                                    console.log("ttt: percent" + percent)
                                     return percent.toFixed(2) * 100 + "%"
                                 }
                                 style: "headline"

@@ -34,6 +34,8 @@ Card {
         }
 
         Subheader {
+            elevation: 1
+            backgroundColor: Palette.colors["purple"]["200"]
             text: qsTr("Eaten today")
         }
 
@@ -48,13 +50,10 @@ Card {
             implicitHeight: dp(100)
             visible: count > 0
             delegate: Standard {
-                elevation: 1
-                z: -10
                 id: listViewDelegate
                 property var food: getFood()
                 function getFood() {
                     var food = dataManager.getFoodById(modelData["FoodId"]);
-                    console.log("ttt: food: " + food + " for food id: " + modelData["FoodId"]);
                     return food
                 }
 
@@ -79,7 +78,6 @@ Card {
     Dialog {
         property int itemIndex;
         onAccepted: {
-            console.log("Delete item " + itemIndex)
             dataManager.removeFoodFromLog(day, itemIndex)
         }
 

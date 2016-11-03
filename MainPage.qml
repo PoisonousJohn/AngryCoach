@@ -4,6 +4,7 @@ import Material 0.2
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
 
 Page {
+
     AddFood {
         id: addFood
         visible: false
@@ -13,6 +14,7 @@ Page {
         id: chooseFoodAmount
         visible: false
         onConfirmed: {
+            console.log("adding food confirmed "  + amount)
             dataManager.addFoodToLog(dayLog.day, food["Id"], amount);
             pageStack.pop();
         }
@@ -61,28 +63,4 @@ Page {
 
     }
 
-    actions: [
-        Action {
-            name: "Menu"
-
-            // Icon name from the Google Material Design icon pack
-            iconName: "navigation/menu"
-        }
-    ]
-
-//        actionBar {
-//            // Set a custom background color, if you don't want to use
-//            // the theme's primary color
-////            backgroundColor: Palette.colors.red["500"]
-
-//            // You can also set a custom content view instead of the title
-//            customContent: TextField {
-//                placeholderText: "Search..."
-//                anchors {
-//                    left: parent.left
-//                    right: parent.right
-//                    verticalCenter: parent.verticalCenter
-//                }
-//            }
-//        }
 }

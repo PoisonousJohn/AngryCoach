@@ -31,19 +31,6 @@ void DataManager::addFood(Food *food)
    food->setId(QUuid::createUuid().toString());
    qDebug() << "Added food with id " << food->Id();
    _data->Food()->insert(food->Id(), food);
-}
-
-void DataManager::addFood(const QVariantMap &data)
-{
-   auto food = new Food();
-   food->setName(data["name"].toString());
-   auto calories = new Calories();
-   calories->setCarbs(data["carbs"].toInt());
-   calories->setProteins(data["proteins"].toInt());
-   calories->setFats(data["fats"].toInt());
-   calories->setTotalCalories(data["totalCalories"].toInt());
-   food->setFoodCalories(calories);
-   addFood(food);
    save();
 }
 
@@ -51,6 +38,11 @@ void DataManager::removeFood(const QString &foodId)
 {
     _data->Food()->remove(foodId);
     save();
+}
+
+AppData *DataManager::getData()
+{
+    return _data;
 }
 
 void DataManager::addFoodToLog(const QDate &date, const QString &foodId, float foodAmount)

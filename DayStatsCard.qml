@@ -2,27 +2,48 @@ import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import Material 0.3
 import Material.ListItems 0.1
+import "fitnessFormula.js" as Formula
+import Fitness 0.1
 
 Card {
 
     id: card
     property var __model: dataManager.getDayLog(dataManager.selectedDate);
-    property int totalCalories;
-    property int carbs;
-    property int fats;
-    property int proteins;
+    property double totalCalories;
+    property double carbs;
+    property double fats;
+    property double proteins;
 
-    property int maxTotalCalories: 100;
-    property int maxCarbs: 100;
-    property int maxFats: 100;
-    property int maxProteins: 100;
+    property double maxTotalCalories;
+    property double maxCarbs;
+    property double maxFats;
+    property double maxProteins;
 
     function updateStats()
     {
+        var userProfile = dataManager.userProfile;
         totalCalories = 0;
         carbs = 0;
         fats = 0;
         proteins = 0;
+
+        maxTotalCalories = Formula.getDailyCaloriesNorm(
+                    userProfile["Weight"],
+                    userProfile["Height"],
+                    userProfile["Age"],
+                    userProfile["Sex"] === AppData.Male
+                                                ? "Male"
+                                                : "Female"
+        );
+
+        // hardcoded physical activity factor
+        maxTotalCalories *= 1.2;
+
+        var nutrition = Formula.getNutritionNorm(maxTotalCalories);
+        maxCarbs = nutrition["Carbs"];
+        maxFats = nutrition["Fats"];
+        maxProteins = nutrition["Proteins"];
+
 
         for (var i = 0; i < __model.length; ++i)
         {
@@ -38,6 +59,14 @@ Card {
 
     Connections {
         target: dataManager
+        onFoodChanged: {
+            updateStats();
+        }
+
+        onUserProfileChanged: {
+            updateStats();
+        }
+
         onDayLogChanged: {
             if (date.getTime() !== dataManager.selectedDate.getTime())
             {
@@ -62,12 +91,17 @@ Card {
         model: ListModel {
             ListElement
             {
-                Name: qsTr("Setup day goal")
+                Name: qsTr("Edit profile")
             }
         }
 
         onItemClicked: {
-            console.log("menu clicked " + itemIndex)
+            if (itemIndex === 0)
+            {
+                pageStack.push(userProfile);
+            }
+
+//            console.log("menu clicked " + itemIndex)
         }
     }
 
@@ -120,7 +154,7 @@ Card {
             }
         }
         RowLayout {
-            property int itemWidth: card.width / 3 -spacing
+            property int itemWidth: mainPage.width / 3 -spacing
 
             id: parameters
             anchors.topMargin: dp(100)
@@ -133,19 +167,19 @@ Card {
                 width: parameters.itemWidth
                 name: "Carbs"
                 progressBarValue: Math.min(1, carbs / maxCarbs)
-                description: " g"
+                description: carbs.toFixed(2) + qsTr(" g")
             }
             ProgressBarWithNameAndDesc {
                 width: parameters.itemWidth
                 name: "Proteins"
                 progressBarValue: Math.min(1, proteins / maxProteins)
-                description: " g"
+                description: proteins.toFixed(2) + qsTr(" g")
             }
             ProgressBarWithNameAndDesc {
                 width: parameters.itemWidth
                 name: "Fats"
                 progressBarValue: Math.min(1, fats / maxFats)
-                description: " g"
+                description: fats.toFixed(2) + qsTr(" g")
             }
 
         }

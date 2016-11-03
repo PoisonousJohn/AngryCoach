@@ -23,12 +23,13 @@ public:
 
     FoodMap* getFood();
     void addFood(Food* food);
-    void addFood(const QVariantMap& data);
     void removeFood(const QString& foodId);
 
+    AppData* getData();
     DayLog* getDayLog(const QDate& date);
     void addFoodToLog(const QDate& date, const QString& foodId, float foodAmount);
     void removeFoodFromLog(const QDate& date, int index);
+    void save();
 
     static QDir getDataDir();
 
@@ -39,7 +40,6 @@ private: // members
 
 private: // methods
     void load();
-    void save();
     void initNewSave();
     QSharedPointer<DayLogCache> getDayLogCache(const QDate& date);
 

@@ -20,8 +20,9 @@ SearchList {
                 listView.itemClicked(modelIndex)
             }
             onPressAndHold: {
-                deleteDialog.foodId = modelData["Id"];
-                deleteDialog.show();
+                contextMenu.foodId = modelData["Id"];
+                contextMenu.title = modelData["Name"];
+                contextMenu.open();
             }
 
             Text {
@@ -33,19 +34,6 @@ SearchList {
                     return modelData["Name"];
                 }
             }
-
-            Button {
-                anchors.rightMargin: dp(10)
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                width: editIcon.width + dp(10)
-                Icon {
-                    id: editIcon
-                    anchors.centerIn: parent
-                    name: "editor/mode_edit"
-                }
-            }
-
         }
     }
 
@@ -53,8 +41,28 @@ SearchList {
         console.log("Adding food to log: " + item["Id"] + " for date " + dayLog.day);
         chooseFoodAmount.food = item;
         pageStack.push(chooseFoodAmount);
-        //            dataManager.addFoodToLog(dayLog.day, item["Id"])
-        //            pageStack.pop()
+    }
+
+    BottomActionSheet {
+        id: contextMenu
+        property string foodId;
+        actions: [
+            Action {
+                name: qsTr("Edit")
+                onTriggered: {
+                    addFood.foodId = contextMenu.foodId;
+                    pageStack.push(addFood);
+                }
+            },
+            Action {
+                name: qsTr("Delete")
+                onTriggered: {
+                    deleteDialog.foodId = contextMenu.foodId;
+                    deleteDialog.show();
+                }
+            }
+
+        ]
     }
     
     StandardActionButton {

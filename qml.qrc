@@ -19,5 +19,8 @@
         <file>ChooseFoodAmount.qml</file>
         <file>TwoColorProgressCircle.qml</file>
         <file>ChooseFood.qml</file>
+        <file>UserProfile.qml</file>
+        <file>StandardFormTextField.qml</file>
+        <file>fitnessFormula.js</file>
     </qresource>
 </RCC>
