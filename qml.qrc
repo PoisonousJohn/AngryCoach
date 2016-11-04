@@ -22,5 +22,8 @@
         <file>UserProfile.qml</file>
         <file>StandardFormTextField.qml</file>
         <file>fitnessFormula.js</file>
+        <file>StaticProgressCircle.qml</file>
+        <file>OverflowableProgressBar.qml</file>
+        <file>OverflowableProgressCircle.qml</file>
     </qresource>
 </RCC>

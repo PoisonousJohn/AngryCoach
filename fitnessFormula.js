@@ -3,9 +3,9 @@
 
 function getNutritionNorm(calories) {
     return {
-        'Carbs' : calories * 0.3 / 9, // 9 kcal/g
-        'Proteins' : calories * 0.45 / 4, // 4 kcal/g
-        'Fats' : calories * 0.25 / 4, // 4 kcal/g
+        'Carbs' : calories * 0.45 / 4, // 4 kcal/g
+        'Proteins' : calories * 0.30 / 4, // 4 kcal/g
+        'Fats' : calories * 0.25 / 9, // 9 kcal/g
     }
 }
 

@@ -19,6 +19,12 @@ Card {
     property double maxFats;
     property double maxProteins;
 
+    function getNutritionDesc(max, curr, unit)
+    {
+        var result = max - curr;
+        return Math.abs(result).toFixed(2) + qsTr(unit) + " " + (result > 0 ? qsTr("left") : qsTr("over"));
+    }
+
     function updateStats()
     {
         var userProfile = dataManager.userProfile;
@@ -134,21 +140,22 @@ Card {
             spacing: dp(50)
             anchors.horizontalCenter: parent.horizontalCenter
             Rectangle {
-                color: Palette.colors["grey"]["300"]
+//                color: Palette.colors["grey"]["300"]
                 radius: width * 0.5
                 width: dp(100)
                 height: dp(100)
-                ProgressCircle {
+                OverflowableProgressCircle {
+                    overflowColor: Palette.colors["red"]["A200"]
                     width: dp(110)
                     height: dp(110)
                     Text {
-                        text: maxTotalCalories - totalCalories + "\nKCAL LEFT"
+                        text: getNutritionDesc(maxTotalCalories, totalCalories, "\nKCAL")
                         anchors.centerIn: parent
                         horizontalAlignment: Text.AlignHCenter
                     }
                     anchors.centerIn: parent
                     indeterminate: false
-                    value: Math.min(totalCalories / maxTotalCalories, 1)
+                    value: totalCalories / maxTotalCalories
                     dashThickness: dp(8)
                 }
             }
@@ -163,23 +170,27 @@ Card {
             anchors.rightMargin: dp(20)
             spacing: dp(20)
 
+
             ProgressBarWithNameAndDesc {
                 width: parameters.itemWidth
                 name: "Carbs"
-                progressBarValue: Math.min(1, carbs / maxCarbs)
-                description: (maxCarbs -  carbs).toFixed(2) + qsTr(" g LEFT")
+                progressBarValue: carbs / maxCarbs
+                description: getNutritionDesc(maxCarbs, carbs, "g")
+                overflowColor: Palette.colors["red"]["A400"]
             }
             ProgressBarWithNameAndDesc {
                 width: parameters.itemWidth
                 name: "Proteins"
-                progressBarValue: Math.min(1, proteins / maxProteins)
-                description: (maxProteins - proteins).toFixed(2) + qsTr(" g LEFT")
+                progressBarValue: proteins / maxProteins
+                description: getNutritionDesc(maxProteins, proteins, "g")
+                overflowColor: Palette.colors["red"]["A400"]
             }
             ProgressBarWithNameAndDesc {
                 width: parameters.itemWidth
                 name: "Fats"
-                progressBarValue: Math.min(1, fats / maxFats)
-                description: (maxFats - fats).toFixed(2) + qsTr(" g LEFT")
+                progressBarValue: fats / maxFats
+                description: getNutritionDesc(maxFats, fats, "g")
+                overflowColor: Palette.colors["red"]["A400"]
             }
 
         }

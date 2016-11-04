@@ -8,6 +8,8 @@ ColumnLayout {
     property alias progressBarValue: progressBar.value
     property alias name: nameLabel.text
     property alias description: descLabel.text
+    property alias color: progressBar.color
+    property alias overflowColor: progressBar.overflowColor
 
     Label {
         id: nameLabel
@@ -15,13 +17,9 @@ ColumnLayout {
 //        text: name
     }
     
-    ProgressBar {
+    OverflowableProgressBar {
         id: progressBar
         implicitWidth: parent.width
-        maximumValue: 1
-        indeterminate: false
-        //                        value: model.value / model.maxValue
-//        value: card[key] / 100
     }
     
     Label {

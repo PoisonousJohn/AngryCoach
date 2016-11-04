@@ -18,14 +18,31 @@ Page {
     }
 
     property double totalWeight;
+    property double foodAmount: {
+        if (amount.text.length === 0)
+        {
+            return 0.00001;
+        }
 
-    onFoodChanged: {
+        var amountNumber = Number.fromLocaleString(Qt.locale(), amount.text);
+        return Math.max(0.000001, amountNumber / food["Weight"]);
+    }
+
+    function updateStats() {
         console.log("Food changed: " + food["Name"]);
         totalWeight = 0;
         for (var i = 0; i < nutritionModel.count; ++i)
         {
-            totalWeight += food["FoodCalories"][nutritionModel.get(i).name];
+            totalWeight += food["FoodCalories"][nutritionModel.get(i).name] * foodAmount;
         }
+    }
+
+    onFoodAmountChanged: {
+        updateStats();
+    }
+
+    onFoodChanged: {
+        updateStats();
     }
 
     StandardActionButton {
@@ -66,7 +83,7 @@ Page {
 
                 Label {
                     Layout.alignment: Qt.AlignCenter
-                    text: food.FoodCalories.TotalCalories.toFixed(2) + qsTr(" kkcal")
+                    text: (food.FoodCalories.TotalCalories * foodAmount).toFixed(2) + qsTr(" kkcal")
                     style: "title"
                 }
 
@@ -75,7 +92,7 @@ Page {
                     Repeater {
                         model: nutritionModel
                         delegate:  Label {
-                            text: qsTr(modelData) + ": " + food["FoodCalories"][modelData].toFixed(2) + qsTr(" g")
+                            text: qsTr(modelData) + ": " + (food["FoodCalories"][modelData] * foodAmount).toFixed(2) + qsTr(" g")
                         }
                     }
 
@@ -108,6 +125,7 @@ Page {
                         id: amount
                         text: "100"
                         implicitWidth: dp(50)
+                        maximumLength: 9
                         validator: DoubleValidator {
                             decimals: 2
                             bottom: 0
@@ -163,7 +181,7 @@ Page {
                                     return 0;
                                 }
 
-                                var result = food["FoodCalories"][modelData] / totalWeight;
+                                var result = food["FoodCalories"][modelData] * foodAmount / totalWeight;
                                 return Math.min(1.0, result);
                             }
 

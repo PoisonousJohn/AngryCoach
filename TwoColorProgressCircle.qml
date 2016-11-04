@@ -12,7 +12,7 @@ Item {
     property color bgColor: Theme.backgroundColor;
 
 
-    ProgressCircle {
+    StaticProgressCircle {
         id: bgCircle
         color: bgColor
         anchors.fill: parent
@@ -22,7 +22,7 @@ Item {
         dashThickness: twoColorProgressCircle.dashThickness
     }
 
-    ProgressCircle {
+    StaticProgressCircle {
         id: mainCircle
         color: mainColor
         anchors.fill: parent

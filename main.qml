@@ -13,7 +13,7 @@ import Material 0.3
   * 6. Search by food name
   * 7. Field validation on adding food -- Done
   * 8. Field validation on adding log -- Done
-  * 9. ProgressCircle overflow
+  * 9. ProgressCircle overflow -- Done
   * 10. Food categories
   * 11. Separate log by breakfast/lunch/dinner/snack
   * 12. Localization
