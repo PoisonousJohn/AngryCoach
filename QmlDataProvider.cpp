@@ -171,7 +171,12 @@ QString QmlDataProvider::getStringFromFloat(float value)
 QVariantList QmlDataProvider::getFood()
 {
     QVariantList list;
-    for (auto& value : _dataManager->getFood()->getHash())
+    auto food = _dataManager->getFood();
+    if (food == nullptr)
+    {
+        return list;
+    }
+    for (auto& value : food->getHash())
     {
         list.append(value);
     }

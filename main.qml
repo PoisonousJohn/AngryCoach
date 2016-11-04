@@ -17,6 +17,7 @@ import Material 0.3
   * 10. Food categories
   * 11. Separate log by breakfast/lunch/dinner/snack
   * 12. Localization
+  * 13. Custom servings
   */
 
 
@@ -24,7 +25,6 @@ ApplicationWindow {
     UserProfile {
         id: userProfile
     }
-//    MainPage { id: mainPage }
     id: window
     theme.primaryColor: "indigo"
     initialPage: MainPage {}

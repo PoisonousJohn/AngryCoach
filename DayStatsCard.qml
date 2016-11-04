@@ -142,7 +142,7 @@ Card {
                     width: dp(110)
                     height: dp(110)
                     Text {
-                        text: totalCalories + "\nKCAL Total"
+                        text: maxTotalCalories - totalCalories + "\nKCAL LEFT"
                         anchors.centerIn: parent
                         horizontalAlignment: Text.AlignHCenter
                     }
@@ -167,19 +167,19 @@ Card {
                 width: parameters.itemWidth
                 name: "Carbs"
                 progressBarValue: Math.min(1, carbs / maxCarbs)
-                description: carbs.toFixed(2) + qsTr(" g")
+                description: (maxCarbs -  carbs).toFixed(2) + qsTr(" g LEFT")
             }
             ProgressBarWithNameAndDesc {
                 width: parameters.itemWidth
                 name: "Proteins"
                 progressBarValue: Math.min(1, proteins / maxProteins)
-                description: proteins.toFixed(2) + qsTr(" g")
+                description: (maxProteins - proteins).toFixed(2) + qsTr(" g LEFT")
             }
             ProgressBarWithNameAndDesc {
                 width: parameters.itemWidth
                 name: "Fats"
                 progressBarValue: Math.min(1, fats / maxFats)
-                description: fats.toFixed(2) + qsTr(" g")
+                description: (maxFats - fats).toFixed(2) + qsTr(" g LEFT")
             }
 
         }
