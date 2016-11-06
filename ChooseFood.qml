@@ -68,6 +68,7 @@ SearchList {
     StandardActionButton {
         AwesomeIcon {
             anchors.centerIn: parent
+            color: Palette.colors.white["500"]
             name: "plus"
         }
         

@@ -5,7 +5,7 @@ import Material.ListItems 0.1
 import Material.Extras 0.1
 import "formHelper.js" as FormHelper
 
-Page {
+ScrollablePage {
     property bool isEditing: foodId.length > 0
     property string foodId;
     property var formValues: isEditing ? dataManager.getFoodValuesForForm(foodId) : null
@@ -57,78 +57,66 @@ Page {
         decimals: 2
     }
 
-    data: Flickable {
-        contentHeight: formLayout.implicitHeight
-        contentWidth: parent.width
+    scrollableContent:  ColumnLayout {
+        id: formLayout
+        anchors.topMargin: dp(10)
+        spacing: dp(10)
         anchors {
             top: parent.top
             left: parent.left
             right: parent.right
-            bottom: parent.bottom
         }
 
-        ColumnLayout {
-            id: formLayout
-            anchors.topMargin: dp(10)
-            spacing: dp(10)
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-            }
-
-            StandardFormTextField {
-                id: name
-                label: qsTr("Name")
-                value: formValues !== null ? formValues["Name"] : ""
-            }
-
-            StandardFormTextField {
-                id: totalCalories
-                label: qsTr("Total Calories")
-                validator: doubleValidator
-                suffixText: qsTr("kcal")
-                value: formValues !== null ? formValues["TotalCalories"] : ""
-                inputHint: Qt.ImhFormattedNumbersOnly
-            }
-
-            StandardFormTextField {
-                id: carbs
-                label: qsTr("Carbs")
-                value: formValues !== null ? formValues["Carbs"] : ""
-                validator: doubleValidator
-                suffixText: qsTr("g")
-                inputHint: Qt.ImhFormattedNumbersOnly
-            }
-
-            StandardFormTextField {
-                id: proteins
-                label: qsTr("Proteins")
-                value: formValues !== null ? formValues["Proteins"] : ""
-                validator: doubleValidator
-                suffixText: qsTr("g")
-                inputHint: Qt.ImhFormattedNumbersOnly
-            }
-
-            StandardFormTextField {
-                id: fats
-                label: qsTr("Fats")
-                value: formValues !== null ? formValues["Fats"] : ""
-                validator: doubleValidator
-                suffixText: qsTr("g")
-                inputHint: Qt.ImhFormattedNumbersOnly
-            }
-
-            StandardFormTextField {
-                id: weight
-                label: qsTr("Weight")
-                value: formValues !== null ? formValues["Weight"] : ""
-                validator: doubleValidator
-                suffixText: qsTr("g")
-                inputHint: Qt.ImhFormattedNumbersOnly
-            }
-
+        StandardFormTextField {
+            id: name
+            label: qsTr("Name")
+            value: formValues !== null ? formValues["Name"] : ""
         }
+
+        StandardFormTextField {
+            id: totalCalories
+            label: qsTr("Total Calories")
+            validator: doubleValidator
+            suffixText: qsTr("kcal")
+            value: formValues !== null ? formValues["TotalCalories"] : ""
+            inputHint: Qt.ImhFormattedNumbersOnly
+        }
+
+        StandardFormTextField {
+            id: carbs
+            label: qsTr("Carbs")
+            value: formValues !== null ? formValues["Carbs"] : ""
+            validator: doubleValidator
+            suffixText: qsTr("g")
+            inputHint: Qt.ImhFormattedNumbersOnly
+        }
+
+        StandardFormTextField {
+            id: proteins
+            label: qsTr("Proteins")
+            value: formValues !== null ? formValues["Proteins"] : ""
+            validator: doubleValidator
+            suffixText: qsTr("g")
+            inputHint: Qt.ImhFormattedNumbersOnly
+        }
+
+        StandardFormTextField {
+            id: fats
+            label: qsTr("Fats")
+            value: formValues !== null ? formValues["Fats"] : ""
+            validator: doubleValidator
+            suffixText: qsTr("g")
+            inputHint: Qt.ImhFormattedNumbersOnly
+        }
+
+        StandardFormTextField {
+            id: weight
+            label: qsTr("Weight")
+            value: formValues !== null ? formValues["Weight"] : ""
+            validator: doubleValidator
+            suffixText: qsTr("g")
+            inputHint: Qt.ImhFormattedNumbersOnly
+        }
+
     }
-
 }

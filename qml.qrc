@@ -26,5 +26,6 @@
         <file>OverflowableProgressBar.qml</file>
         <file>OverflowableProgressCircle.qml</file>
         <file>formHelper.js</file>
+        <file>ScrollablePage.qml</file>
     </qresource>
 </RCC>

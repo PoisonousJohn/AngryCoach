@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.1
 import Material 0.2
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
 
-Page {
+ScrollablePage {
 
     AddFood {
         id: addFood
@@ -24,39 +24,38 @@ Page {
         id: searchFood
     }
 
+
+//    scrollWith: parent.width
+//    scrollHeight: column.implicitHeight
+
     id: mainPage
     title: "Application Name"
-    data: Item {
-        anchors.fill: parent
-
-        ColumnLayout {
-//            anchors.fill: parent
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-
-            DayStatsCard {
-            }
-
-            FoodDayLog {
-                id: dayLog
-                day: dataManager.selectedDate
-            }
+    scrollableContent: ColumnLayout {
+        id: column
+        anchors {
+            left: parent.left
+            right: parent.right
         }
 
-
-        StandardActionButton {
-            onClicked: {
-                pageStack.push(searchFood)
-            }
-
-            AwesomeIcon {
-                name: "plus"
-                anchors.centerIn: parent
-            }
+        DayStatsCard {
         }
 
+        FoodDayLog {
+            id: dayLog
+            day: dataManager.selectedDate
+        }
+    }
+
+    StandardActionButton {
+        onClicked: {
+            pageStack.push(searchFood)
+        }
+
+        AwesomeIcon {
+            color: Palette.colors.white["500"]
+            name: "plus"
+            anchors.centerIn: parent
+        }
     }
 
 }
