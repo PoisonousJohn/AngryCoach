@@ -19,12 +19,12 @@ Page {
 
     property double totalWeight;
     property double foodAmount: {
-        if (amount.text.length === 0)
+        if (amount.displayText.length === 0)
         {
             return 0.00001;
         }
 
-        var amountNumber = Number.fromLocaleString(Qt.locale(), amount.text);
+        var amountNumber = Number.fromLocaleString(Qt.locale(), amount.displayText);
         return Math.max(0.000001, amountNumber / food["Weight"]);
     }
 
@@ -45,25 +45,11 @@ Page {
         updateStats();
     }
 
-    StandardActionButton {
-        enabled: Number.fromLocaleString(Qt.locale(), amount.text) > 0
-        backgroundColor: enabled ? Palette.colors["green"]["A700"] : Palette.colors["grey"]["500"]
-        onClicked: {
-            confirmed(Number.fromLocaleString(Qt.locale(), amount.text));
-            pageStack.pop();
-        }
-
-        AwesomeIcon {
-            anchors.centerIn: parent
-            name: "check"
-        }
-
-    }
 
     title: qsTr("How much food?")
 
     ColumnLayout {
-        spacing: dp(20)
+        spacing: dp(10)
         anchors {
             left: parent.left
             right: parent.right
@@ -126,6 +112,7 @@ Page {
                         text: "100"
                         implicitWidth: dp(50)
                         maximumLength: 9
+                        inputMethodHints: Qt.ImhFormattedNumbersOnly
                         validator: DoubleValidator {
                             decimals: 2
                             bottom: 0
@@ -182,6 +169,10 @@ Page {
                                 }
 
                                 var result = food["FoodCalories"][modelData] * foodAmount / totalWeight;
+                                console.log("final percent: " + result);
+                                console.log("foodAmount : " + foodAmount);
+                                console.log("total weight: " + totalWeight);
+                                console.log("modelData: " + food["FoodCalories"][modelData] + " (" + modelData + ")");
                                 return Math.min(1.0, result);
                             }
 
@@ -191,7 +182,9 @@ Page {
                             value: percent
                             Label {
                                 text: {
-                                    return percent.toFixed(2) * 100 + "%"
+                                    var result = (percent * 100).toFixed(2);
+                                    console.log("display percent: " + result)
+                                    return result + "%"
                                 }
                                 style: "headline"
                                 anchors.centerIn: parent
@@ -209,6 +202,30 @@ Page {
 
             }
         }
+    }
+
+    StandardActionButton {
+        anchors {
+            right: parent.right
+            top: parent.top
+            topMargin: dp(100)
+            rightMargin: dp(10)
+            verticalCenter: undefined
+            horizontalCenter: undefined
+        }
+
+        enabled: Number.fromLocaleString(Qt.locale(), amount.displayText) > 0
+        backgroundColor: enabled ? Palette.colors["green"]["A700"] : Palette.colors["grey"]["500"]
+        onClicked: {
+            confirmed(Number.fromLocaleString(Qt.locale(), amount.displayText));
+            pageStack.pop();
+        }
+
+        AwesomeIcon {
+            anchors.centerIn: parent
+            name: "check"
+        }
+
     }
 
 

@@ -4,6 +4,6 @@ ActionButton {
     id: standardActionButton
     anchors.horizontalCenter: parent.right
     anchors.verticalCenter: parent.bottom
-    anchors.horizontalCenterOffset: dp(-height)
-    anchors.verticalCenterOffset: dp(-width)
+    anchors.horizontalCenterOffset: -width
+    anchors.verticalCenterOffset: -height
 }

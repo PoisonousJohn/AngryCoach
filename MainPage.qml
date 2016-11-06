@@ -46,11 +46,7 @@ Page {
         }
 
 
-        ActionButton {
-            anchors.horizontalCenter: parent.right
-            anchors.verticalCenter: parent.bottom
-            anchors.horizontalCenterOffset: dp(-width)
-            anchors.verticalCenterOffset: dp(-height)
+        StandardActionButton {
             onClicked: {
                 pageStack.push(searchFood)
             }

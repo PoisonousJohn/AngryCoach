@@ -3,105 +3,131 @@ import QtQuick.Layouts 1.1
 import Material 0.3
 import Material.ListItems 0.1
 import Material.Extras 0.1
+import "formHelper.js" as FormHelper
 
 Page {
     property bool isEditing: foodId.length > 0
     property string foodId;
+    property var formValues: isEditing ? dataManager.getFoodValuesForForm(foodId) : null
+
+    function getFormData() {
+        return {
+            "Name": name.value,
+            "TotalCalories": totalCalories.value,
+            "Carbs": carbs.value,
+            "Proteins": proteins.value,
+            "Fats": fats.value,
+            "Weight": weight.value,
+        };
+    }
 
     title: isEditing ? qsTr("Edit food") : qsTr("Add food");
+       actions: [
+           Action {
+               name: "Done"
+               iconName: "action/done"
+                enabled: {
+                    return  FormHelper.notEmpty([name]) &&
+                            FormHelper.numberGreaterThanZero(
+                                [totalCalories,
+                                carbs,
+                                fats,
+                                proteins,
+                                weight]
+                            )
+                }
+               onTriggered:  {
+                    if (isEditing)
+                    {
+                        dataManager.editFood(foodId, getFormData());
+                    }
+                    else
+                    {
+                        dataManager.addFood(getFormData());
+                    }
+
+                    pageStack.pop()
+               }
+           }
+       ]
+
     DoubleValidator {
         id: doubleValidator
         bottom: 0.1
         decimals: 2
-//        notation: DoubleValidator.StandardNotation
     }
 
-    onGoBack: form.clear();
-
-    ListModel {
-        id: fieldsModel
-        Component.onCompleted: {
-            fieldsModel.append(
-                {
-                    fieldName: "Name",
-                    name: qsTr("Title"),
-                    placeholder: qsTr("required")
-                }
-            );
-            fieldsModel.append(
-                {
-                    fieldName: "TotalCalories",
-                    name: qsTr("Total calories"),
-                    placeholder: qsTr("required"),
-                    validator: doubleValidator,
-                }
-            );
-            fieldsModel.append(
-                {
-                    fieldName: "Carbs",
-                    name: qsTr("Carbs"),
-                    validator: doubleValidator,
-                    placeholder: qsTr("required")
-                }
-            );
-            fieldsModel.append(
-                {
-                    fieldName: "Proteins",
-                    name: qsTr("Proteins"),
-                    validator: doubleValidator,
-                    placeholder: qsTr("required")
-                }
-            );
-            fieldsModel.append(
-                {
-                    fieldName: "Fats",
-                    name: qsTr("Fats"),
-                    validator: doubleValidator,
-                    placeholder: qsTr("required")
-                }
-            );
-            fieldsModel.append(
-                {
-                    fieldName: "Weight",
-                    name: qsTr("Weight"),
-                    postfix: qsTr("g"),
-                    validator: doubleValidator,
-                    placeholder: qsTr("required")
-                }
-            );
-        }
-    }
-
-    data: Item {
-        anchors.fill: parent
-        TextForm {
-            id: form
-            model: fieldsModel
-            valuesModel: {
-                console.log("values model changed");
-                return isEditing ? dataManager.getFoodValuesForForm(foodId) : undefined;
-            }
+    data: Flickable {
+        contentHeight: formLayout.implicitHeight
+        contentWidth: parent.width
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
         }
 
-        StandardActionButton {
-            backgroundColor: isEditing ? Palette.colors["green"]["A700"] : Theme.accentColor
-            onClicked: {
-                if (isEditing)
-                {
-                    dataManager.editFood(foodId, form.formData());
-                }
-                else
-                {
-                    dataManager.addFood(form.formData());
-                }
-
-                pageStack.pop()
+        ColumnLayout {
+            id: formLayout
+            anchors.topMargin: dp(10)
+            spacing: dp(10)
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
             }
 
-            AwesomeIcon {
-                anchors.centerIn: parent
-                name: isEditing ? "check" : "plus"
+            StandardFormTextField {
+                id: name
+                label: qsTr("Name")
+                value: formValues !== null ? formValues["Name"] : ""
             }
+
+            StandardFormTextField {
+                id: totalCalories
+                label: qsTr("Total Calories")
+                validator: doubleValidator
+                suffixText: qsTr("kcal")
+                value: formValues !== null ? formValues["TotalCalories"] : ""
+                inputHint: Qt.ImhFormattedNumbersOnly
+            }
+
+            StandardFormTextField {
+                id: carbs
+                label: qsTr("Carbs")
+                value: formValues !== null ? formValues["Carbs"] : ""
+                validator: doubleValidator
+                suffixText: qsTr("g")
+                inputHint: Qt.ImhFormattedNumbersOnly
+            }
+
+            StandardFormTextField {
+                id: proteins
+                label: qsTr("Proteins")
+                value: formValues !== null ? formValues["Proteins"] : ""
+                validator: doubleValidator
+                suffixText: qsTr("g")
+                inputHint: Qt.ImhFormattedNumbersOnly
+            }
+
+            StandardFormTextField {
+                id: fats
+                label: qsTr("Fats")
+                value: formValues !== null ? formValues["Fats"] : ""
+                validator: doubleValidator
+                suffixText: qsTr("g")
+                inputHint: Qt.ImhFormattedNumbersOnly
+            }
+
+            StandardFormTextField {
+                id: weight
+                label: qsTr("Weight")
+                value: formValues !== null ? formValues["Weight"] : ""
+                validator: doubleValidator
+                suffixText: qsTr("g")
+                inputHint: Qt.ImhFormattedNumbersOnly
+            }
+
         }
     }
 

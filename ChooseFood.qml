@@ -72,6 +72,7 @@ SearchList {
         }
         
         onClicked: {
+            addFood.foodId = ""
             pageStack.push(addFood)
         }
     }

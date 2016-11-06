@@ -5,11 +5,13 @@ import Material.ListItems 0.1
 
 Standard {
 
-    property alias label: formLabel.text
+    property alias label: textField.placeholderText
     property alias value: textField.text
+    property alias displayValue: textField.displayText
     property alias validator: textField.validator
     property alias helperText: textField.helperText
     property alias suffixText: suffix.text
+    property alias inputHint: textField.inputMethodHints
 
     RowLayout {
         anchors {
@@ -19,16 +21,16 @@ Standard {
             right: parent.right
         }
         
-        Label {
-            id: formLabel
-            style: "body2"
-            Layout.minimumWidth: parent.width * 0.2
-        }
+//        Label {
+//            id: formLabel
+//            style: "body2"
+//            Layout.minimumWidth: parent.width * 0.2
+//        }
         TextField {
             id: textField
+            floatingLabel: true
             height: dp(100)
-            Layout.preferredWidth: 0.8 * parent.width - suffix.width - (suffix.visible ? parent.anchors.rightMargin : 0)
-            placeholderText: qsTr("required")
+            Layout.preferredWidth: parent.width - (suffix.visible ? suffix.width + parent.anchors.rightMargin : parent.anchors.rightMargin * 0.5)
             Layout.alignment: Qt.AlignRight
         }
         Label {
@@ -36,6 +38,10 @@ Standard {
             visible: text.length > 0
         }
         
+    }
+
+    onClicked: {
+        textField.focus = true
     }
     
 }

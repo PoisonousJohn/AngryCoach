@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.0
 import Material 0.3
 import Material.ListItems 0.1
 import Fitness 0.1
+import "formHelper.js" as FormHelper
 
 Page {
     id: userProfilePage
@@ -11,34 +12,51 @@ Page {
     property bool firstTimeLaunch: userProfile["Weight"] === 0
     signal updated();
 
-    StandardActionButton {
-        enabled: {
-            var locale = Qt.locale();
-            var weightNumber = Number.fromLocaleString(locale, weight.value);
-            var heightNumber = Number.fromLocaleString(locale, height.value);
-            var ageNumber = parseInt(age.value);
+    actions: [
+        Action {
+            iconName: "action/done"
+            enabled: {
+                return FormHelper.numberGreaterThanZero([weight, height, age]);
+            }
 
-            return weightNumber > 0 && heightNumber > 0 && ageNumber > 0;
+            onTriggered: {
+                var map = {};
+                var locale = Qt.locale();
+                map["Weight"] = Number.fromLocaleString(locale, weight.value);
+                map["Height"] = Number.fromLocaleString(locale, height.value);
+                map["Age"] = parseInt(age.value);
+                map["Sex"] = sexMenu.selectedIndex;
+                dataManager.updateUserProfile(map);
+                updated();
+                pageStack.pop()
+            }
         }
 
-        onClicked: {
-            var map = {};
-            var locale = Qt.locale();
-            map["Weight"] = Number.fromLocaleString(locale, weight.value);
-            map["Height"] = Number.fromLocaleString(locale, height.value);
-            map["Age"] = parseInt(age.value);
-            map["Sex"] = sexMenu.selectedIndex;
-            dataManager.updateUserProfile(map);
-            updated();
-            pageStack.pop()
-        }
+    ]
 
-        backgroundColor: enabled ? Palette.colors["green"]["A700"] : Palette.colors["grey"]["500"]
-        AwesomeIcon {
-            name: "check"
-            anchors.centerIn: parent
-        }
-    }
+//    StandardActionButton {
+//        enabled: {
+//            return FormHelper.numberGreaterThanZero([weight, height, age]);
+//        }
+
+//        onClicked: {
+//            var map = {};
+//            var locale = Qt.locale();
+//            map["Weight"] = Number.fromLocaleString(locale, weight.value);
+//            map["Height"] = Number.fromLocaleString(locale, height.value);
+//            map["Age"] = parseInt(age.value);
+//            map["Sex"] = sexMenu.selectedIndex;
+//            dataManager.updateUserProfile(map);
+//            updated();
+//            pageStack.pop()
+//        }
+
+//        backgroundColor: enabled ? Palette.colors["green"]["A700"] : Palette.colors["grey"]["500"]
+//        AwesomeIcon {
+//            name: "check"
+//            anchors.centerIn: parent
+//        }
+//    }
 
     ColumnLayout {
         spacing: 0
@@ -98,6 +116,7 @@ Page {
                     validator: doubleValidator
                     suffixText: qsTr("kg")
                     value: !firstTimeLaunch ? userProfile["Weight"] : ""
+                    inputHint: Qt.ImhFormattedNumbersOnly
                 }
 
                 StandardFormTextField {
@@ -106,12 +125,14 @@ Page {
                     validator: doubleValidator
                     suffixText: qsTr("cm")
                     value: !firstTimeLaunch ? userProfile["Height"] : ""
+                    inputHint: Qt.ImhFormattedNumbersOnly
                 }
 
                 StandardFormTextField {
                     id: age
                     label: qsTr("Age")
                     value: !firstTimeLaunch ? userProfile["Age"] : ""
+                    inputHint: Qt.ImhFormattedNumbersOnly
                     validator: IntValidator{}
                 }
 

@@ -25,5 +25,6 @@
         <file>StaticProgressCircle.qml</file>
         <file>OverflowableProgressBar.qml</file>
         <file>OverflowableProgressCircle.qml</file>
+        <file>formHelper.js</file>
     </qresource>
 </RCC>
