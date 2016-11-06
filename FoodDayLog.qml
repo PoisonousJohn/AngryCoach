@@ -43,11 +43,12 @@ Card {
             id: listview
             clip: true
             model: dataManager.getDayLog(dataManager.selectedDate)
+            implicitHeight: contentHeight
             anchors {
                 left: parent.left
                 right: parent.right
             }
-            implicitHeight: dp(100)
+//            implicitHeight: dp(100)
             visible: count > 0
             delegate: Standard {
                 id: listViewDelegate
