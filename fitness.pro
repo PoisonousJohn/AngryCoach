@@ -14,7 +14,9 @@ SOURCES += $$PWD/thirdParty/jenson/src/*.cpp \
     FoodMap.cpp \
     DayLogCache.cpp \
     QmlDataProvider.cpp \
-    FoodAmount.cpp
+    FoodAmount.cpp \
+    FoodRecipe.cpp \
+    RecipeMap.cpp
 SOURCES += main.cpp
 
 RESOURCES += qml.qrc
@@ -43,7 +45,7 @@ HEADERS += \
     FoodMap.h \
     DayLogCache.h \
     QmlDataProvider.h \
-    FoodAmount.h
+    FoodAmount.h \
+    FoodRecipe.h \
+    RecipeMap.h
 
-DISTFILES += \
-    TwoColorProgressCircle.qml

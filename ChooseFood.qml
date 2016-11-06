@@ -6,9 +6,13 @@ import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
 
 SearchList {
     id: searchFood
-    title: qsTr("Choose food")
+    property string mode: "Food"
+    signal add();
+    signal editItem(string itemId);
+    signal deleteItem(string itemId);
+//    title: mode === "Food" ? qsTr("Choose food to add") : qsTr("Choose recipe to add")
     visible: false
-    model: dataManager.food
+//    model: mode === "Food" ? dataManager.food : dataManager.recipes
     defaultModelField: "Name"
     listView {
         delegate: BaseListItem {
@@ -37,12 +41,6 @@ SearchList {
         }
     }
 
-    onItemSelected: {
-        console.log("Adding food to log: " + item["Id"] + " for date " + dayLog.day);
-        chooseFoodAmount.food = item;
-        pageStack.push(chooseFoodAmount);
-    }
-
     BottomActionSheet {
         id: contextMenu
         property string foodId;
@@ -50,15 +48,13 @@ SearchList {
             Action {
                 name: qsTr("Edit")
                 onTriggered: {
-                    addFood.foodId = contextMenu.foodId;
-                    pageStack.push(addFood);
+                    editItem(contextMenu.foodId);
                 }
             },
             Action {
                 name: qsTr("Delete")
                 onTriggered: {
-                    deleteDialog.foodId = contextMenu.foodId;
-                    deleteDialog.show();
+                    deleteItem(contextMenu.foodId)
                 }
             }
 
@@ -73,19 +69,8 @@ SearchList {
         }
         
         onClicked: {
-            addFood.foodId = ""
-            pageStack.push(addFood)
+            add();
         }
     }
 
-    Dialog {
-        property string foodId;
-        onAccepted: {
-            dataManager.removeFood(foodId)
-        }
-
-        id: deleteDialog
-        title: qsTr("Delete item?")
-        text: qsTr("Do you really want to delete this item?")
-    }
 }

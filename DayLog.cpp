@@ -21,3 +21,20 @@ void DayLog::removeFood(int index)
     _EatenFood.removeAt(index);
     emit updated();
 }
+
+void DayLog::addRecipe(const QString &recipeId, float amount)
+{
+    auto foodAmount = new FoodAmount();
+    foodAmount->setAmount(amount);
+    foodAmount->setFoodId(recipeId);
+    auto val = QVariant::fromValue(foodAmount);
+    _EatenRecipes.append(val);
+    emit updated();
+
+}
+
+void DayLog::removeRecipe(int index)
+{
+    _EatenRecipes.removeAt(index);
+    emit updated();
+}

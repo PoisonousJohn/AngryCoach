@@ -12,8 +12,10 @@
 
 class DayLog;
 class Food;
+class FoodRecipe;
 class AppData;
 class FoodMap;
+class RecipeMap;
 
 class DataManager : public QObject
 {
@@ -22,8 +24,11 @@ public:
     explicit DataManager(QObject *parent = 0);
 
     FoodMap* getFood();
+    RecipeMap* getRecipes();
     void addFood(Food* food);
     void removeFood(const QString& foodId);
+    void addRecipe(FoodRecipe* recipe);
+    void removeRecipe(const QString& recipeId);
 
     AppData* getData();
     DayLog* getDayLog(const QDate& date);

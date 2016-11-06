@@ -54,9 +54,10 @@ Card {
             }
 //            implicitHeight: dp(100)
             visible: count > 0
-            delegate: Standard {
+            delegate: FoodAmountRow {
                 id: listViewDelegate
-                property var food: getFood()
+                food: getFood()
+                modelItem: modelData
                 function getFood() {
                     var food = dataManager.getFoodById(modelData["FoodId"]);
                     return food
@@ -66,11 +67,11 @@ Card {
                     deleteDialog.itemIndex = index;
                     deleteDialog.show();
                 }
-                text: food["Name"]
-                valueText:
-                {
-                    modelData["Amount"] + qsTr(" g") + " (" + Math.round(food["FoodCalories"]["TotalCalories"] * (modelData["Amount"] / 100) ) + qsTr(" kcal") + ")"
-                }
+//                text: food["Name"]
+//                valueText:
+//                {
+//                    modelData["Amount"] + qsTr(" g") + " (" + Math.round(food["FoodCalories"]["TotalCalories"] * (modelData["Amount"] / 100) ) + qsTr(" kcal") + ")"
+//                }
             }
         }
 

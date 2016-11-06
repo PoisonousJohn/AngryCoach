@@ -4,6 +4,7 @@
 #include "DataManager.h"
 #include "DayLog.h"
 #include "FoodMap.h"
+#include "RecipeMap.h"
 #include "FoodAmount.h"
 #include "AppData.h"
 
@@ -148,6 +149,20 @@ Food *QmlDataProvider::findFood(const QString &foodId)
     return obj;
 }
 
+FoodRecipe *QmlDataProvider::findRecipe(const QString &recipeId)
+{
+    const auto& hash = _dataManager->getRecipes()->getHash();
+    auto result = hash.find(recipeId);
+    if (result == hash.end())
+    {
+        qDebug() << "Recipe" << recipeId << "not found";
+        return nullptr;
+    }
+
+    auto obj = qvariant_cast<FoodRecipe*>(result.value());
+    return obj;
+}
+
 float QmlDataProvider::getFloat(const QVariant &variant) const
 {
     auto loc = QLocale();
@@ -164,6 +179,21 @@ void QmlDataProvider::mapDataToFood(Food *food, const QVariantMap &data)
     calories->setTotalCalories(getFloat(data["TotalCalories"]));
     food->setFoodCalories(calories);
     food->setWeight(getFloat(data["Weight"]));
+}
+
+void QmlDataProvider::mapDataToRecipe(FoodRecipe *recipe, const QVariantMap &data)
+{
+    recipe->setName(data["Name"].toString());
+    QVariantList list;
+    for (auto& item : data["Food"].toList())
+    {
+        auto amount = new FoodAmount();
+        const auto& map = item.toMap();
+        amount->setFoodId(map["id"].toString());
+        amount->setAmount(map["amount"].toFloat());
+        list.append(QVariant::fromValue(amount));
+    }
+    recipe->setIngredients(list);
 }
 
 QString QmlDataProvider::getStringFromFloat(float value)
@@ -192,4 +222,54 @@ QObject* QmlDataProvider::getFoodById(const QString &foodId)
     auto obj = findFood(foodId);
     QQmlEngine::setObjectOwnership(obj, QQmlEngine::CppOwnership);
     return obj;
+}
+
+void QmlDataProvider::addRecipe(const QVariantMap &data)
+{
+    auto recipe = new FoodRecipe();
+    mapDataToRecipe(recipe, data);
+    _dataManager->addRecipe(recipe);
+    emit recipesChanged();
+}
+
+void QmlDataProvider::editRecipe(const QString &recipeId, const QVariantMap &data)
+{
+    auto food = findRecipe(recipeId);
+    if (food == nullptr)
+    {
+        qDebug() << "Recipe not found for editing" << recipeId;
+        return;
+    }
+
+    mapDataToRecipe(food, data);
+    _dataManager->save();
+    emit recipesChanged();
+}
+
+void QmlDataProvider::removeRecipe(const QString &recipeId)
+{
+    _dataManager->removeRecipe(recipeId);
+    emit recipesChanged();
+    emit dayLogChanged(QDate::currentDate());
+}
+
+QVariantList QmlDataProvider::getRecipes()
+{
+    QVariantList list;
+    auto recipes = _dataManager->getRecipes();
+    if (recipes == nullptr)
+    {
+        return list;
+    }
+    for (auto& value : recipes->getHash())
+    {
+        list.append(value);
+    }
+    return list;
+
+}
+
+QObject *QmlDataProvider::getRecipeById(const QString &recipeId)
+{
+
 }

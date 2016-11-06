@@ -13,8 +13,11 @@ public:
     Q_INVOKABLE DayLog(QObject* parent = 0);
     // list of FoodAmount
     JENSON_PROPERTY_GETSET(QVariantList, EatenFood)
+    JENSON_PROPERTY_GETSET(QVariantList, EatenRecipes)
     void addFood(const QString& foodId, float foodAmount);
     void removeFood(int index);
+    void addRecipe(const QString& recipeId, float amount);
+    void removeRecipe(int index);
 signals:
     void updated();
 };

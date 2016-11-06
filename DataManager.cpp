@@ -26,6 +26,11 @@ FoodMap* DataManager::getFood()
     return _data->Food();
 }
 
+RecipeMap *DataManager::getRecipes()
+{
+    return _data->Recipes();
+}
+
 void DataManager::addFood(Food *food)
 {
    food->setId(QUuid::createUuid().toString());
@@ -37,6 +42,20 @@ void DataManager::addFood(Food *food)
 void DataManager::removeFood(const QString &foodId)
 {
     _data->Food()->remove(foodId);
+    save();
+}
+
+void DataManager::addRecipe(FoodRecipe *recipe)
+{
+   recipe->setId(QUuid::createUuid().toString());
+   qDebug() << "Added recipe with id " << recipe->Id();
+   _data->Recipes()->insert(recipe->Id(), recipe);
+   save();
+}
+
+void DataManager::removeRecipe(const QString &recipeId)
+{
+    _data->Recipes()->remove(recipeId);
     save();
 }
 

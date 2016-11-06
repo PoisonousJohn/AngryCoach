@@ -7,12 +7,14 @@
 #include <QVariant>
 class DataManager;
 class Food;
+class FoodRecipe;
 
 class QmlDataProvider : public QObject
 {
     Q_OBJECT
 public:
     Q_PROPERTY(QVariantList food READ getFood NOTIFY foodChanged)
+    Q_PROPERTY(QVariantList recipes READ getRecipes NOTIFY recipesChanged)
     QmlDataProvider(QObject* parent = 0);
 
     Q_PROPERTY(QDate selectedDate READ getSelectedDate WRITE setSelectedDate NOTIFY selectedDateChanged)
@@ -28,6 +30,13 @@ public:
     QVariantList getFood();
     Q_INVOKABLE QObject* getFoodById(const QString& foodId);
 
+    // recipe
+    Q_INVOKABLE void addRecipe(const QVariantMap& data);
+    Q_INVOKABLE void editRecipe(const QString& recipeId, const QVariantMap& data);
+    Q_INVOKABLE void removeRecipe(const QString& recipeId);
+    QVariantList getRecipes();
+    Q_INVOKABLE QObject* getRecipeById(const QString& recipeId);
+
     // day log
 
     // returns list of Food*
@@ -41,14 +50,17 @@ public:
 
 signals:
     void foodChanged();
+    void recipesChanged();
     void dayLogChanged(const QDate& date);
     void selectedDateChanged();
     void userProfileChanged();
 
 private: // methods
     Food* findFood(const QString& foodId);
+    FoodRecipe* findRecipe(const QString& recipeId);
     float getFloat(const QVariant& variant) const;
     void mapDataToFood(Food* food, const QVariantMap& data);
+    void mapDataToRecipe(FoodRecipe* recipe, const QVariantMap& data);
     QString getStringFromFloat(float value);
 
 private: // members

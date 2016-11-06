@@ -4,6 +4,7 @@
 #include <QObject>
 #include <jenson.h>
 #include "FoodMap.h"
+#include "RecipeMap.h"
 #include "DayLogCache.h"
 
 
@@ -20,6 +21,7 @@ public:
 
     Q_INVOKABLE explicit AppData(QObject* parent = 0);
     QOBJECT_PROPERTY_GETSET(FoodMap, Food)
+    QOBJECT_PROPERTY_GETSET(RecipeMap, Recipes)
     JENSON_PROPERTY_GETSET(float, Weight)
     JENSON_PROPERTY_GETSET(float, Height)
     JENSON_PROPERTY_GETSET(int, Age)

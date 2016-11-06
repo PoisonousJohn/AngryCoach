@@ -29,5 +29,9 @@
         <file>ScrollablePage.qml</file>
         <file>StandardFormDropdown.qml</file>
         <file>FloatingMenuButton.qml</file>
+        <file>TestPage.qml</file>
+        <file>icons/food.svg</file>
+        <file>AddRecipe.qml</file>
+        <file>FoodAmountRow.qml</file>
     </qresource>
 </RCC>
