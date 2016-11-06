@@ -64,7 +64,7 @@ Card {
                 text: food["Name"]
                 valueText:
                 {
-                    modelData["Amount"] + qsTr(" g") + " (" + (food["FoodCalories"]["TotalCalories"] * (modelData["Amount"] / 100) ) + qsTr(" kcal") + ")"
+                    modelData["Amount"] + qsTr(" g") + " (" + Math.round(food["FoodCalories"]["TotalCalories"] * (modelData["Amount"] / 100) ) + qsTr(" kcal") + ")"
                 }
             }
         }

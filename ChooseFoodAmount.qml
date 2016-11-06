@@ -169,10 +169,6 @@ Page {
                                 }
 
                                 var result = food["FoodCalories"][modelData] * foodAmount / totalWeight;
-                                console.log("final percent: " + result);
-                                console.log("foodAmount : " + foodAmount);
-                                console.log("total weight: " + totalWeight);
-                                console.log("modelData: " + food["FoodCalories"][modelData] + " (" + modelData + ")");
                                 return Math.min(1.0, result);
                             }
 
@@ -183,7 +179,6 @@ Page {
                             Label {
                                 text: {
                                     var result = (percent * 100).toFixed(2);
-                                    console.log("display percent: " + result)
                                     return result + "%"
                                 }
                                 style: "headline"

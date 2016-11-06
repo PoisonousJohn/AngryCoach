@@ -128,6 +128,7 @@ void QmlDataProvider::updateUserProfile(const QVariantMap &data)
     appData->setAge(data["Age"].toInt());
     appData->setUserSex(data["Sex"].toInt());
     _dataManager->save();
+    emit userProfileChanged();
 }
 
 Food *QmlDataProvider::findFood(const QString &foodId)
