@@ -27,5 +27,7 @@
         <file>OverflowableProgressCircle.qml</file>
         <file>formHelper.js</file>
         <file>ScrollablePage.qml</file>
+        <file>StandardFormDropdown.qml</file>
+        <file>FloatingMenuButton.qml</file>
     </qresource>
 </RCC>

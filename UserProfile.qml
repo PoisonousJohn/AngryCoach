@@ -8,6 +8,13 @@ import "formHelper.js" as FormHelper
 Page {
     id: userProfilePage
     title: qsTr("User profile")
+    property var massModifierMenu: [
+        qsTr("Normal"),
+        qsTr("Slow weight loss"),
+        qsTr("Medium weight loss"),
+        qsTr("Fast weight loss"),
+    ]
+
     property var userProfile: dataManager.userProfile
     property bool firstTimeLaunch: userProfile["Weight"] === 0
     signal updated();
@@ -26,6 +33,7 @@ Page {
                 map["Height"] = Number.fromLocaleString(locale, height.value);
                 map["Age"] = parseInt(age.value);
                 map["Sex"] = sexMenu.selectedIndex;
+                map["MassModifier"] = massModifier.selectedIndex;
                 dataManager.updateUserProfile(map);
                 updated();
                 pageStack.pop()
@@ -33,30 +41,6 @@ Page {
         }
 
     ]
-
-//    StandardActionButton {
-//        enabled: {
-//            return FormHelper.numberGreaterThanZero([weight, height, age]);
-//        }
-
-//        onClicked: {
-//            var map = {};
-//            var locale = Qt.locale();
-//            map["Weight"] = Number.fromLocaleString(locale, weight.value);
-//            map["Height"] = Number.fromLocaleString(locale, height.value);
-//            map["Age"] = parseInt(age.value);
-//            map["Sex"] = sexMenu.selectedIndex;
-//            dataManager.updateUserProfile(map);
-//            updated();
-//            pageStack.pop()
-//        }
-
-//        backgroundColor: enabled ? Palette.colors["green"]["A700"] : Palette.colors["grey"]["500"]
-//        AwesomeIcon {
-//            name: "check"
-//            anchors.centerIn: parent
-//        }
-//    }
 
     ColumnLayout {
         spacing: 0
@@ -95,9 +79,12 @@ Page {
                 right: parent.right
             }
 
+            height: formLayout.implicitHeight + dp(20)
+
 
             ColumnLayout
             {
+                id: formLayout
                 anchors.top: parent.top
                 anchors.topMargin: dp(10)
                 spacing: dp(10)
@@ -136,34 +123,19 @@ Page {
                     validator: IntValidator{}
                 }
 
-                Standard {
+                StandardFormDropdown {
+                    id: sexMenu
+                    selectedIndex: userProfile["Sex"]
+                    menuModel: ["Male", "Female"]
+                    label: qsTr("Sex")
+                }
 
-    //               action: Item {}
-
-                   RowLayout {
-                       anchors {
-                           left: parent.left
-                           right: parent.right
-                           verticalCenter:  parent.verticalCenter
-                           margins: dp(10)
-                       }
-
-                       Label {
-                           Layout.alignment: Qt.AlignLeft
-                           style: "body2"
-                           text: qsTr("Sex")
-                       }
-
-                       MenuField {
-                           id: sexMenu
-                           Layout.alignment: Qt.AlignRight
-                           Layout.preferredWidth: 0.8 * parent.width
-                           selectedIndex: userProfile["Sex"]
-
-                           model: ["Male", "Female"]
-                       }
-                   }
-               }
+                StandardFormDropdown {
+                    id: massModifier
+                    selectedIndex: userProfile["MassModifier"]
+                    menuModel: massModifierMenu
+                    label: qsTr("Diet plan")
+                }
 
             }
 

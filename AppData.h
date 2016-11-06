@@ -24,6 +24,7 @@ public:
     JENSON_PROPERTY_GETSET(float, Height)
     JENSON_PROPERTY_GETSET(int, Age)
     JENSON_PROPERTY_GETSET(int, UserSex)
+    JENSON_PROPERTY_GETSET(int, MassModifier)
 };
 
 SERIALIZABLE(AppData, Data)

@@ -22,6 +22,10 @@ Card {
 
             listview.model = dataManager.getDayLog(date)
         }
+
+        onSelectedDateChanged: {
+            listview.model = dataManager.getDayLog(dataManager.selectedDate)
+        }
     }
 
     ColumnLayout {
@@ -39,11 +43,11 @@ Card {
             text: qsTr("Eaten today")
         }
 
-        ListView {
+        Repeater {
             id: listview
             clip: true
-            model: dataManager.getDayLog(dataManager.selectedDate)
-            implicitHeight: contentHeight
+//            model: 0
+//            implicitHeight: contentHeight
             anchors {
                 left: parent.left
                 right: parent.right

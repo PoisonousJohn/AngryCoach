@@ -15,7 +15,7 @@ public:
     Q_PROPERTY(QVariantList food READ getFood NOTIFY foodChanged)
     QmlDataProvider(QObject* parent = 0);
 
-    Q_PROPERTY(QDate selectedDate READ getSelectedDate NOTIFY selectedDateChanged)
+    Q_PROPERTY(QDate selectedDate READ getSelectedDate WRITE setSelectedDate NOTIFY selectedDateChanged)
     Q_PROPERTY(QVariantMap userProfile READ getUserProfileModel NOTIFY userProfileChanged)
 
     const QDate& getSelectedDate() const;

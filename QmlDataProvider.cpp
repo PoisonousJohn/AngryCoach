@@ -116,6 +116,8 @@ QVariantMap QmlDataProvider::getUserProfileModel()
     map.insert("Height", data->Height());
     map.insert("Age", data->Age());
     map.insert("Sex", data->UserSex());
+    map.insert("MassModifier", data->MassModifier());
+    map.insert("MassModifierFactor", 1.f - data->MassModifier() * 0.1f);
 
     return map;
 }
@@ -127,6 +129,7 @@ void QmlDataProvider::updateUserProfile(const QVariantMap &data)
     appData->setHeight(getFloat(data["Height"]));
     appData->setAge(data["Age"].toInt());
     appData->setUserSex(data["Sex"].toInt());
+    appData->setMassModifier(data["MassModifier"].toInt());
     _dataManager->save();
     emit userProfileChanged();
 }

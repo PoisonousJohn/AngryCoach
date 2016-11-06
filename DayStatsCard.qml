@@ -40,15 +40,17 @@ Card {
                     userProfile["Sex"] === AppData.Male
                                                 ? "Male"
                                                 : "Female"
-        );
+        ) * userProfile["MassModifierFactor"];
+
+        console.log("Mass modifier: " + userProfile["MassModifier"]);
 
         // hardcoded physical activity factor
         maxTotalCalories *= 1.2;
 
         var nutrition = Formula.getNutritionNorm(maxTotalCalories);
-        maxCarbs = nutrition["Carbs"];
-        maxFats = nutrition["Fats"];
-        maxProteins = nutrition["Proteins"];
+        maxCarbs = nutrition["Carbs"] * userProfile["MassModifierFactor"];
+        maxFats = nutrition["Fats"] * userProfile["MassModifierFactor"];
+        maxProteins = nutrition["Proteins"] * userProfile["MassModifierFactor"];
 
 
         for (var i = 0; i < __model.length; ++i)

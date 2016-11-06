@@ -7,6 +7,7 @@ AppData::AppData(QObject *parent)
     , _Age(0)
     , _UserSex(0)
     , _Food(new FoodMap(this))
+    , _MassModifier(0)
 {
 
 }

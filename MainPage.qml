@@ -5,6 +5,37 @@ import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
 
 ScrollablePage {
 
+    actions: [
+        Action {
+            name: qsTr("Choose day")
+            iconName: "action/today"
+            onTriggered: {
+                datePickerPopup.open()
+            }
+        }
+
+    ]
+
+    PopupBase {
+        id: datePickerPopup
+        overlayLayer: "dialogOverlayLayer"
+        overlayColor: Qt.rgba(0, 0, 0, 0.3)
+        anchors.centerIn: parent
+
+        opacity: showing ? 1 : 0
+        visible: opacity > 0
+        DatePicker {
+           id: datePicker
+           Component.onCompleted: dataManager.selectedDate = selectedDate
+           selectedDate: new Date()
+           anchors.centerIn: parent
+           onSelectedDateChanged: {
+               dataManager.selectedDate = selectedDate
+           }
+        }
+    }
+
+
     AddFood {
         id: addFood
         visible: false
@@ -24,10 +55,6 @@ ScrollablePage {
         id: searchFood
     }
 
-
-//    scrollWith: parent.width
-//    scrollHeight: column.implicitHeight
-
     id: mainPage
     title: "Application Name"
     scrollableContent: ColumnLayout {
@@ -46,11 +73,10 @@ ScrollablePage {
         }
     }
 
-    StandardActionButton {
+    FloatingMenuButton {
         onClicked: {
             pageStack.push(searchFood)
         }
-
         AwesomeIcon {
             color: Palette.colors.white["500"]
             name: "plus"
