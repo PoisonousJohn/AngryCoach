@@ -135,6 +135,24 @@ void QmlDataProvider::updateUserProfile(const QVariantMap &data)
     emit userProfileChanged();
 }
 
+QVariantMap QmlDataProvider::getRecipeValuesForForm(const QString &recipeId)
+{
+    QVariantMap map;
+
+    auto recipe = findRecipe(recipeId);
+    if (recipe == nullptr)
+    {
+        return map;
+    }
+
+    map["Id"] = recipe->Id();
+    map["Name"] = recipe->Name();
+    map["Ingredients"] = recipe->Ingredients();
+
+    return map;
+
+}
+
 Food *QmlDataProvider::findFood(const QString &foodId)
 {
     const auto& foodHash = _dataManager->getFood()->getHash();
@@ -185,12 +203,12 @@ void QmlDataProvider::mapDataToRecipe(FoodRecipe *recipe, const QVariantMap &dat
 {
     recipe->setName(data["Name"].toString());
     QVariantList list;
-    for (auto& item : data["Food"].toList())
+    for (auto& item : data["Ingredients"].toList())
     {
         auto amount = new FoodAmount();
-        const auto& map = item.toMap();
-        amount->setFoodId(map["id"].toString());
-        amount->setAmount(map["amount"].toFloat());
+        auto obj = qvariant_cast<QObject*>(item);
+        amount->setFoodId(obj->property("FoodId").toString());
+        amount->setAmount(obj->property("Amount").toFloat());
         list.append(QVariant::fromValue(amount));
     }
     recipe->setIngredients(list);

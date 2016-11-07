@@ -159,7 +159,7 @@ ScrollablePage {
             pageStack.push(chooseRecipeAmount);
         }
         onEditItem: {
-            addRecipe.foodId = itemId;
+            addRecipe.recipeId = itemId;
             pageStack.push(addRecipe);
         }
         onDeleteItem: {

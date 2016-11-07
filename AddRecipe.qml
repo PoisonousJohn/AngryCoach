@@ -14,6 +14,25 @@ Page {
     property bool isEditing: recipeId.length > 0;
     property string recipeId;
     property var ingredients;
+    property var formValues: isEditing ? dataManager.getRecipeValuesForForm(recipeId) : null
+    onFormValuesChanged: {
+        if (ingredients)
+        {
+            ingredients.clear();
+        }
+        else
+        {
+            ingredients = createModel(addRecipePage);
+        }
+
+
+        var valueIngredients = formValues["Ingredients"];
+        for (var i = 0; i < valueIngredients.length; ++i)
+        {
+            ingredients.append(valueIngredients[i]);
+        }
+
+    }
 
     onAddIngredient: {
         pageStack.push(chooseFoodForRecipe)
@@ -40,8 +59,10 @@ Page {
                 console.log("new model: " + addRecipePage.ingredients);
             }
 
+            console.log("Food amount for recipe: " + JSON.stringify(food) + " " + amount);
+
             addRecipePage.ingredients.append({
-                                 "Id": food["Id"],
+                                 "FoodId": food["Id"],
                                  "Amount": amount
                              });
             pageStack.pop();
@@ -77,7 +98,25 @@ Page {
                         addRecipePage.ingredients.count > 0
             }
             onTriggered: {
-                console.log("TODO: on done adding recipe")
+                var data = {};
+                data["Name"] = title.displayText;
+                var list = [];
+                for (var i = 0; i < addRecipePage.ingredients.count; ++i) {
+                    var ingredient = addRecipePage.ingredients.get(i);
+                    console.log("Added ingredient " + JSON.stringify(ingredient));
+                    list.push(ingredient);
+                }
+
+                data["Ingredients"] = list;
+                if (isEditing) {
+                    dataManager.editRecipe(recipeId, data)
+                } else {
+                    dataManager.addRecipe(data);
+                }
+
+
+
+                pageStack.pop();
             }
         }
 
@@ -101,6 +140,7 @@ Page {
             TextField {
                 id: title
                 focus: !isEditing
+                text: formValues ? formValues["Name"] : ""
                 anchors {
                     centerIn: parent
                 }
@@ -143,7 +183,10 @@ Page {
                     model: ingredients
                     delegate: FoodAmountRow {
                         modelItem: repeater.model.get(index);
-                        food: modelItem ? dataManager.getFoodById(modelItem["Id"]) : undefined
+                        food: {
+                            console.log("recipe model item: " + JSON.stringify(modelItem))
+                            modelItem ? dataManager.getFoodById(modelItem["FoodId"]) : undefined
+                        }
                         onPressAndHold: {
                             deleteIngredientDialog.itemIndex = index;
                             deleteIngredientDialog.show();

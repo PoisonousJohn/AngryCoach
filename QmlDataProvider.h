@@ -46,7 +46,7 @@ public:
     Q_INVOKABLE QVariantMap getFoodValuesForForm(const QString& foodId);
     Q_INVOKABLE QVariantMap getUserProfileModel();
     Q_INVOKABLE void updateUserProfile(const QVariantMap& data);
-
+    Q_INVOKABLE QVariantMap getRecipeValuesForForm(const QString& recipeId);
 
 signals:
     void foodChanged();
