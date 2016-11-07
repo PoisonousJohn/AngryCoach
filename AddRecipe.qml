@@ -25,6 +25,10 @@ Page {
             ingredients = createModel(addRecipePage);
         }
 
+        if (!formValues)
+        {
+            return;
+        }
 
         var valueIngredients = formValues["Ingredients"];
         for (var i = 0; i < valueIngredients.length; ++i)
@@ -150,7 +154,7 @@ Page {
                 width: parent.width * 0.9
 
                 floatingLabel: true
-                font.pointSize: dp(20)
+                font.pointSize: 20
                 placeholderText: qsTr("Title")
             }
 

@@ -33,5 +33,7 @@
         <file>icons/food.svg</file>
         <file>AddRecipe.qml</file>
         <file>FoodAmountRow.qml</file>
+        <file>ChooseRecipeAmount.qml</file>
+        <file>UIHelpers.js</file>
     </qresource>
 </RCC>

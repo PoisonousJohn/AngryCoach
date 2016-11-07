@@ -4,11 +4,12 @@ import Material 0.3
 import Material.ListItems 0.1
 import "fitnessFormula.js" as Formula
 import Fitness 0.1
+import "UIHelpers.js" as UIHelpers
 
 Card {
 
     id: card
-    property var __model: dataManager.getDayLog(dataManager.selectedDate);
+    property var __model;
     property double totalCalories;
     property double carbs;
     property double fats;
@@ -27,6 +28,11 @@ Card {
 
     function updateStats()
     {
+        if (!__model)
+        {
+            return;
+        }
+
         var userProfile = dataManager.userProfile;
         totalCalories = 0;
         carbs = 0;
@@ -42,8 +48,6 @@ Card {
                                                 : "Female"
         ) * userProfile["MassModifierFactor"];
 
-        console.log("Mass modifier: " + userProfile["MassModifier"]);
-
         // hardcoded physical activity factor
         maxTotalCalories *= 1.2;
 
@@ -52,16 +56,28 @@ Card {
         maxFats = nutrition["Fats"] * userProfile["MassModifierFactor"];
         maxProteins = nutrition["Proteins"] * userProfile["MassModifierFactor"];
 
-
-        for (var i = 0; i < __model.length; ++i)
+        for (var i = 0; i < __model["Food"].length; ++i)
         {
-            var foodId = __model[i]["FoodId"];
+            var foodId = __model["Food"][i]["FoodId"];
             var food = dataManager.getFoodById(foodId);
-            var amountFactor = __model[i]["Amount"] / 100;
+            var amountFactor = __model["Food"][i]["Amount"] / 100;
             totalCalories += food["FoodCalories"]["TotalCalories"] * amountFactor;
             carbs += food["FoodCalories"]["Carbs"] * amountFactor;
             fats += food["FoodCalories"]["Fats"] * amountFactor;
             proteins += food["FoodCalories"]["Proteins"] * amountFactor;
+        }
+
+        for (i = 0; i < __model["Recipes"].length; ++i)
+        {
+            var recipeId = __model["Recipes"][i]["FoodId"];
+            var recipe = dataManager.getRecipeById(recipeId);
+
+            var stats = UIHelpers.getRecipeStats(recipe, dataManager, __model["Recipes"][i]["Amount"]);
+
+            totalCalories += stats["calories"]
+            carbs += stats["nutritions"]["Carbs"];
+            fats += stats["nutritions"]["Fats"];
+            proteins += stats["nutritions"]["Proteins"];
         }
     }
 
@@ -72,6 +88,12 @@ Card {
         }
 
         onUserProfileChanged: {
+            updateStats();
+        }
+
+        onSelectedDateChanged: {
+            __model = null;
+            __model = dataManager.getDayLog(dataManager.selectedDate);
             updateStats();
         }
 

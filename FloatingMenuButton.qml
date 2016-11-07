@@ -4,7 +4,7 @@ import Material 0.2
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
 
 Item {
-    property double radius: 100
+    property double radius: dp(80)
     property string buttonsState: expanded ? "Shown" :  "Hidden"
     property bool expanded: false;
     property alias delegate: repeater.delegate

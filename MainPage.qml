@@ -112,12 +112,12 @@ ScrollablePage {
         }
     }
 
-    ChooseFoodAmount {
+    ChooseRecipeAmount {
         id: chooseRecipeAmount
         visible: false
         onConfirmed: {
             console.log("adding recipe confirmed "  + amount)
-            dataManager.addRecipeToLog(dayLog.day, food["Id"], amount);
+            dataManager.addRecipeToLog(dayLog.day, chooseRecipeAmount.recipe["Id"], amount);
             pageStack.pop();
         }
     }
@@ -155,7 +155,7 @@ ScrollablePage {
 
         onItemSelected: {
             console.log("Adding recipe to log: " + item["Id"] + " for date " + dayLog.day);
-            chooseRecipeAmount.food = item;
+            chooseRecipeAmount.recipe = item;
             pageStack.push(chooseRecipeAmount);
         }
         onEditItem: {

@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
 import Material 0.3
 import Material.ListItems 0.1
+import "UIHelpers.js" as UIHelpers
 
 Card {
     property date day: dataManager.selectedDate
@@ -12,19 +13,23 @@ Card {
         right: parent.right
     }
 
+    function updateDayModel() {
+        var log = dataManager.getDayLog(dataManager.selectedDate);
+        listview.model = null;
+        recipesList.model = null;
+        listview.model = log["Food"];
+        recipesList.model = log["Recipes"]
+    }
+
     Connections {
         target: dataManager
         onDayLogChanged: {
-            if (date.getTime() !== dataManager.selectedDate.getTime())
-            {
-                return;
-            }
-
-            listview.model = dataManager.getDayLog(date)
+            console.log("Day log changed!!!!!!");
+            updateDayModel();
         }
 
         onSelectedDateChanged: {
-            listview.model = dataManager.getDayLog(dataManager.selectedDate)
+            updateDayModel();
         }
     }
 
@@ -46,16 +51,12 @@ Card {
         Repeater {
             id: listview
             clip: true
-//            model: 0
-//            implicitHeight: contentHeight
             anchors {
                 left: parent.left
                 right: parent.right
             }
-//            implicitHeight: dp(100)
             visible: count > 0
             delegate: FoodAmountRow {
-                id: listViewDelegate
                 food: getFood()
                 modelItem: modelData
                 function getFood() {
@@ -67,27 +68,57 @@ Card {
                     deleteDialog.itemIndex = index;
                     deleteDialog.show();
                 }
-//                text: food["Name"]
-//                valueText:
-//                {
-//                    modelData["Amount"] + qsTr(" g") + " (" + Math.round(food["FoodCalories"]["TotalCalories"] * (modelData["Amount"] / 100) ) + qsTr(" kcal") + ")"
-//                }
+            }
+        }
+
+        Repeater {
+            id: recipesList
+            clip: true
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+            visible: count > 0
+            delegate: FoodAmountRow {
+                property var stats: UIHelpers.getRecipeStats(food, dataManager, modelData["Amount"]);
+                food: dataManager.getRecipeById(modelData["FoodId"]);
+                valueText: stats["calories"] + qsTr(" kcal")
+                modelItem: modelData
+                subText: {
+                    return modelData["Amount"] + qsTr(" serving, ") + stats["recipeWeight"] + qsTr(" g") + " (" + stats["calories"] + qsTr(" kcal") + ")"
+                }
+
+                onPressAndHold: {
+                    recipeDeleteDialog.itemIndex = index;
+                    recipeDeleteDialog.show();
+                }
             }
         }
 
         Standard {
             text: qsTr("Looks like you've eaten nothing");
-            visible: listview.count == 0
+            visible: listview.count == 0 && recipesList.count == 0
         }
     }
 
     Dialog {
+        id: deleteDialog
         property int itemIndex;
         onAccepted: {
             dataManager.removeFoodFromLog(day, itemIndex)
         }
 
-        id: deleteDialog
+        title: qsTr("Delete item?")
+        text: qsTr("Do you really want to delete this item?")
+    }
+
+    Dialog {
+        id: recipeDeleteDialog
+        property int itemIndex;
+        onAccepted: {
+            dataManager.removeRecipeFromLog(day, itemIndex)
+        }
+
         title: qsTr("Delete item?")
         text: qsTr("Do you really want to delete this item?")
     }

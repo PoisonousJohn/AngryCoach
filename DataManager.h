@@ -34,6 +34,8 @@ public:
     DayLog* getDayLog(const QDate& date);
     void addFoodToLog(const QDate& date, const QString& foodId, float foodAmount);
     void removeFoodFromLog(const QDate& date, int index);
+    void addRecipeToLog(const QDate& date, const QString& recipeId, float amount);
+    void removeRecipeFromLog(const QDate& date, int index);
     void save();
 
     static QDir getDataDir();

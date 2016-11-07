@@ -4,8 +4,10 @@ Subtitled {
     property var food;
     property var modelItem;
 
+    implicitHeight: height
     itemLabel.style: "title"
     text: food ? food["Name"] : ""
+    valueText: Math.round(food["FoodCalories"]["TotalCalories"] * (modelItem["Amount"] / 100) ) + qsTr(" kcal")
     subText:
     {
         if (!modelItem)
@@ -13,6 +15,6 @@ Subtitled {
             return "";
         }
 
-        modelItem["Amount"] + qsTr(" g") + " (" + Math.round(food["FoodCalories"]["TotalCalories"] * (modelItem["Amount"] / 100) ) + qsTr(" kcal") + ")"
+        modelItem["Amount"] + qsTr(" g")
     }
 }

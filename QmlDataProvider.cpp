@@ -46,6 +46,7 @@ void QmlDataProvider::editFood(const QString &foodId, const QVariantMap &data)
     mapDataToFood(food, data);
     _dataManager->save();
     emit foodChanged();
+    emit dayLogChanged(_selectedDate);
 }
 
 void QmlDataProvider::removeFood(const QString &foodId)
@@ -55,8 +56,9 @@ void QmlDataProvider::removeFood(const QString &foodId)
     emit dayLogChanged(QDate::currentDate());
 }
 
-QVariantList QmlDataProvider::getDayLog(const QDate &date)
+QVariantMap QmlDataProvider::getDayLog(const QDate &date)
 {
+    QVariantMap map;
     QVariantList list;
     auto dayLog = _dataManager->getDayLog(date);
     auto foodMap = _dataManager->getFood();
@@ -73,7 +75,25 @@ QVariantList QmlDataProvider::getDayLog(const QDate &date)
         }
     }
 
-    return list;
+    QVariantList recipesList;
+    auto recipesMap = _dataManager->getRecipes();
+    auto& recipesHash = recipesMap->getHash();
+    for (QVariant& recipeVariant : dayLog->EatenRecipes())
+    {
+        auto foodAmount = qvariant_cast<FoodAmount*>(recipeVariant);
+        QString foodId = foodAmount->FoodId();
+        // filter out deleted food
+        auto food = recipesHash.find(foodId);
+        if (food != recipesHash.end())
+        {
+            recipesList.append(recipeVariant);
+        }
+    }
+
+    map["Food"] = list;
+    map["Recipes"] = recipesList;
+
+    return map;
 }
 
 void QmlDataProvider::addFoodToLog(const QDate &date, const QString &foodId, float foodAmount)
@@ -82,9 +102,21 @@ void QmlDataProvider::addFoodToLog(const QDate &date, const QString &foodId, flo
     emit dayLogChanged(date);
 }
 
+void QmlDataProvider::addRecipeToLog(const QDate &date, const QString &recipeId, float amount)
+{
+    _dataManager->addRecipeToLog(date, recipeId, amount);
+    emit dayLogChanged(date);
+}
+
 void QmlDataProvider::removeFoodFromLog(const QDate &date, int index)
 {
     _dataManager->removeFoodFromLog(date, index);
+    emit dayLogChanged(date);
+}
+
+void QmlDataProvider::removeRecipeFromLog(const QDate &date, int index)
+{
+    _dataManager->removeRecipeFromLog(date, index);
     emit dayLogChanged(date);
 }
 
@@ -262,13 +294,14 @@ void QmlDataProvider::editRecipe(const QString &recipeId, const QVariantMap &dat
     mapDataToRecipe(food, data);
     _dataManager->save();
     emit recipesChanged();
+    emit dayLogChanged(_selectedDate);
 }
 
 void QmlDataProvider::removeRecipe(const QString &recipeId)
 {
     _dataManager->removeRecipe(recipeId);
     emit recipesChanged();
-    emit dayLogChanged(QDate::currentDate());
+    emit dayLogChanged(_selectedDate);
 }
 
 QVariantList QmlDataProvider::getRecipes()
@@ -289,5 +322,7 @@ QVariantList QmlDataProvider::getRecipes()
 
 QObject *QmlDataProvider::getRecipeById(const QString &recipeId)
 {
-
+    auto obj = findRecipe(recipeId);
+    QQmlEngine::setObjectOwnership(obj, QQmlEngine::CppOwnership);
+    return obj;
 }
