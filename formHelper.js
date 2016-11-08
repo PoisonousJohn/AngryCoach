@@ -11,11 +11,18 @@ function notEmpty(textFieldsArray) {
 
     return true;
 }
+
+function getFloatFromText(text)
+{
+    var number = Number.fromLocaleString(Qt.locale(), text);
+    return number;
+}
+
 function numberGreaterThanZero(textFieldsArray) {
     var locale = Qt.locale();
     for (var i = 0; i < textFieldsArray.length; ++i) {
         var field = textFieldsArray[i];
-        var number = Number.fromLocaleString(locale, field.displayValue);;
+        var number = Number.fromLocaleString(locale, field.displayValue);
         if (!(number > 0)) {
             return false;
         }

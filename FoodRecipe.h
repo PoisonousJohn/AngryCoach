@@ -16,6 +16,7 @@ public:
     JENSON_PROPERTY_GETSET(QString, Id)
     JENSON_PROPERTY_GETSET(QString, Name)
     JENSON_PROPERTY_GETSET(QVariantList, Ingredients)
+    JENSON_PROPERTY_GETSET(float, Servings)
     void addIngredient(const QString& foodId, float foodAmount);
     void removeIngredient(int index);
 signals:

@@ -99,11 +99,13 @@ Page {
             enabled: {
                 return  title.displayText.length > 0 &&
                         addRecipePage.ingredients !== undefined  &&
-                        addRecipePage.ingredients.count > 0
+                        addRecipePage.ingredients.count > 0 &&
+                        FormHelper.getFloatFromText(servings.displayText) > 0
             }
             onTriggered: {
                 var data = {};
                 data["Name"] = title.displayText;
+                data["Servings"] = servings.displayText
                 var list = [];
                 for (var i = 0; i < addRecipePage.ingredients.count; ++i) {
                     var ingredient = addRecipePage.ingredients.get(i);
@@ -160,6 +162,29 @@ Page {
 
         }
 
+        Subheader {
+            text: qsTr("Servings")
+        }
+
+        Standard {
+            elevation: 1
+            anchors {
+                left: parent.left
+                right: parent.right
+            }
+            TextField {
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.left
+                    right: parent.right
+                    margins: dp(20)
+                }
+                id: servings
+                placeholderText: qsTr("Servings")
+                text: formValues ? formValues["Servings"] : "1"
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+            }
+        }
 
         Subheader {
             text: qsTr("Ingredients")

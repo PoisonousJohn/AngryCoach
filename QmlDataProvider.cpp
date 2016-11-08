@@ -180,6 +180,7 @@ QVariantMap QmlDataProvider::getRecipeValuesForForm(const QString &recipeId)
     map["Id"] = recipe->Id();
     map["Name"] = recipe->Name();
     map["Ingredients"] = recipe->Ingredients();
+    map["Servings"] = recipe->Servings();
 
     return map;
 
@@ -234,6 +235,7 @@ void QmlDataProvider::mapDataToFood(Food *food, const QVariantMap &data)
 void QmlDataProvider::mapDataToRecipe(FoodRecipe *recipe, const QVariantMap &data)
 {
     recipe->setName(data["Name"].toString());
+    recipe->setServings(data["Servings"].toFloat());
     QVariantList list;
     for (auto& item : data["Ingredients"].toList())
     {

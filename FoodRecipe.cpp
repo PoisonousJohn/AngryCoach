@@ -1,7 +1,9 @@
 #include "FoodRecipe.h"
 #include "FoodAmount.h"
 
-FoodRecipe::FoodRecipe(QObject *parent) : QObject(parent)
+FoodRecipe::FoodRecipe(QObject *parent)
+    : QObject(parent)
+    , _Servings(1.f)
 {
 
 }
