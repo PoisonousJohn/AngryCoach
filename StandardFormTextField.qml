@@ -12,6 +12,10 @@ Standard {
     property alias helperText: textField.helperText
     property alias suffixText: suffix.text
     property alias inputHint: textField.inputMethodHints
+    onFocusChanged: {
+        console.log("Focus changed: " + focus)
+        textField.focus = focus
+    }
 
     RowLayout {
         anchors {
@@ -28,6 +32,7 @@ Standard {
 //        }
         TextField {
             id: textField
+            focus: parent.focus
             floatingLabel: true
             height: dp(100)
             Layout.preferredWidth: parent.width - (suffix.visible ? suffix.width + parent.anchors.rightMargin : parent.anchors.rightMargin * 0.5)

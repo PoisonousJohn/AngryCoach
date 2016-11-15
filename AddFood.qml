@@ -10,6 +10,15 @@ ScrollablePage {
     property string foodId;
     property var formValues: isEditing ? dataManager.getFoodValuesForForm(foodId) : null
 
+    onFormValuesChanged: {
+        name.value = formValues !== null ? formValues["Name"] : ""
+        totalCalories.value = formValues !== null ? formValues["TotalCalories"] : ""
+        fats.value = formValues !== null ? formValues["Fats"] : ""
+        proteins.value = formValues !== null ? formValues["Proteins"] : ""
+        carbs.value = formValues !== null ? formValues["Carbs"] : ""
+        weight.value = formValues !== null ? formValues["Weight"] : "100"
+    }
+
     function getFormData() {
         return {
             "Name": name.value,
@@ -23,6 +32,7 @@ ScrollablePage {
 
     onGoBack: {
         foodId = ""
+        formValuesChanged();
     }
 
     title: isEditing ? qsTr("Edit food") : qsTr("Add food");
@@ -74,7 +84,6 @@ ScrollablePage {
         StandardFormTextField {
             id: name
             label: qsTr("Name")
-            value: formValues !== null ? formValues["Name"] : ""
         }
 
         StandardFormTextField {

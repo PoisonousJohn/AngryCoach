@@ -15,13 +15,18 @@ ScrollablePage {
 
     onGoBack: {
         recipeId = ""
+        formValuesChanged();
     }
 
     property bool isEditing: recipeId.length > 0;
     property string recipeId;
     property var ingredients;
     property var formValues: isEditing ? dataManager.getRecipeValuesForForm(recipeId) : null
+
     onFormValuesChanged: {
+        console.log("Form values changed: " + formValues)
+        title.text = formValues ? formValues["Name"] : "";
+
         if (ingredients)
         {
             ingredients.clear();
@@ -147,7 +152,6 @@ ScrollablePage {
             TextField {
                 id: title
                 focus: !isEditing
-                text: formValues ? formValues["Name"] : ""
                 anchors {
                     centerIn: parent
                 }
