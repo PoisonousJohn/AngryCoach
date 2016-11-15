@@ -1,4 +1,5 @@
 import QtQuick 2.5
+import QtQml.Models 2.2
 import QtQuick.Layouts 1.1
 import Material 0.3
 import Material.ListItems 0.1
@@ -18,7 +19,7 @@ SearchList {
         delegateModel.delegate: BaseListItem {
             id: listDelegate
             elevation: 1
-            property int modelIndex: index
+            property int modelIndex: DelegateModel.itemsIndex
             height: dp(50)
             onClicked: {
                 listView.itemClicked(modelIndex)
@@ -35,7 +36,21 @@ SearchList {
                 anchors.margins: 16 * Units.dp
                 anchors.verticalCenter: parent.verticalCenter
                 text: {
+                    if (!modelData)
+                    {
+                        console.log("Index: " + listDelegate.DelegateModel.searchFilterIndex);
+                        if (!listDelegate.DelegateModel.inSearchFilter)
+                        {
+                            return "Not found in filter"
+                        }
+
+                        var obj = searchFood.searchGroup.get(0);
+                        var data = listDelegate.DelegateModel.model.modelData;
+                        return data["Name"];
+                    }
+
                     return modelData["Name"];
+//                    return modelData ? modelData["Name"] : "";
                 }
             }
         }

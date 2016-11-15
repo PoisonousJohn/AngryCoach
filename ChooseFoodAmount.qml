@@ -178,7 +178,7 @@ Page {
                             value: percent
                             Label {
                                 text: {
-                                    var result = (percent * 100).toFixed(2);
+                                    var result = Math.round(percent * 100);
                                     return result + "%"
                                 }
                                 style: "headline"

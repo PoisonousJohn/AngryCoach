@@ -21,6 +21,10 @@ ScrollablePage {
         };
     }
 
+    onGoBack: {
+        foodId = ""
+    }
+
     title: isEditing ? qsTr("Edit food") : qsTr("Add food");
        actions: [
            Action {
@@ -112,7 +116,7 @@ ScrollablePage {
         StandardFormTextField {
             id: weight
             label: qsTr("Weight")
-            value: formValues !== null ? formValues["Weight"] : ""
+            value: formValues !== null ? formValues["Weight"] : "100"
             validator: doubleValidator
             suffixText: qsTr("g")
             inputHint: Qt.ImhFormattedNumbersOnly

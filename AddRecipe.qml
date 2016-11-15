@@ -4,12 +4,18 @@ import Material 0.3
 import Material.ListItems 0.1
 import "formHelper.js" as FormHelper
 
-Page {
+ScrollablePage {
     id:addRecipePage
+
+    scrollableContent: mainLayout
 
     signal addIngredient();
 
     title: isEditing ? qsTr("Edit recipe") : qsTr("Add recipe")
+
+    onGoBack: {
+        recipeId = ""
+    }
 
     property bool isEditing: recipeId.length > 0;
     property string recipeId;
@@ -56,14 +62,10 @@ Page {
     ChooseFoodAmount {
         id: chooseFoodAmountForRecipe
         onConfirmed: {
-            console.log("adding ingredient to recipe confirmed "  + amount)
             if (addRecipePage.ingredients === undefined)
             {
                 addRecipePage.ingredients = createModel(addRecipePage)
-                console.log("new model: " + addRecipePage.ingredients);
             }
-
-            console.log("Food amount for recipe: " + JSON.stringify(food) + " " + amount);
 
             addRecipePage.ingredients.append({
                                  "FoodId": food["Id"],
@@ -78,7 +80,6 @@ Page {
         title: qsTr("Add food to recipe")
         model: dataManager.food
         onItemSelected: {
-            console.log("Adding food to recipe: " + item["Id"])
             chooseFoodAmountForRecipe.food = item;
             pageStack.push(chooseFoodAmountForRecipe);
         }
@@ -109,7 +110,6 @@ Page {
                 var list = [];
                 for (var i = 0; i < addRecipePage.ingredients.count; ++i) {
                     var ingredient = addRecipePage.ingredients.get(i);
-                    console.log("Added ingredient " + JSON.stringify(ingredient));
                     list.push(ingredient);
                 }
 
@@ -129,6 +129,7 @@ Page {
     ]
 
     ColumnLayout {
+        id: mainLayout
         spacing: 0
         anchors {
             left: parent.left
@@ -213,7 +214,6 @@ Page {
                     delegate: FoodAmountRow {
                         modelItem: repeater.model.get(index);
                         food: {
-                            console.log("recipe model item: " + JSON.stringify(modelItem))
                             modelItem ? dataManager.getFoodById(modelItem["FoodId"]) : undefined
                         }
                         onPressAndHold: {

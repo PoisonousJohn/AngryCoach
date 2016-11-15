@@ -15,6 +15,7 @@ Page {
         anchors.fill: parent
         contentWidth: parent.width;
         contentHeight: scrollableContent.implicitHeight;
+        boundsBehavior: Flickable.StopAtBounds
 //        contentHeight: dp(1000);
         Item {
             data: scrollableContent

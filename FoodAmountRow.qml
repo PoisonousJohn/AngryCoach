@@ -7,7 +7,7 @@ Subtitled {
     implicitHeight: height
     itemLabel.style: "title"
     text: food ? food["Name"] : ""
-    valueText: Math.round(food["FoodCalories"]["TotalCalories"] * (modelItem["Amount"] / 100) ) + qsTr(" kcal")
+    valueText: food ? Math.round(food["FoodCalories"]["TotalCalories"] * (modelItem["Amount"] / 100) ) + qsTr(" kcal") : ""
     subText:
     {
         if (!modelItem)

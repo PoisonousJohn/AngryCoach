@@ -11,7 +11,8 @@ Page {
     property alias model: list.model
     property alias defaultModelField: list.defaultModelValue
     property alias listView: list
-    property alias delegateModel: delegateModel
+    property alias delegateModel: list.delegateModel
+    property alias searchGroup: searchFilterGroup
     signal itemSelected(var item)
 
     DelegateModel {
@@ -32,11 +33,11 @@ Page {
            color: Palette.colors["white"]["500"]
            textColor: Palette.colors["white"]["500"]
            placeholderText: qsTr("Search...")
-//           onDisplayTextChanged: {
-//               searchFilterGroup.filter = searchField.displayText
-//               list.delegateModel.filterOnGroup = searchFilterGroup.filter.length > 0 ? "searchFilter" : "all"
+           onDisplayTextChanged: {
+               searchFilterGroup.filter = searchField.displayText
+               list.delegateModel.filterOnGroup = searchFilterGroup.filter.length > 0 ? "searchFilter" : "items"
 
-//           }
+           }
 
            anchors {
                left: parent.left
@@ -49,42 +50,35 @@ Page {
     SimpleList {
         id: list
         title: searchList.title
-//        delegateModel {
-//            groups: [
-//                DelegateModelGroup {
-//                    id: searchFilterGroup
-//                    includeByDefault: false
-//                    name: "searchFilter"
-//                    property string filter;
-//                    onFilterChanged: {
-//                        // remove all
-//                        for (var i = 0; i < count; ++i)
-//                        {
-//                            remove(0);
-//                        }
-//                        var filterLowerCase = filter.toLowerCase();
-//                        var isArray = Array.isArray(model);
-//                        var modelCount = !isArray
-//                                                ? searchList.model.count
-//                                                : searchList.model.length;
-//                        for (i = 0; i < modelCount; ++i)
-//                        {
-//                            var entry = isArray ? searchList.model[i] : searchList.model.get(i);
-//    //                        if (entry[defaultModelField].toLowerCase().indexOf(filterLowerCase) >= 0)
-//    //                        {
-//                                insert(entry);
-//    //                        }
-//                        }
-//                    }
-//                },
 
-//                DelegateModelGroup {
-//                    name: "all"
-//                    includeByDefault: true
-//                }
+        delegateModel {
+            groups: [
+                DelegateModelGroup {
+                    id: searchFilterGroup
+                    includeByDefault: false
+                    name: "searchFilter"
+                    property string filter;
+                    onFilterChanged: {
 
-//            ]
-//        }
+                        // remove all
+                        var filterLowerCase = filter.toLowerCase();
+                        var isArray = Array.isArray(model);
+                        var modelCount = !isArray
+                                                ? searchList.model.count
+                                                : searchList.model.length;
+                        for (var i = 0; i < modelCount; ++i)
+                        {
+                            var entry = !isArray ? list.model.get(i) : list.model[i];
+                            var fits = filterLowerCase.length === 0 || entry[defaultModelField].toLowerCase().indexOf(filterLowerCase) >= 0;
+                            console.log("index: " + i)
+                            list.delegateModel.items.setGroups(i, 1, ['items', fits ? "searchFilter" : "dummy"]);
+                        }
+                    }
+                }
+
+            ]
+            filterOnGroup: "items"
+        }
 
         anchors {
             bottom: parent.bottom

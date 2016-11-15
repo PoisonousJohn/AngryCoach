@@ -31,10 +31,19 @@ function getRecipeStats(recipe, dataManager, serving) {
         }
     }
 
+    for (var i = 0; i < nutritionModel.length; ++i)
+    {
+        nutritionKey = nutritionModel[i];
+
+        nutritionsData[nutritionKey] = parseFloat(nutritionsData[nutritionKey].toFixed(2));
+    }
+
     return {
-        "recipeWeight": recipeWeight,
-        "nutritionWeight": nutritionWeight,
+        "recipeWeight": parseFloat(recipeWeight.toFixed(2)),
+        "nutritionWeight": parseFloat(nutritionWeight.toFixed(2)),
         "nutritions": nutritionsData,
-        "calories": calories,
+        "calories": Math.round(calories),
     };
 }
+
+//11 1,2
