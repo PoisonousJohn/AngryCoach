@@ -20,10 +20,23 @@ Page {
 
     }
 
+    onItemSelected: {
+        clearSearch();
+    }
+
+    function clearSearch() {
+        searchField.text = "";
+        searchField.displayText = "";
+    }
+
     actions: [
         Action {
             name: "Search"
-            iconName: "action/search"
+            iconName: "content/clear"
+            visible: searchField.displayText.length > 0
+            onTriggered: {
+                clearSearch();
+            }
         }
     ]
 
