@@ -4,7 +4,6 @@ import Material 0.3
 Page {
     property var scrollableContent;
 //    onContentChanged: {
-//        console.log(content)
 //        content.parent = flickable.contentItem
 //        flickable.contentHeight = content.implicitHeight
 //        flickable.contentWidth = content.implicitWidth
@@ -15,7 +14,7 @@ Page {
         anchors.fill: parent
         contentWidth: parent.width;
         contentHeight: scrollableContent.implicitHeight;
-        boundsBehavior: Flickable.StopAtBounds
+//        boundsBehavior: Flickable.StopAtBounds
 //        contentHeight: dp(1000);
         Item {
             data: scrollableContent

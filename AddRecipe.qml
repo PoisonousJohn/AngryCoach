@@ -24,7 +24,6 @@ ScrollablePage {
     property var formValues: isEditing ? dataManager.getRecipeValuesForForm(recipeId) : null
 
     onFormValuesChanged: {
-        console.log("Form values changed: " + formValues)
         title.text = formValues ? formValues["Name"] : "";
 
         if (ingredients)

@@ -29,7 +29,6 @@ Page {
     }
 
     function updateStats() {
-        console.log("Food changed: " + food["Name"]);
         totalWeight = 0;
         for (var i = 0; i < nutritionModel.count; ++i)
         {

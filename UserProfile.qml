@@ -5,8 +5,9 @@ import Material.ListItems 0.1
 import Fitness 0.1
 import "formHelper.js" as FormHelper
 
-Page {
+ScrollablePage {
     id: userProfilePage
+    scrollableContent: mainColumn
     title: qsTr("User profile")
     property var massModifierMenu: [
         qsTr("Normal"),
@@ -43,6 +44,7 @@ Page {
     ]
 
     ColumnLayout {
+        id: mainColumn
         spacing: 0
         anchors {
             left: parent.left

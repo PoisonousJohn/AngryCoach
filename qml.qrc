@@ -35,5 +35,12 @@
         <file>FoodAmountRow.qml</file>
         <file>ChooseRecipeAmount.qml</file>
         <file>UIHelpers.js</file>
+        <file>SearchRecipe.qml</file>
+        <file>SearchFood.qml</file>
+        <file>DatePickerPopup.qml</file>
+        <file>singletons/MainPageStack.qml</file>
+        <file>singletons/qmldir</file>
+        <file>PageLoader.qml</file>
+        <file>DialogLoader.qml</file>
     </qresource>
 </RCC>

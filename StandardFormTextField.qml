@@ -13,7 +13,6 @@ Standard {
     property alias suffixText: suffix.text
     property alias inputHint: textField.inputMethodHints
     onFocusChanged: {
-        console.log("Focus changed: " + focus)
         textField.focus = focus
     }
 

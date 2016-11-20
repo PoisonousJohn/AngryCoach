@@ -71,3 +71,7 @@ Thumbs.db
 *.dll
 *.exe
 
+android/.build
+android/.idea
+android/.gradle
+

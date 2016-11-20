@@ -1,7 +1,9 @@
 import QtQuick 2.5
 //import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
+import QtQuick.Controls.Styles 1.4
 import Material 0.3
+import "./singletons"
 
 /**
   * todo:
@@ -22,21 +24,90 @@ import Material 0.3
 
 
 ApplicationWindow {
-    UserProfile {
-        id: userProfile
+    function delay(delayTime, cb) {
+        timer = new Timer();
+        timer.interval = delayTime;
+        timer.repeat = false;
+        timer.triggered.connect(cb);
+        timer.start();
     }
+
+    visible: false
+    signal initialLoaded;
+    contentItem {
+        opacity: 0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 500
+            }
+        }
+    }
+
+//    Rectangle {
+//        id: colorRect
+//        anchors.fill: parent
+//        color: "red"
+//        Behavior on opacity {
+//            NumberAnimation {
+//                duration:  10000
+//            }
+//        }
+//    }
+
+    style: ApplicationWindowStyle {
+
+        background: Rectangle {
+            anchors.fill: parent
+            color: Palette.colors["indigo"]["500"]
+        }
+    }
+
+//    backgroundColor: Palette.colors["deepBlue"]["500"]
+
+    PageLoader {
+        id:userProfile
+        pagePath: "UserProfile.qml"
+    }
+
     id: window
     theme.primaryColor: "indigo"
-    initialPage: MainPage {}
-    visible: true
+
+    Loader {
+        id: initialPageLoader
+        asynchronous: true
+//        sourceComponent: MainPage{
+//            visible: false
+//            canGoBack: false
+//        }
+        focus: true
+        anchors.fill: parent
+        onLoaded: {
+            initialLoaded();
+        }
+    }
+
+    initialPage: Page {}
+
     width: 480
     height: 852
 
-    Component.onCompleted: {
+    onInitialLoaded: {
+        console.log("loaded")
+        window.visible = true
+        window.contentItem.opacity = 1
+        pageStack.clear()
+        pageStack.push(initialPageLoader.item)
+        initialPageLoader.item.canGoBack = false
+        MainPageStack.pageStack = pageStack
         if (dataManager.userProfile["Weight"] === 0)
         {
-            pageStack.push(userProfile)
+            userProfile.loadPage()
+            userProfile.item.canGoBack = false
         }
+    }
+
+    Component.onCompleted: {
+        initialPageLoader.setSource("MainPage.qml", {canGoBack: false})
     }
 
 

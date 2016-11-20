@@ -20,6 +20,11 @@ Card {
     property double maxFats;
     property double maxProteins;
 
+    Component.onCompleted: {
+        __model = dataManager.getDayLog(dataManager.selectedDate);
+        updateStats()
+    }
+
     function getNutritionDesc(max, curr, unit)
     {
         var result = max - curr;
@@ -128,10 +133,9 @@ Card {
         onItemClicked: {
             if (itemIndex === 0)
             {
-                pageStack.push(userProfile);
+                userProfile.loadPage()
+//                pageStack.push(userProfile);
             }
-
-//            console.log("menu clicked " + itemIndex)
         }
     }
 

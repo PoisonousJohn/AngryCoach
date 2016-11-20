@@ -24,14 +24,20 @@ RESOURCES += qml.qrc
 INCLUDEPATH += $$PWD/thirdParty
 INCLUDEPATH += $$PWD/thirdParty/jenson/src
 
+# Default rules for deployment.
+include(deployment.pri)
+include(quickflux/quickflux.pri)
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
+#QML_IMPORT_PATH += $$PWD/singletons
+#QML2_IMPORT_PATH += $$PWD/singletons
 QML_IMPORT_PATH += $$PWD/material/src
 QML2_IMPORT_PATH += $$PWD/material/src
+#QML_IMPORT_PATH += $$PWD/quickflux
+#QML2_IMPORT_PATH += $$PWD/quickflux
 
 message("import path" $$QML2_IMPORT_PATH)
 
-# Default rules for deployment.
-include(deployment.pri)
 
 HEADERS += \
     Ingredient.h \

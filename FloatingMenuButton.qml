@@ -48,7 +48,6 @@ Item {
 
 
             Component.onCompleted: {
-                console.log("Model element: " + repeater.model[index])
                 repeater.model[index].parent = button
             }
 

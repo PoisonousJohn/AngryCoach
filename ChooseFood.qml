@@ -20,7 +20,7 @@ SearchList {
             id: listDelegate
             elevation: 1
             property int modelIndex: DelegateModel.itemsIndex
-            height: dp(50)
+            height: 50 * Units.dp
             onClicked: {
                 listView.itemClicked(modelIndex)
             }
@@ -38,7 +38,6 @@ SearchList {
                 text: {
                     if (!modelData)
                     {
-                        console.log("Index: " + listDelegate.DelegateModel.searchFilterIndex);
                         if (!listDelegate.DelegateModel.inSearchFilter)
                         {
                             return "Not found in filter"

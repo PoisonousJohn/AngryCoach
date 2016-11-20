@@ -9,6 +9,10 @@ Page {
     id: chooseRecipeAmount
 
     signal confirmed(double amount);
+    onConfirmed: {
+        dataManager.addRecipeToLog(dataManager.selectedDate, chooseRecipeAmount.recipe["Id"], amount);
+        pageStack.pop();
+    }
 
     property var recipe;
     property double totalNutritionWeight;
@@ -57,7 +61,7 @@ Page {
         }
         Card {
             backgroundColor: Palette.colors["blue"]["300"]
-            height: dp(140)
+            height: Units.dp * 140
             anchors {
                 left: parent.left
                 right: parent.right
@@ -68,13 +72,13 @@ Page {
                 id: mainInfo
 
 
-                spacing: dp(20)
+                spacing: Units.dp * 20
 
                 anchors {
                     left: parent.left
                     right: parent.right
                     top: parent.top
-                    margins: dp(10)
+                    margins: Units.dp * 10
                 }
                 Label {
                     color: Palette.colors["indigo"]["900"]
@@ -130,11 +134,11 @@ Page {
                 right: parent.right
             }
 
-            height: dp(200)
+            height: Units.dp * 200
 
             ColumnLayout {
                 anchors.fill: parent
-                anchors.margins: dp(10)
+                anchors.margins: Units.dp * 10
 
                 RowLayout {
                     anchors.centerIn: parent
@@ -163,9 +167,9 @@ Page {
                                 return Math.min(1.0, result);
                             }
 
-                            width: dp(110)
-                            height: dp(110)
-                            dashThickness: dp(10)
+                            width: Units.dp * 110
+                            height: Units.dp * 110
+                            dashThickness: Units.dp * 10
                             value: percent
                             Label {
                                 text: qsTr(modelData)
@@ -200,8 +204,8 @@ Page {
         anchors {
             right: parent.right
             top: parent.top
-            topMargin: dp(111)
-            rightMargin: dp(10)
+            topMargin: Units.dp * 111
+            rightMargin: Units.dp * 10
             verticalCenter: undefined
             horizontalCenter: undefined
         }

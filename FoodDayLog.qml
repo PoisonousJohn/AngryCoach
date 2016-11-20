@@ -7,6 +7,10 @@ import "UIHelpers.js" as UIHelpers
 
 Card {
     property date day: dataManager.selectedDate
+    Component.onCompleted:  {
+        updateDayModel();
+    }
+
     implicitHeight: content.implicitHeight - dp(3)
     anchors {
         left: parent.left
@@ -24,7 +28,6 @@ Card {
     Connections {
         target: dataManager
         onDayLogChanged: {
-            console.log("Day log changed!!!!!!");
             updateDayModel();
         }
 

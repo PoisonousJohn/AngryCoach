@@ -13,6 +13,7 @@ Page {
     property alias listView: list
     property alias delegateModel: list.delegateModel
     property alias searchGroup: searchFilterGroup
+    property alias searchField: searchField
     signal itemSelected(var item)
 
     DelegateModel {
@@ -26,7 +27,6 @@ Page {
 
     function clearSearch() {
         searchField.text = "";
-        searchField.displayText = "";
     }
 
     actions: [
@@ -43,6 +43,7 @@ Page {
     actionBar {
        customContent: TextField {
            id: searchField
+           height: Units.dp * 40
            color: Palette.colors["white"]["500"]
            textColor: Palette.colors["white"]["500"]
            placeholderText: qsTr("Search...")
@@ -83,7 +84,6 @@ Page {
                         {
                             var entry = !isArray ? list.model.get(i) : list.model[i];
                             var fits = filterLowerCase.length === 0 || entry[defaultModelField].toLowerCase().indexOf(filterLowerCase) >= 0;
-                            console.log("index: " + i)
                             list.delegateModel.items.setGroups(i, 1, ['items', fits ? "searchFilter" : "dummy"]);
                         }
                     }

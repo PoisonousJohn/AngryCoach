@@ -4,3 +4,6 @@
 [submodule "thirdParty/jenson"]
 	path = thirdParty/jenson
 	url = https://github.com/hrobeers/jenson.git
+[submodule "quickflux"]
+	path = quickflux
+	url = https://github.com/benlau/quickflux.git
