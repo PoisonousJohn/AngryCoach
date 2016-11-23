@@ -31,8 +31,8 @@ ScrollablePage {
     }
 
     onGoBack: {
+        Qt.inputMethod.reset();
         Qt.inputMethod.hide()
-        forceActiveFocus();
         foodId = ""
         formValuesChanged();
     }

@@ -5,6 +5,10 @@ import Material 0.3
 Page {
 
     signal confirmed(double amount);
+    onConfirmed: {
+        dataManager.addFoodToLog(dataManager.selectedDate, food["Id"], amount);
+        pageStack.pop();
+    }
 
     property var food:  {
         "Id": "testId",

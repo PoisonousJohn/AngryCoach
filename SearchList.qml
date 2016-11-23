@@ -7,7 +7,6 @@ import Material.ListItems 0.1
 Page {
     id: searchList
 
-
     property alias model: list.model
     property alias defaultModelField: list.defaultModelValue
     property alias listView: list
@@ -26,7 +25,11 @@ Page {
     }
 
     function clearSearch() {
-        searchField.text = "";
+        Qt.inputMethod.reset()
+        Qt.inputMethod.hide()
+        searchField.focus = false
+        searchField.text = ""
+        searchField.clear()
     }
 
     actions: [
