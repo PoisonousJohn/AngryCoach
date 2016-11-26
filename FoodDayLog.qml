@@ -24,7 +24,6 @@ Card {
         listview.model = log["Food"];
         recipesList.model = log["Recipes"]
     }
-
     Connections {
         target: dataManager
         onDayLogChanged: {
@@ -49,6 +48,20 @@ Card {
             elevation: 1
             backgroundColor: Palette.colors["purple"]["200"]
             text: qsTr("Eaten today")
+
+            SpriteAnimation {
+                id: sprite
+                frameSequence: [0,1,2,3,2,3,2,3,1,0]
+                width: dp(64)
+                height: dp(64)
+                source: "pig/eat.png"
+                frameCount: 4
+                frameWidth: 64
+                frameHeight: 64
+                frameRate: 4
+                interpolate: false
+                anchors.right: parent.right
+            }
         }
 
         Repeater {
@@ -58,13 +71,17 @@ Card {
                 left: parent.left
                 right: parent.right
             }
-            visible: count > 0
+            visible: listview.count > 0
             delegate: FoodAmountRow {
                 food: getFood()
                 modelItem: modelData
                 function getFood() {
                     var food = dataManager.getFoodById(modelData["FoodId"]);
                     return food
+                }
+
+                onClicked: {
+                    chooseFoodAmount.loadPage({ food: getFood(), dayLogIndex: index });
                 }
 
                 onPressAndHold: {
@@ -74,6 +91,7 @@ Card {
             }
         }
 
+
         Repeater {
             id: recipesList
             clip: true
@@ -81,7 +99,7 @@ Card {
                 left: parent.left
                 right: parent.right
             }
-            visible: count > 0
+            visible: recipesList.count > 0
             delegate: FoodAmountRow {
                 property var stats: UIHelpers.getRecipeStats(food, dataManager, modelData["Amount"]);
                 food: dataManager.getRecipeById(modelData["FoodId"]);
@@ -89,6 +107,10 @@ Card {
                 modelItem: modelData
                 subText: {
                     return modelData["Amount"] + qsTr(" serving, ") + stats["recipeWeight"] + qsTr(" g") + " (" + stats["calories"] + qsTr(" kcal") + ")"
+                }
+
+                onClicked: {
+                    chooseRecipeAmount.loadPage({ recipe: food, dayLogIndex: index });
                 }
 
                 onPressAndHold: {
@@ -102,6 +124,17 @@ Card {
             text: qsTr("Looks like you've eaten nothing");
             visible: listview.count == 0 && recipesList.count == 0
         }
+
+    }
+
+    PageLoader {
+        id: chooseFoodAmount
+        pagePath: "ChooseFoodAmount.qml"
+    }
+
+    PageLoader {
+        id: chooseRecipeAmount
+        pagePath: "ChooseRecipeAmount.qml"
     }
 
     Dialog {

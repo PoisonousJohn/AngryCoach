@@ -6,9 +6,26 @@ Page {
 
     signal confirmed(double amount);
     onConfirmed: {
-        dataManager.addFoodToLog(dataManager.selectedDate, food["Id"], amount);
+        if (foodAmountObj)
+        {
+            dataManager.editFoodAmount(dataManager.selectedDate, dayLogIndex, amount);
+        }
+        else
+        {
+            dataManager.addFoodToLog(dataManager.selectedDate, food["Id"], amount);
+        }
+
         pageStack.pop();
     }
+
+    onGoBack: {
+        dayLogIndex = -1;
+    }
+
+    property int dayLogIndex: -1;
+    property var foodAmountObj: dayLogIndex >= 0
+                                        ? dataManager.getDayLog(dataManager.selectedDate)["Food"][dayLogIndex]
+                                        : null;
 
     property var food:  {
         "Id": "testId",
@@ -49,7 +66,7 @@ Page {
     }
 
 
-    title: qsTr("How much food?")
+    title: foodAmountObj ? qsTr("Edit food amount") : qsTr("How much food?")
 
     ColumnLayout {
         spacing: dp(10)
@@ -112,9 +129,10 @@ Page {
 
                     TextField {
                         id: amount
-                        text: "100"
+                        text: foodAmountObj ? foodAmountObj["Amount"] : "100"
                         implicitWidth: dp(50)
                         maximumLength: 9
+                        focus: true
                         inputMethodHints: Qt.ImhFormattedNumbersOnly
                         validator: DoubleValidator {
                             decimals: 2

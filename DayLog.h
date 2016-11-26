@@ -18,6 +18,8 @@ public:
     void removeFood(int index);
     void addRecipe(const QString& recipeId, float amount);
     void removeRecipe(int index);
+    void setFoodAmount(int index, float amount);
+    void setRecipeAmount(int index, float amount);
 signals:
     void updated();
 };

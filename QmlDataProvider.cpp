@@ -120,6 +120,22 @@ void QmlDataProvider::removeRecipeFromLog(const QDate &date, int index)
     emit dayLogChanged(date);
 }
 
+void QmlDataProvider::editFoodAmount(const QDate &date, int index, float amount)
+{
+    auto log = _dataManager->getDayLog(date);
+    log->setFoodAmount(index, amount);
+    _dataManager->save();
+    emit dayLogChanged(date);
+}
+
+void QmlDataProvider::editRecipeAmount(const QDate &date, int index, float amount)
+{
+    auto log = _dataManager->getDayLog(date);
+    log->setRecipeAmount(index, amount);
+    _dataManager->save();
+    emit dayLogChanged(date);
+}
+
 QVariantMap QmlDataProvider::getFoodValuesForForm(const QString &foodId)
 {
     QVariantMap map;

@@ -10,7 +10,15 @@ Page {
 
     signal confirmed(double amount);
     onConfirmed: {
-        dataManager.addRecipeToLog(dataManager.selectedDate, chooseRecipeAmount.recipe["Id"], amount);
+        if (foodAmountObj)
+        {
+            dataManager.editRecipeAmount(dataManager.selectedDate, dayLogIndex, amount);
+        }
+        else
+        {
+            dataManager.addRecipeToLog(dataManager.selectedDate, chooseRecipeAmount.recipe["Id"], amount);
+        }
+
         pageStack.pop();
     }
 
@@ -19,6 +27,12 @@ Page {
     property double totalRecipeWeight;
     property double totalCalories;
     property var nutritions;
+
+    property int dayLogIndex: -1;
+    property var foodAmountObj: dayLogIndex >= 0
+                                        ? dataManager.getDayLog(dataManager.selectedDate)["Recipes"][dayLogIndex]
+                                        : null;
+
     property double serving: {
         if (amount.displayText.length === 0)
         {
@@ -51,7 +65,7 @@ Page {
     }
 
 
-    title: qsTr("Choose serving")
+    title: foodAmountObj ? qsTr("Edit serving") : qsTr("Choose serving")
 
     ColumnLayout {
         spacing: 0
@@ -95,7 +109,7 @@ Page {
                     }
                     TextField {
                         id: amount
-                        text: "1"
+                        text: foodAmountObj ? foodAmountObj["Amount"] : "1"
                         focus: true
                         color: Palette.colors["indigo"]["700"]
                         floatingLabel: true

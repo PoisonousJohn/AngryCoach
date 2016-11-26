@@ -74,7 +74,7 @@ ApplicationWindow {
 
     Loader {
         id: initialPageLoader
-        asynchronous: true
+        asynchronous: false
 //        sourceComponent: MainPage{
 //            visible: false
 //            canGoBack: false
@@ -97,7 +97,6 @@ ApplicationWindow {
         window.contentItem.opacity = 1
         pageStack.clear()
         pageStack.push(initialPageLoader.item)
-        initialPageLoader.item.canGoBack = false
         MainPageStack.pageStack = pageStack
         if (dataManager.userProfile["Weight"] === 0)
         {

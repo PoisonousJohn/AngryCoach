@@ -42,5 +42,9 @@
         <file>singletons/qmldir</file>
         <file>PageLoader.qml</file>
         <file>DialogLoader.qml</file>
+        <file>pig/eat.png</file>
+        <file>SpriteAnimation.qml</file>
+        <file>pig/eat.wav</file>
+        <file>pig/overdose.wav</file>
     </qresource>
 </RCC>

@@ -39,12 +39,16 @@ public:
 
     // day log
 
-    // returns list of Food*
+    // returns object with keys:
+    // Food -> array of FoodAmount
+    // Recipes -> array of FoodAmount
     Q_INVOKABLE QVariantMap getDayLog(const QDate& date);
     Q_INVOKABLE void addFoodToLog(const QDate& date, const QString& foodId, float foodAmount);
     Q_INVOKABLE void addRecipeToLog(const QDate& date, const QString& recipeId, float amount);
     Q_INVOKABLE void removeFoodFromLog(const QDate& date, int index);
     Q_INVOKABLE void removeRecipeFromLog(const QDate& date, int index);
+    Q_INVOKABLE void editFoodAmount(const QDate& date, int index, float amount);
+    Q_INVOKABLE void editRecipeAmount(const QDate& date, int index, float amount);
     Q_INVOKABLE QVariantMap getFoodValuesForForm(const QString& foodId);
     Q_INVOKABLE QVariantMap getUserProfileModel();
     Q_INVOKABLE void updateUserProfile(const QVariantMap& data);

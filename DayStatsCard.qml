@@ -1,5 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Layouts 1.1
+import QtMultimedia 5.0
 import Material 0.3
 import Material.ListItems 0.1
 import "fitnessFormula.js" as Formula
@@ -110,8 +111,28 @@ Card {
 
             __model = dataManager.getDayLog(dataManager.selectedDate);
             updateStats();
+            if (totalStatsCircle.value > 1.0)
+            {
+                overdoseEffect.play();
+            }
+            else
+            {
+                eatEffect.play();
+            }
+
         }
     }
+
+    SoundEffect {
+        id: eatEffect
+        source: "pig/eat.wav"
+    }
+
+    SoundEffect {
+        id: overdoseEffect
+        source: "pig/overdose.wav"
+    }
+
 
     on__ModelChanged: {
         updateStats();
@@ -173,6 +194,7 @@ Card {
                 width: dp(100)
                 height: dp(100)
                 OverflowableProgressCircle {
+                    id: totalStatsCircle
                     overflowColor: Palette.colors["red"]["A200"]
                     width: dp(110)
                     height: dp(110)
