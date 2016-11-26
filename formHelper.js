@@ -30,3 +30,16 @@ function numberGreaterThanZero(textFieldsArray) {
 
     return true;
 }
+
+function numberGreaterOrEqualsZero(textFieldsArray) {
+    var locale = Qt.locale();
+    for (var i = 0; i < textFieldsArray.length; ++i) {
+        var field = textFieldsArray[i];
+        var number = Number.fromLocaleString(locale, field.displayValue);
+        if (!(number >= 0)) {
+            return false;
+        }
+    }
+
+    return true;
+}

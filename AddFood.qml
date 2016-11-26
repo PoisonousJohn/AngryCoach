@@ -45,11 +45,12 @@ ScrollablePage {
                 enabled: {
                     return  FormHelper.notEmpty([name]) &&
                             FormHelper.numberGreaterThanZero(
-                                [totalCalories,
-                                carbs,
+                                [totalCalories, weight]
+                            ) &&
+                            FormHelper.numberGreaterOrEqualsZero(
+                                [carbs,
                                 fats,
-                                proteins,
-                                weight]
+                                proteins]
                             )
                 }
                onTriggered:  {
