@@ -1,7 +1,7 @@
 package ru.rockyourcode.PigSum;
 
 import android.content.Intent;
-import android.provider.SyncStateContract;
+import android.graphics.Color;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
@@ -13,7 +13,7 @@ public class SplashActivity extends AwesomeSplash
     @Override
     public void initSplash(ConfigSplash configSplash) {
         //Customize Circular Reveal
-        configSplash.setBackgroundColor(R.color.fillColor); //any color you want form colors.xml
+        configSplash.setBackgroundColor(R.color.app_background); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(1000); //int ms
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);  //or Flags.REVEAL_LEFT
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP
@@ -50,7 +50,7 @@ public class SplashActivity extends AwesomeSplash
     public void animationsFinished() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
     }
 }

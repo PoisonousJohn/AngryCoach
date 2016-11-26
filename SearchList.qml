@@ -26,10 +26,6 @@ Page {
 
     function clearSearch() {
         Qt.inputMethod.reset()
-        Qt.inputMethod.hide()
-        searchField.focus = false
-        searchField.text = ""
-        searchField.clear()
     }
 
     actions: [
