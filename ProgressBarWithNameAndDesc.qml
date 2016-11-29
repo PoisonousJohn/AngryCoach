@@ -11,6 +11,8 @@ ColumnLayout {
     property alias color: progressBar.color
     property alias overflowColor: progressBar.overflowColor
 
+    spacing: dp(10)
+
     Label {
         id: nameLabel
         anchors.horizontalCenter: parent.horizontalCenter

@@ -140,7 +140,7 @@ Card {
 
     anchors.left: parent.left
     anchors.right: parent.right
-    height: stats.height + dp(40)
+    height: dp(240)
 
     SimpleContextMenu {
         id: dayStatsMenu
@@ -196,8 +196,8 @@ Card {
                 OverflowableProgressCircle {
                     id: totalStatsCircle
                     overflowColor: Palette.colors["red"]["A200"]
-                    width: dp(110)
-                    height: dp(110)
+                    width: dp(150)
+                    height: dp(150)
                     Text {
                         text: getNutritionDesc(maxTotalCalories, totalCalories, "\nKCAL")
                         anchors.centerIn: parent
@@ -206,7 +206,7 @@ Card {
                     anchors.centerIn: parent
                     indeterminate: false
                     value: totalCalories / maxTotalCalories
-                    dashThickness: dp(8)
+                    dashThickness: dp(10)
                 }
             }
         }
@@ -214,7 +214,8 @@ Card {
             property int itemWidth: mainPage.width / 3 -spacing
 
             id: parameters
-            anchors.topMargin: dp(100)
+            anchors.top: totalStats.bottom
+            anchors.topMargin: dp(40)
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.leftMargin: dp(20)
             anchors.rightMargin: dp(20)

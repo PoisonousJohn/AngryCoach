@@ -46,7 +46,7 @@ Card {
 
         Subheader {
             elevation: 1
-            backgroundColor: Palette.colors["green"]["500"]
+            backgroundColor: Palette.colors["lightBlue"]["100"]
             text: qsTr("Eaten today")
         }
 
