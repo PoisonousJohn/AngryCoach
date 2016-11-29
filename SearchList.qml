@@ -16,11 +16,6 @@ Page {
     property alias searchField: searchField
     signal itemSelected(var item)
 
-//    DelegateModel {
-//        id: delegateModel
-
-//    }
-
     onItemSelected: {
         clearSearch();
     }
