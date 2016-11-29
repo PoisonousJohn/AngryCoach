@@ -5,18 +5,6 @@ import Material 0.3
 Page {
 
     signal confirmed(double amount);
-    onConfirmed: {
-        if (foodAmountObj)
-        {
-            dataManager.editFoodAmount(dataManager.selectedDate, dayLogIndex, amount);
-        }
-        else
-        {
-            dataManager.addFoodToLog(dataManager.selectedDate, food["Id"], amount);
-        }
-
-        pageStack.pop();
-    }
 
     onGoBack: {
         dayLogIndex = -1;

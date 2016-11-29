@@ -11,14 +11,15 @@ Page {
     property alias defaultModelField: list.defaultModelValue
     property alias listView: list
     property alias delegateModel: list.delegateModel
+    property alias delegate: list.delegate
     property alias searchGroup: searchFilterGroup
     property alias searchField: searchField
     signal itemSelected(var item)
 
-    DelegateModel {
-        id: delegateModel
+//    DelegateModel {
+//        id: delegateModel
 
-    }
+//    }
 
     onItemSelected: {
         clearSearch();

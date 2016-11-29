@@ -16,9 +16,8 @@ SearchList {
 //    model: mode === "Food" ? dataManager.food : dataManager.recipes
     defaultModelField: "Name"
     listView {
-        delegateModel.delegate: BaseListItem {
+        delegateModel.delegate: StandardWithDivider {
             id: listDelegate
-            elevation: 1
             property int modelIndex: DelegateModel.itemsIndex
             height: 50 * Units.dp
             onClicked: {

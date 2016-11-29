@@ -1,1 +1,2 @@
 singleton MainPageStack 1.0 MainPageStack.qml
+singleton AppActions 1.0 AppActions.qml

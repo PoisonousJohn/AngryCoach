@@ -63,19 +63,28 @@ ScrollablePage {
         return newModel;
     }
 
-    ChooseFoodAmount {
+    PageLoader {
         id: chooseFoodAmountForRecipe
-        onConfirmed: {
-            if (addRecipePage.ingredients === undefined)
-            {
-                addRecipePage.ingredients = createModel(addRecipePage)
-            }
+        pagePath: "ChooseFoodAmount.qml"
+        property var food;
+        Connections {
+            target: chooseFoodAmountForRecipe.item
+            onConfirmed: {
+                if (addRecipePage.ingredients === undefined)
+                {
+                    addRecipePage.ingredients = createModel(addRecipePage)
+                }
 
-            addRecipePage.ingredients.append({
-                                 "FoodId": food["Id"],
-                                 "Amount": amount
-                             });
-            pageStack.pop();
+                addRecipePage.ingredients.append({
+                                     "FoodId": chooseFoodAmountForRecipe.food["Id"],
+                                     "Amount": amount
+                                 });
+                pageStack.pop();
+            }
+        }
+    }
+    ChooseFoodAmount {
+        onConfirmed: {
         }
     }
 
@@ -85,7 +94,7 @@ ScrollablePage {
         model: dataManager.food
         onItemSelected: {
             chooseFoodAmountForRecipe.food = item;
-            pageStack.push(chooseFoodAmountForRecipe);
+            chooseFoodAmountForRecipe.loadPage({food: item });
         }
         onEditItem: {
             addFood.foodId = itemId;

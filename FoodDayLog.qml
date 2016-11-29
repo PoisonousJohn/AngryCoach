@@ -46,22 +46,8 @@ Card {
 
         Subheader {
             elevation: 1
-            backgroundColor: Palette.colors["purple"]["200"]
+            backgroundColor: Palette.colors["green"]["500"]
             text: qsTr("Eaten today")
-
-            SpriteAnimation {
-                id: sprite
-                frameSequence: [0,1,2,3,2,3,2,3,1,0]
-                width: dp(64)
-                height: dp(64)
-                source: "pig/eat.png"
-                frameCount: 4
-                frameWidth: 64
-                frameHeight: 64
-                frameRate: 4
-                interpolate: false
-                anchors.right: parent.right
-            }
         }
 
         Repeater {
@@ -77,10 +63,11 @@ Card {
                 modelItem: modelData
                 function getFood() {
                     var food = dataManager.getFoodById(modelData["FoodId"]);
-                    return food
+                    return food;
                 }
 
                 onClicked: {
+                    chooseFoodAmount.index = index;
                     chooseFoodAmount.loadPage({ food: getFood(), dayLogIndex: index });
                 }
 
@@ -130,6 +117,15 @@ Card {
     PageLoader {
         id: chooseFoodAmount
         pagePath: "ChooseFoodAmount.qml"
+        property int index;
+        Connections {
+            target: chooseFoodAmount.item
+            onConfirmed: {
+                dataManager.editFoodAmount(dataManager.selectedDate, chooseFoodAmount.index, amount);
+                pageStack.pop();
+            }
+        }
+
     }
 
     PageLoader {

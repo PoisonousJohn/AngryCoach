@@ -46,5 +46,7 @@
         <file>SpriteAnimation.qml</file>
         <file>pig/eat.wav</file>
         <file>pig/overdose.wav</file>
+        <file>singletons/AppActions.qml</file>
+        <file>StandardWithDivider.qml</file>
     </qresource>
 </RCC>

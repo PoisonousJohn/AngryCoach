@@ -6,6 +6,7 @@ import Material 0.3
 import Material.ListItems 0.1
 
 ColumnLayout {
+
     id: simpleList
 
     property alias delegateModel: delegateModel
@@ -17,7 +18,9 @@ ColumnLayout {
     property alias model: delegateModel.model
     property int maxTextWidth;
     property int maxHeight: listView.model.count * itemHeight
-    signal itemClicked(int modelIndex);
+
+    signal itemClicked(int modelIndex)
+    signal itemPressAndHold(int modelIndex)
 
     implicitHeight: maxHeight
 
@@ -26,44 +29,47 @@ ColumnLayout {
 
     DelegateModel {
         id: delegateModel
-        delegate: Standard {
+        delegate: StandardWithDivider {
             id: listDelegate
-            property int modelIndex: index
-            height: itemHeight
-            onClicked: {
-                itemClicked(modelIndex)
-            }
 
-            Text {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.margins: 16 * Units.dp
-                anchors.verticalCenter: parent.verticalCenter
-                text: {
-                    return defaultModelValue.length > 0 ? modelData[defaultModelValue] : modelData;
-                }
-                onContentWidthChanged: {
-                    maxTextWidth = Math.max(contentWidth + 33 * Units.dp, maxTextWidth)
-                }
+            textItem.onContentWidthChanged: {
+                maxTextWidth = Math.max(textItem.contentWidth + 33 * Units.dp, maxTextWidth)
+            }
+            text: {
+                return defaultModelValue.length > 0 ? modelData[defaultModelValue] : modelData;
+            }
+            onClicked: {
+                itemClicked(modelIndex);
+            }
+            onPressAndHold: {
+                itemPressAndHold(modelIndex)
             }
         }
     }
+
 
     Subheader {
         id: header
         visible: text.length > 0
     }
 
-    ListView {
-        id: listView
-        model: delegateModel
-        clip: true
+    Rectangle {
+        color: "white"
         anchors {
            top: header.visible ? header.bottom : parent.top
            bottom: parent.bottom
            left: parent.left
            right: parent.right
         }
+        ListView {
+            id: listView
+            model: delegateModel
+            clip: true
+            anchors {
+                fill: parent
+            }
+        }
+
     }
 
 }

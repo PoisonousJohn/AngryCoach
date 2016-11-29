@@ -106,6 +106,7 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
+//        initialPageLoader.setSource("TestPage.qml", {canGoBack: false})
         initialPageLoader.setSource("MainPage.qml", {canGoBack: false})
     }
 

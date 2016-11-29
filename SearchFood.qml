@@ -12,6 +12,7 @@ ChooseFood {
     }
     
     onItemSelected: {
+        chooseFoodAmount.foodId = item["Id"]
         chooseFoodAmount.loadPage({food: item})
     }
     onEditItem: {
@@ -25,6 +26,14 @@ ChooseFood {
     PageLoader {
         id: chooseFoodAmount
         pagePath: "ChooseFoodAmount.qml"
+        property string foodId;
+        Connections {
+            target: chooseFoodAmount.item
+            onConfirmed: {
+                dataManager.addFoodToLog(dataManager.selectedDate, chooseFoodAmount.foodId, amount);
+                pageStack.pop();
+            }
+        }
     }
     PageLoader {
         id: addFood
