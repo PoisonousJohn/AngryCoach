@@ -83,26 +83,16 @@ ScrollablePage {
             }
         }
     }
-    ChooseFoodAmount {
-        onConfirmed: {
-        }
-    }
 
-    ChooseFood {
+    FoodList {
         id: chooseFoodForRecipe
         title: qsTr("Add food to recipe")
         model: dataManager.food
+
         onItemSelected: {
+            console.log("search food in recipe item selected")
             chooseFoodAmountForRecipe.food = item;
             chooseFoodAmountForRecipe.loadPage({food: item });
-        }
-        onEditItem: {
-            addFood.foodId = itemId;
-            pageStack.push(addFood);
-        }
-        onDeleteItem: {
-            foodDeleteDialog.foodId = itemId
-            foodDeleteDialog.show();
         }
     }
 
@@ -127,15 +117,15 @@ ScrollablePage {
                 }
 
                 data["Ingredients"] = list;
-                if (isEditing) {
-                    dataManager.editRecipe(recipeId, data)
-                } else {
-                    dataManager.addRecipe(data);
-                }
+//                if (isEditing) {
+//                    dataManager.editRecipe(recipeId, data)
+//                } else {
+//                    dataManager.addRecipe(data);
+//                }
 
 
 
-                pageStack.pop();
+//                pageStack.pop();
             }
         }
 

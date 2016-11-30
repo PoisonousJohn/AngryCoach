@@ -6,14 +6,11 @@ import Material.ListItems 0.1
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
 
 SearchList {
-    id: searchFood
-    property string mode: "Food"
+    id: editableItemsList
     signal add();
     signal editItem(string itemId);
     signal deleteItem(string itemId);
-//    title: mode === "Food" ? qsTr("Choose food to add") : qsTr("Choose recipe to add")
     visible: false
-//    model: mode === "Food" ? dataManager.food : dataManager.recipes
     defaultModelField: "Name"
     listView {
         delegateModel.delegate: StandardWithDivider {
@@ -42,7 +39,7 @@ SearchList {
                             return "Not found in filter"
                         }
 
-                        var obj = searchFood.searchGroup.get(0);
+                        var obj = editableItemsList.searchGroup.get(0);
                         var data = listDelegate.DelegateModel.model.modelData;
                         return data["Name"];
                     }
@@ -73,7 +70,8 @@ SearchList {
 
         ]
     }
-    
+
+
     StandardActionButton {
         AwesomeIcon {
             anchors.centerIn: parent

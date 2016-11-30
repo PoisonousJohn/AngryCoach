@@ -3,8 +3,8 @@ import QtQuick.Layouts 1.1
 import Material 0.2
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
 
-ChooseFood {
-    id: searchRecipe
+EditableItemsList {
+    id: recipesList
     model: dataManager.recipes
     title: qsTr("Choose recipe to add")
     onAdd: {

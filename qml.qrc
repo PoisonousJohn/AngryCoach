@@ -18,7 +18,7 @@
         <file>SimpleContextMenu.qml</file>
         <file>ChooseFoodAmount.qml</file>
         <file>TwoColorProgressCircle.qml</file>
-        <file>ChooseFood.qml</file>
+        <file>EditableItemsList.qml</file>
         <file>UserProfile.qml</file>
         <file>StandardFormTextField.qml</file>
         <file>fitnessFormula.js</file>
@@ -35,8 +35,8 @@
         <file>FoodAmountRow.qml</file>
         <file>ChooseRecipeAmount.qml</file>
         <file>UIHelpers.js</file>
-        <file>SearchRecipe.qml</file>
-        <file>SearchFood.qml</file>
+        <file>RecipesList.qml</file>
+        <file>FoodList.qml</file>
         <file>DatePickerPopup.qml</file>
         <file>singletons/MainPageStack.qml</file>
         <file>singletons/qmldir</file>
@@ -48,5 +48,6 @@
         <file>pig/overdose.wav</file>
         <file>singletons/AppActions.qml</file>
         <file>StandardWithDivider.qml</file>
+        <file>AddFoodToLog.qml</file>
     </qresource>
 </RCC>

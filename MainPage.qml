@@ -85,11 +85,11 @@ ScrollablePage {
 
     PageLoader {
         id: searchRecipePageLoader
-        pagePath: "SearchRecipe.qml"
+        pagePath: "RecipesList.qml"
     }
     PageLoader {
         id: searchFoodPageLoader
-        pagePath: "SearchFood.qml"
+        pagePath: "AddFoodToLog.qml"
     }
 
 }
