@@ -48,7 +48,7 @@ ScrollablePage {
                 iconName: "maps/local_dining"
                 tooltip: qsTr("Recipe")
                 onTriggered: {
-                    searchRecipePageLoader.loadPage()
+                    recipeListLoader.loadPage()
                     floatingMenu.close()
                 }
             }
@@ -60,7 +60,7 @@ ScrollablePage {
                 iconName: "food"
                 tooltip: qsTr("Food")
                 onTriggered: {
-                    searchFoodPageLoader.loadPage()
+                    addFoodToLogLoader.loadPage()
                     floatingMenu.close()
                 }
 
@@ -84,11 +84,11 @@ ScrollablePage {
     }
 
     PageLoader {
-        id: searchRecipePageLoader
+        id: recipeListLoader
         pagePath: "RecipesList.qml"
     }
     PageLoader {
-        id: searchFoodPageLoader
+        id: addFoodToLogLoader
         pagePath: "AddFoodToLog.qml"
     }
 
