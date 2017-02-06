@@ -117,15 +117,15 @@ ScrollablePage {
                 }
 
                 data["Ingredients"] = list;
-//                if (isEditing) {
-//                    dataManager.editRecipe(recipeId, data)
-//                } else {
-//                    dataManager.addRecipe(data);
-//                }
+                if (isEditing) {
+                    dataManager.editRecipe(recipeId, data)
+                } else {
+                    dataManager.addRecipe(data);
+                }
 
 
 
-//                pageStack.pop();
+                pageStack.pop();
             }
         }
 

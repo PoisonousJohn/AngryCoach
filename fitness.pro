@@ -31,8 +31,8 @@ include(quickflux/quickflux.pri)
 # Additional import path used to resolve QML modules in Qt Creator's code model
 #QML_IMPORT_PATH += $$PWD/singletons
 #QML2_IMPORT_PATH += $$PWD/singletons
-QML_IMPORT_PATH += $$PWD/material/src
-QML2_IMPORT_PATH += $$PWD/material/src
+QML_IMPORT_PATH += $$PWD
+QML2_IMPORT_PATH += $$PWD
 #QML_IMPORT_PATH += $$PWD/quickflux
 #QML2_IMPORT_PATH += $$PWD/quickflux
 
