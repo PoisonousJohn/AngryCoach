@@ -4,19 +4,21 @@ import Material 0.3
 import Material.ListItems 0.1
 import Material.Extras 0.1
 import "formHelper.js" as FormHelper
+import 'stores'
+import 'singletons'
 
 ScrollablePage {
-    property bool isEditing: foodId.length > 0
-    property string foodId;
-    property var formValues: isEditing ? dataManager.getFoodValuesForForm(foodId) : null
+    property bool isEditing: MainStore.food.isEditing
+    property var formValues: MainStore.food.food
 
     onFormValuesChanged: {
-        name.value = formValues !== null ? formValues["Name"] : ""
-        totalCalories.value = formValues !== null ? formValues["TotalCalories"] : ""
-        fats.value = formValues !== null ? formValues["Fats"] : ""
-        proteins.value = formValues !== null ? formValues["Proteins"] : ""
-        carbs.value = formValues !== null ? formValues["Carbs"] : ""
-        weight.value = formValues !== null ? formValues["Weight"] : "100"
+        console.log("form values changed: " + formValues)
+        name.value = formValues ? formValues["Name"] : ""
+        totalCalories.value = formValues ? formValues["TotalCalories"] : ""
+        fats.value = formValues ? formValues["Fats"] : ""
+        proteins.value = formValues ? formValues["Proteins"] : ""
+        carbs.value = formValues ? formValues["Carbs"] : ""
+        weight.value = formValues ? formValues["Weight"] : "100"
     }
 
     function getFormData() {
@@ -33,8 +35,9 @@ ScrollablePage {
     onGoBack: {
         Qt.inputMethod.reset();
         Qt.inputMethod.hide()
-        foodId = ""
-        formValuesChanged();
+//        foodId = ""
+//        formValuesChanged();
+        AppActions.cancelEditFood();
     }
 
     title: isEditing ? qsTr("Edit food") : qsTr("Add food");
@@ -56,7 +59,7 @@ ScrollablePage {
                onTriggered:  {
                     if (isEditing)
                     {
-                        dataManager.editFood(foodId, getFormData());
+                        dataManager.editFood(formValues["Id"], getFormData());
                     }
                     else
                     {

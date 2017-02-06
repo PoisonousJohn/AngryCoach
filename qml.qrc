@@ -30,7 +30,6 @@
         <file>StandardFormDropdown.qml</file>
         <file>FloatingMenuButton.qml</file>
         <file>TestPage.qml</file>
-        <file>icons/food.svg</file>
         <file>AddRecipe.qml</file>
         <file>FoodAmountRow.qml</file>
         <file>ChooseRecipeAmount.qml</file>
@@ -49,5 +48,9 @@
         <file>singletons/AppActions.qml</file>
         <file>StandardWithDivider.qml</file>
         <file>AddFoodToLog.qml</file>
+        <file>stores/MainStore.qml</file>
+        <file>stores/qmldir</file>
+        <file>stores/FoodStore.qml</file>
+        <file>PageLoaders.qml</file>
     </qresource>
 </RCC>

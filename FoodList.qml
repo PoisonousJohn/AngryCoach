@@ -1,19 +1,21 @@
 import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import Material 0.2
-import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
+import QuickFlux 1.1
+import 'stores'
+import 'singletons'
 
 EditableItemsList {
     id: searchFood
-    model: dataManager.food
+    model: MainStore.food.list
     title: qsTr("Choose food to add")
     
     onAdd: {
-        addFood.loadPage({foodId: ""})
+        AppActions.openAddFoodPage();
     }
 
     onEditItem: {
-        addFood.loadPage({foodId: itemId})
+        AppActions.openEditFoodPage(itemId);
     }
 
     onDeleteItem: {
@@ -24,6 +26,19 @@ EditableItemsList {
     PageLoader {
         id: addFood
         pagePath: "AddFood.qml"
+
+        AppListener {
+            onDispatched: {
+                switch (type) {
+                    case "openAddFoodPage":
+                        addFood.loadPage({foodId: ""});
+                        break;
+                    case "openEditFoodPage":
+                        addFood.loadPage({foodId: message.foodId});
+                        break;
+                }
+            }
+        }
     }
 
     DialogLoader {

@@ -4,6 +4,12 @@ import QtQuick 2.0
 import QuickFlux 1.0
 
 ActionCreator {
+    signal openAddFoodPage();
+    signal openEditFoodPage(string foodId);
+    signal cancelEditFood();
+    signal openAddFoodToLogPage();
+    signal openAddRecipeToLogPage();
+
     signal addFood(var data);
     signal editFood(string foodId, var data);
     signal removeFood(string foodId);

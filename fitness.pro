@@ -31,8 +31,9 @@ include(quickflux/quickflux.pri)
 # Additional import path used to resolve QML modules in Qt Creator's code model
 #QML_IMPORT_PATH += $$PWD/singletons
 #QML2_IMPORT_PATH += $$PWD/singletons
-QML_IMPORT_PATH += $$PWD
-QML2_IMPORT_PATH += $$PWD
+QML_IMPORT_PATH += $$PWD \
+                    $$PWD/material/src
+QML2_IMPORT_PATH += $$QML_IMPORT_PATH
 #QML_IMPORT_PATH += $$PWD/quickflux
 #QML2_IMPORT_PATH += $$PWD/quickflux
 
@@ -62,7 +63,8 @@ DISTFILES += \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat
+    android/gradlew.bat \
+    stores/qmldir
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 

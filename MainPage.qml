@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import Material 0.3
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
+import 'singletons'
 
 ScrollablePage {
 
@@ -48,7 +49,7 @@ ScrollablePage {
                 iconName: "maps/local_dining"
                 tooltip: qsTr("Recipe")
                 onTriggered: {
-                    recipeListLoader.loadPage()
+                    AppActions.openAddRecipeToLogPage();
                     floatingMenu.close()
                 }
             }
@@ -60,7 +61,7 @@ ScrollablePage {
                 iconName: "food"
                 tooltip: qsTr("Food")
                 onTriggered: {
-                    addFoodToLogLoader.loadPage()
+                    AppActions.openAddFoodToLogPage();
                     floatingMenu.close()
                 }
 
@@ -79,17 +80,7 @@ ScrollablePage {
         }
     }
 
-    Loader {
-        id: newPage
-    }
+    PageLoaders {}
 
-    PageLoader {
-        id: recipeListLoader
-        pagePath: "RecipesList.qml"
-    }
-    PageLoader {
-        id: addFoodToLogLoader
-        pagePath: "AddFoodToLog.qml"
-    }
 
 }
