@@ -19,7 +19,7 @@ SOURCES += $$PWD/thirdParty/jenson/src/*.cpp \
     RecipeMap.cpp
 SOURCES += main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES +=	qml.qrc
 
 INCLUDEPATH += $$PWD/thirdParty
 INCLUDEPATH += $$PWD/thirdParty/jenson/src
