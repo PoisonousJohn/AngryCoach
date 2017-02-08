@@ -4,9 +4,19 @@ import QtQuick.Controls 1.4
 import Material 0.3
 import Material.ListItems 0.1
 import "UIHelpers.js" as UIHelpers
+import 'stores'
 
 Card {
+    property var log: DayLogStore.log
     property date day: dataManager.selectedDate
+
+    function updateDayModel() {
+        listview.model = null;
+        recipesList.model = null;
+        listview.model = log["Food"];
+        recipesList.model = log["Recipes"]
+    }
+
     Component.onCompleted:  {
         updateDayModel();
     }
@@ -17,22 +27,20 @@ Card {
         right: parent.right
     }
 
-    function updateDayModel() {
-        var log = dataManager.getDayLog(dataManager.selectedDate);
-        listview.model = null;
-        recipesList.model = null;
-        listview.model = log["Food"];
-        recipesList.model = log["Recipes"]
-    }
-    Connections {
-        target: dataManager
-        onDayLogChanged: {
-            updateDayModel();
-        }
+//    Connections {
+//        target: dataManager
+//        onDayLogChanged: {
+//            updateDayModel();
+//        }
 
-        onSelectedDateChanged: {
-            updateDayModel();
-        }
+//        onSelectedDateChanged: {
+//            updateDayModel();
+//        }
+//    }
+
+
+    onLogChanged: {
+        updateDayModel();
     }
 
     ColumnLayout {

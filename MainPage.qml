@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 import Material 0.3
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
 import 'singletons'
+import 'stores'
 
 ScrollablePage {
 
@@ -11,7 +12,8 @@ ScrollablePage {
             name: qsTr("Choose day")
             iconName: "action/today"
             onTriggered: {
-                datePickerLoader.load()
+                AppActions.openDaySelectionPopup();
+//                datePickerLoader.load()
             }
         }
 
@@ -31,7 +33,7 @@ ScrollablePage {
 
         FoodDayLog {
             id: dayLog
-            day: dataManager.selectedDate
+            day: DayLogStore.day
         }
     }
 
@@ -49,7 +51,7 @@ ScrollablePage {
                 iconName: "maps/local_dining"
                 tooltip: qsTr("Recipe")
                 onTriggered: {
-                    AppActions.openAddRecipeToLogPage();
+                    AppActions.openRecipeList();
                     floatingMenu.close()
                 }
             }
@@ -61,7 +63,7 @@ ScrollablePage {
                 iconName: "food"
                 tooltip: qsTr("Food")
                 onTriggered: {
-                    AppActions.openAddFoodToLogPage();
+                    AppActions.openFoodList();
                     floatingMenu.close()
                 }
 
@@ -70,14 +72,6 @@ ScrollablePage {
 
         buttons: [button1,button2]
 
-    }
-
-    Loader {
-        id:datePickerLoader
-        function load() {
-            source = "DatePickerPopup.qml"
-            item.open();
-        }
     }
 
     PageLoaders {}

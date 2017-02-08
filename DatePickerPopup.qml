@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import Material 0.2
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
+import 'singletons'
 
 PopupBase {
     id: datePickerPopup
@@ -13,11 +14,11 @@ PopupBase {
     visible: opacity > 0
     DatePicker {
         id: datePicker
-        Component.onCompleted: dataManager.selectedDate = selectedDate
+//        Component.onCompleted: dataManager.selectedDate = selectedDate
         selectedDate: new Date()
         anchors.centerIn: parent
         onSelectedDateChanged: {
-            dataManager.selectedDate = selectedDate
+            AppActions.selectDay(selectedDate);
         }
     }
 }

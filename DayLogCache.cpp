@@ -32,6 +32,7 @@ DayLog *DayLogCache::getLog() const
 
 void DayLogCache::save()
 {
+    qDebug() << "Saving day log";
     if (!_file->isOpen())
     {
         if (!_file->open(QIODevice::ReadWrite))

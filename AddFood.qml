@@ -8,8 +8,8 @@ import 'stores'
 import 'singletons'
 
 ScrollablePage {
-    property bool isEditing: MainStore.food.isEditing
-    property var formValues: MainStore.food.food
+    property bool isEditing: FoodStore.isEditing
+    property var formValues: FoodStore.food
 
     onFormValuesChanged: {
         console.log("form values changed: " + formValues)

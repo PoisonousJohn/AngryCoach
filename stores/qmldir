@@ -1,1 +1,3 @@
-singleton MainStore 1.0 MainStore.qml
+singleton FoodStore 1.0 FoodStore.qml
+singleton DayLogStore 1.0 DayLogStore.qml
+

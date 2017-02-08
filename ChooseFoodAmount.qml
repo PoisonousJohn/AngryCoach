@@ -1,36 +1,18 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import Material 0.3
+import 'stores'
+import 'singletons'
 
 Page {
+    property bool isEditing: food !== null && food !== undefined
 
-    signal confirmed(double amount);
-
-    onGoBack: {
-        dayLogIndex = -1;
-    }
-
-    property int dayLogIndex: -1;
-    property var foodAmountObj: dayLogIndex >= 0
-                                        ? dataManager.getDayLog(dataManager.selectedDate)["Food"][dayLogIndex]
-                                        : null;
-
-    property var food:  {
-        "Id": "testId",
-        "Name": "Test name",
-        "FoodCalories" : {
-            "TotalCalories" : 100,
-            "Carbs" : 10,
-            "Proteins" : 20,
-            "Fats" : 30,
-        },
-    }
-
+    property var food: FoodStore.selectedFood
     property double totalWeight;
     property double foodAmount: {
-        if (amount.displayText.length === 0)
+        if (!isEditing || amount.displayText.length === 0)
         {
-            return 0.00001;
+            return 0.000001;
         }
 
         var amountNumber = Number.fromLocaleString(Qt.locale(), amount.displayText);
@@ -38,11 +20,21 @@ Page {
     }
 
     function updateStats() {
+        if (!food)
+        {
+            return;
+        }
+
         totalWeight = 0;
         for (var i = 0; i < nutritionModel.count; ++i)
         {
-            totalWeight += food["FoodCalories"][nutritionModel.get(i).name] * foodAmount;
+            totalWeight += food[nutritionModel.get(i).name] * foodAmount;
         }
+    }
+
+    onGoBack: {
+        Qt.inputMethod.reset();
+        Qt.inputMethod.hide()
     }
 
     onFoodAmountChanged: {
@@ -54,7 +46,7 @@ Page {
     }
 
 
-    title: foodAmountObj ? qsTr("Edit food amount") : qsTr("How much food?")
+    title: isEditing ? qsTr("Edit food amount") : qsTr("How much food?")
 
     ColumnLayout {
         spacing: dp(10)
@@ -77,7 +69,7 @@ Page {
 
                 Label {
                     Layout.alignment: Qt.AlignCenter
-                    text: (food.FoodCalories.TotalCalories * foodAmount).toFixed(2) + qsTr(" kcal")
+                    text: (isEditing ? food.TotalCalories * foodAmount : 0).toFixed(2) + qsTr(" kcal")
                     style: "title"
                 }
 
@@ -86,7 +78,9 @@ Page {
                     Repeater {
                         model: nutritionModel
                         delegate:  Label {
-                            text: qsTr(modelData) + ": " + (food["FoodCalories"][modelData] * foodAmount).toFixed(2) + qsTr(" g")
+                            text: isEditing
+                                    ? qsTr(modelData) + ": " + (food[modelData] * foodAmount).toFixed(2) + qsTr(" g")
+                                    : ""
                         }
                     }
 
@@ -105,7 +99,7 @@ Page {
                     margins: dp(10)
                 }
                 Label {
-                    text: food["Name"]
+                    text: isEditing ? food["Name"] : ""
                     style: "title"
                 }
 
@@ -117,10 +111,10 @@ Page {
 
                     TextField {
                         id: amount
-                        text: foodAmountObj ? foodAmountObj["Amount"] : "100"
+                        text: isEditing ? food["Amount"] : "100"
                         implicitWidth: dp(50)
                         maximumLength: 9
-                        focus: true
+                        focus: !isEditing
                         inputMethodHints: Qt.ImhFormattedNumbersOnly
                         validator: DoubleValidator {
                             decimals: 2
@@ -177,7 +171,7 @@ Page {
                                     return 0;
                                 }
 
-                                var result = food["FoodCalories"][modelData] * foodAmount / totalWeight;
+                                var result = food[modelData] * foodAmount / totalWeight;
                                 return Math.min(1.0, result);
                             }
 
@@ -221,7 +215,7 @@ Page {
         enabled: Number.fromLocaleString(Qt.locale(), amount.displayText) > 0
         backgroundColor: enabled ? Palette.colors["green"]["A700"] : Palette.colors["grey"]["500"]
         onClicked: {
-            confirmed(Number.fromLocaleString(Qt.locale(), amount.displayText));
+            AppActions.addFoodAmount(amount.displayText);
             pageStack.pop();
         }
 

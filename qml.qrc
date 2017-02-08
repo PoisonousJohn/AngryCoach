@@ -48,9 +48,10 @@
         <file>singletons/AppActions.qml</file>
         <file>StandardWithDivider.qml</file>
         <file>AddFoodToLog.qml</file>
-        <file>stores/MainStore.qml</file>
         <file>stores/qmldir</file>
         <file>stores/FoodStore.qml</file>
         <file>PageLoaders.qml</file>
+        <file>stores/DayLogStore.qml</file>
+        <file>adapters/FoodStoreAdapter.qml</file>
     </qresource>
 </RCC>

@@ -7,7 +7,7 @@ import 'singletons'
 
 EditableItemsList {
     id: searchFood
-    model: MainStore.food.list
+    model: FoodStore.list
     title: qsTr("Choose food to add")
     
     onAdd: {

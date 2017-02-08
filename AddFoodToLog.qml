@@ -1,24 +1,20 @@
 import QtQuick 2.0
+import QuickFlux 1.0
+import 'singletons'
 
 FoodList {
     id: addFoodToLog
 
     onItemSelected: {
-        console.log("search food item selected default")
-        chooseFoodAmount.foodId = item["Id"]
-        chooseFoodAmount.loadPage({food: item})
+        AppActions.selectFood(item["Id"]);
     }
 
-    PageLoader {
-        id: chooseFoodAmount
-        pagePath: "ChooseFoodAmount.qml"
-        property string foodId;
-        Connections {
-            target: chooseFoodAmount.item
-            onConfirmed: {
-                dataManager.addFoodToLog(dataManager.selectedDate, chooseFoodAmount.foodId, amount);
-                pageStack.pop();
+    AppListener {
+        onDispatched: {
+            if (type === "addFoodAmount") {
+                MainPageStack.pageStack.pop();
             }
         }
     }
+
 }
