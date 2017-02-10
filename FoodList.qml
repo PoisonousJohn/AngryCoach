@@ -11,34 +11,16 @@ EditableItemsList {
     title: qsTr("Choose food to add")
     
     onAdd: {
-        AppActions.openAddFoodPage();
+        AppActions.openFoodPage("");
     }
 
     onEditItem: {
-        AppActions.openEditFoodPage(itemId);
+        AppActions.openFoodPage(itemId);
     }
 
     onDeleteItem: {
         foodDeleteDialog.itemId = itemId;
         foodDeleteDialog.show(qsTr("Delete food?"), qsTr("Do you really want to delete this item?"))
-    }
-
-    PageLoader {
-        id: addFood
-        pagePath: "AddFood.qml"
-
-        AppListener {
-            onDispatched: {
-                switch (type) {
-                    case "openAddFoodPage":
-                        addFood.loadPage({foodId: ""});
-                        break;
-                    case "openEditFoodPage":
-                        addFood.loadPage({foodId: message.foodId});
-                        break;
-                }
-            }
-        }
     }
 
     DialogLoader {

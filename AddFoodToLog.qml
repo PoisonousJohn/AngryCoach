@@ -3,15 +3,16 @@ import QuickFlux 1.0
 import 'singletons'
 
 FoodList {
+
     id: addFoodToLog
 
     onItemSelected: {
-        AppActions.selectFood(item["Id"]);
+        AppActions.requestAddFoodAmount(item["Id"]);
     }
 
     AppListener {
         onDispatched: {
-            if (type === "addFoodAmount") {
+            if (type === "acceptFoodAmount" ) {
                 MainPageStack.pageStack.pop();
             }
         }

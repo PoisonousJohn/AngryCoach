@@ -7,6 +7,15 @@ Item {
         pagePath: "RecipesList.qml"
     }
     PageLoader {
+        id: chooseRecipeAmount
+        pagePath: "ChooseRecipeAmount.qml"
+    }
+
+    PageLoader {
+        id: addRecipe
+        pagePath: "AddRecipe.qml"
+    }
+    PageLoader {
         id: addFoodToLogLoader
         pagePath: "AddFoodToLog.qml"
     }
@@ -14,7 +23,6 @@ Item {
         id: chooseFoodAmount
         pagePath: "ChooseFoodAmount.qml"
     }
-
     Loader {
         id:datePickerLoader
         function load() {
@@ -22,10 +30,20 @@ Item {
             item.open();
         }
     }
+    PageLoader {
+        id: addFood
+        pagePath: "AddFood.qml"
+    }
 
     AppListener {
         onDispatched: {
             switch (type) {
+                case "openRecipePage":
+                    addRecipe.loadPage();
+                    break;
+                case "openFoodPage":
+                    addFood.loadPage();
+                    break;
                 case "openDaySelectionPopup":
                     datePickerLoader.load();
                     break;
@@ -35,7 +53,7 @@ Item {
                 case "openRecipeList":
                     recipeListLoader.loadPage();
                     break;
-                case "selectFood":
+                case "openFoodAmountPage":
                     chooseFoodAmount.loadPage();
                     break;
             }

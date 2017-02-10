@@ -53,5 +53,7 @@
         <file>PageLoaders.qml</file>
         <file>stores/DayLogStore.qml</file>
         <file>adapters/FoodStoreAdapter.qml</file>
+        <file>images/free-food-photo20.png</file>
+        <file>stores/RecipesStore.qml</file>
     </qresource>
 </RCC>

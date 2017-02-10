@@ -5,6 +5,7 @@ import Material 0.3
 import Material.ListItems 0.1
 import "UIHelpers.js" as UIHelpers
 import 'stores'
+import 'singletons'
 
 Card {
     property var log: DayLogStore.log
@@ -26,17 +27,6 @@ Card {
         left: parent.left
         right: parent.right
     }
-
-//    Connections {
-//        target: dataManager
-//        onDayLogChanged: {
-//            updateDayModel();
-//        }
-
-//        onSelectedDateChanged: {
-//            updateDayModel();
-//        }
-//    }
 
 
     onLogChanged: {
@@ -75,8 +65,9 @@ Card {
                 }
 
                 onClicked: {
-                    chooseFoodAmount.index = index;
-                    chooseFoodAmount.loadPage({ food: getFood(), dayLogIndex: index });
+                    AppActions.requestEditFoodAmount(index);
+//                    chooseFoodAmount.index = index;
+//                    chooseFoodAmount.loadPage({ food: getFood(), dayLogIndex: index });
                 }
 
                 onPressAndHold: {
@@ -136,10 +127,10 @@ Card {
 
     }
 
-    PageLoader {
-        id: chooseRecipeAmount
-        pagePath: "ChooseRecipeAmount.qml"
-    }
+//    PageLoader {
+//        id: chooseRecipeAmount
+//        pagePath: "ChooseRecipeAmount.qml"
+//    }
 
     Dialog {
         id: deleteDialog

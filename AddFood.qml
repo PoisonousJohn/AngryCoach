@@ -8,17 +8,16 @@ import 'stores'
 import 'singletons'
 
 ScrollablePage {
-    property bool isEditing: FoodStore.isEditing
+    property bool isEditing: formValues["Id"] !== ""
     property var formValues: FoodStore.food
 
     onFormValuesChanged: {
-        console.log("form values changed: " + formValues)
-        name.value = formValues ? formValues["Name"] : ""
-        totalCalories.value = formValues ? formValues["TotalCalories"] : ""
-        fats.value = formValues ? formValues["Fats"] : ""
-        proteins.value = formValues ? formValues["Proteins"] : ""
-        carbs.value = formValues ? formValues["Carbs"] : ""
-        weight.value = formValues ? formValues["Weight"] : "100"
+        name.value = formValues["Name"]
+        totalCalories.value = formValues["TotalCalories"]
+        fats.value = formValues["Fats"]
+        proteins.value = formValues["Proteins"]
+        carbs.value = formValues["Carbs"]
+        weight.value = formValues["Weight"]
     }
 
     function getFormData() {
@@ -37,7 +36,7 @@ ScrollablePage {
         Qt.inputMethod.hide()
 //        foodId = ""
 //        formValuesChanged();
-        AppActions.cancelEditFood();
+//        AppActions.cancelEditFood();
     }
 
     title: isEditing ? qsTr("Edit food") : qsTr("Add food");
@@ -45,7 +44,7 @@ ScrollablePage {
            Action {
                name: "Done"
                iconName: "action/done"
-                enabled: {
+               enabled: {
                     return  FormHelper.notEmpty([name]) &&
                             FormHelper.numberGreaterThanZero(
                                 [totalCalories, weight]
@@ -55,18 +54,10 @@ ScrollablePage {
                                 fats,
                                 proteins]
                             )
-                }
+               }
                onTriggered:  {
-                    if (isEditing)
-                    {
-                        dataManager.editFood(formValues["Id"], getFormData());
-                    }
-                    else
-                    {
-                        dataManager.addFood(getFormData());
-                    }
-
-                    pageStack.pop()
+                   AppActions.acceptFoodPageValues(getFormData());
+                   pageStack.pop();
                }
            }
        ]
@@ -97,14 +88,14 @@ ScrollablePage {
             label: qsTr("Total Calories")
             validator: doubleValidator
             suffixText: qsTr("kcal")
-            value: formValues !== null ? formValues["TotalCalories"] : ""
+            value: formValues["TotalCalories"]
             inputHint: Qt.ImhFormattedNumbersOnly
         }
 
         StandardFormTextField {
             id: carbs
             label: qsTr("Carbs")
-            value: formValues !== null ? formValues["Carbs"] : ""
+            value: formValues["Carbs"]
             validator: doubleValidator
             suffixText: qsTr("g")
             inputHint: Qt.ImhFormattedNumbersOnly
@@ -113,7 +104,7 @@ ScrollablePage {
         StandardFormTextField {
             id: proteins
             label: qsTr("Proteins")
-            value: formValues !== null ? formValues["Proteins"] : ""
+            value: formValues["Proteins"]
             validator: doubleValidator
             suffixText: qsTr("g")
             inputHint: Qt.ImhFormattedNumbersOnly
@@ -122,7 +113,7 @@ ScrollablePage {
         StandardFormTextField {
             id: fats
             label: qsTr("Fats")
-            value: formValues !== null ? formValues["Fats"] : ""
+            value: formValues["Fats"]
             validator: doubleValidator
             suffixText: qsTr("g")
             inputHint: Qt.ImhFormattedNumbersOnly
@@ -131,7 +122,7 @@ ScrollablePage {
         StandardFormTextField {
             id: weight
             label: qsTr("Weight")
-            value: formValues !== null ? formValues["Weight"] : "100"
+            value: formValues["Weight"]
             validator: doubleValidator
             suffixText: qsTr("g")
             inputHint: Qt.ImhFormattedNumbersOnly

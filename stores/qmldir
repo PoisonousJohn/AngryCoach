@@ -1,3 +1,4 @@
 singleton FoodStore 1.0 FoodStore.qml
+singleton RecipesStore 1.0 RecipesStore.qml
 singleton DayLogStore 1.0 DayLogStore.qml
 
