@@ -3,6 +3,10 @@ import QuickFlux 1.0
 
 Item {
     PageLoader {
+        id:userProfile
+        pagePath: "UserProfile.qml"
+    }
+    PageLoader {
         id: recipeListLoader
         pagePath: "RecipesList.qml"
     }
@@ -34,10 +38,30 @@ Item {
         id: addFood
         pagePath: "AddFood.qml"
     }
+    Loader {
+        id: confirmationDialog
+        property var acceptedCallback
+        function load(title, message, onConfirm)
+        {
+            acceptedCallback = onConfirm;
+            setSource("Material/Dialog.qml", { title: title, text: message });
+            item.show();
+        }
+
+        Connections {
+            target: confirmationDialog.item
+            onAccepted: {
+                confirmationDialog.acceptedCallback();
+            }
+        }
+    }
 
     AppListener {
         onDispatched: {
             switch (type) {
+                case "openUserProfile":
+                    userProfile.loadPage();
+                    break;
                 case "openRecipePage":
                     addRecipe.loadPage();
                     break;
@@ -55,6 +79,12 @@ Item {
                     break;
                 case "openFoodAmountPage":
                     chooseFoodAmount.loadPage();
+                    break;
+                case "openRecipeAmountPage":
+                    chooseRecipeAmount.loadPage();
+                    break;
+                case "openConfirmationDialog":
+                    confirmationDialog.load(message.title, message.message, message.onConfirmAction);
                     break;
             }
         }

@@ -7,7 +7,7 @@ import 'singletons'
 
 EditableItemsList {
     id: searchFood
-    model: FoodStore.list
+    model: foodStore.list
     title: qsTr("Choose food to add")
     
     onAdd: {
@@ -19,16 +19,7 @@ EditableItemsList {
     }
 
     onDeleteItem: {
-        foodDeleteDialog.itemId = itemId;
-        foodDeleteDialog.show(qsTr("Delete food?"), qsTr("Do you really want to delete this item?"))
-    }
-
-    DialogLoader {
-        id: foodDeleteDialog
-        property string itemId;
-        onAccepted: {
-            dataManager.removeFood(itemId)
-        }
+        AppActions.askToRemoveFood(itemId);
     }
 
 

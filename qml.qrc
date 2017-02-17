@@ -55,5 +55,6 @@
         <file>adapters/FoodStoreAdapter.qml</file>
         <file>images/free-food-photo20.png</file>
         <file>stores/RecipesStore.qml</file>
+        <file>stores/UserProfileStore.qml</file>
     </qresource>
 </RCC>

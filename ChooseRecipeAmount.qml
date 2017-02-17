@@ -3,35 +3,20 @@ import QtQuick.Layouts 1.1
 import Material 0.3
 import Material.ListItems 0.1
 import "UIHelpers.js" as UIHelpers
+import "stores"
+import "singletons"
 
 Page {
 
     id: chooseRecipeAmount
 
-    signal confirmed(double amount);
-    onConfirmed: {
-        if (foodAmountObj)
-        {
-            dataManager.editRecipeAmount(dataManager.selectedDate, dayLogIndex, amount);
-        }
-        else
-        {
-            dataManager.addRecipeToLog(dataManager.selectedDate, chooseRecipeAmount.recipe["Id"], amount);
-        }
-
-        pageStack.pop();
-    }
-
-    property var recipe;
     property double totalNutritionWeight;
     property double totalRecipeWeight;
     property double totalCalories;
     property var nutritions;
 
-    property int dayLogIndex: -1;
-    property var foodAmountObj: dayLogIndex >= 0
-                                        ? dataManager.getDayLog(dataManager.selectedDate)["Recipes"][dayLogIndex]
-                                        : null;
+    property var recipeAmount: dayLogStore.recipeAmount
+    property var recipe: recipeAmount ? recipeAmount.Recipe : null
 
     property double serving: {
         if (amount.displayText.length === 0)
@@ -48,12 +33,12 @@ Page {
             return;
         }
 
-        var stats = UIHelpers.getRecipeStats(recipe, dataManager, serving);
+        var stats = recipesStore.getRecipeAmountViewModel(-1, recipe.Id, serving);
 
-        totalNutritionWeight = stats["nutritionWeight"];
-        totalCalories = stats["calories"];
-        totalRecipeWeight = stats["recipeWeight"];
-        chooseRecipeAmount.nutritions = stats["nutritions"];
+        totalNutritionWeight = stats.NutritionsWeight;
+        totalCalories = stats.TotalCalories;
+        totalRecipeWeight = stats.Weight;
+        chooseRecipeAmount.nutritions = stats;
     }
 
     onServingChanged: {
@@ -61,11 +46,11 @@ Page {
     }
 
     onRecipeChanged: {
-        updateStats();
+//        updateStats();
     }
 
 
-    title: foodAmountObj ? qsTr("Edit serving") : qsTr("Choose serving")
+    title: recipeAmount ? qsTr("Edit serving") : qsTr("Choose serving")
 
     ColumnLayout {
         spacing: 0
@@ -109,7 +94,7 @@ Page {
                     }
                     TextField {
                         id: amount
-                        text: foodAmountObj ? foodAmountObj["Amount"] : "1"
+                        text: recipeAmount ? recipeAmount["Amount"] : "1"
                         focus: true
                         color: Palette.colors["indigo"]["700"]
                         floatingLabel: true
@@ -227,7 +212,8 @@ Page {
         enabled: Number.fromLocaleString(Qt.locale(), amount.displayText) > 0
         backgroundColor: enabled ? Palette.colors["green"]["A700"] : Palette.colors["grey"]["500"]
         onClicked: {
-            confirmed(Number.fromLocaleString(Qt.locale(), amount.displayText));
+            var amountNumber = Number.fromLocaleString(Qt.locale(), amount.displayText);
+            AppActions.acceptRecipeAmount(recipe ? recipe.Id : null, amountNumber);
             pageStack.pop();
         }
 

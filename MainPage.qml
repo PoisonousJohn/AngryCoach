@@ -33,7 +33,7 @@ ScrollablePage {
 
         FoodDayLog {
             id: dayLog
-            day: DayLogStore.day
+            day: dayLogStore.day
         }
     }
 

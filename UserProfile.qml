@@ -1,14 +1,13 @@
 import QtQuick 2.5
 import QtQuick.Layouts 1.0
+import QuickFlux 1.0
 import Material 0.3
 import Material.ListItems 0.1
 import Fitness 0.1
 import "formHelper.js" as FormHelper
+import "singletons"
 
 ScrollablePage {
-    id: userProfilePage
-    scrollableContent: mainColumn
-    title: qsTr("User profile")
     property var massModifierMenu: [
         qsTr("Normal"),
         qsTr("Slow weight loss"),
@@ -18,7 +17,10 @@ ScrollablePage {
 
     property var userProfile: dataManager.userProfile
     property bool firstTimeLaunch: userProfile["Weight"] === 0
-    signal updated();
+
+    id: userProfilePage
+    scrollableContent: mainColumn
+    title: qsTr("User profile")
 
     actions: [
         Action {
@@ -35,13 +37,21 @@ ScrollablePage {
                 map["Age"] = parseInt(age.value);
                 map["Sex"] = sexMenu.selectedIndex;
                 map["MassModifier"] = massModifier.selectedIndex;
-                dataManager.updateUserProfile(map);
-                updated();
+                AppActions.updateUserProfile(map);
                 pageStack.pop()
             }
         }
 
     ]
+
+    AppListener {
+        onDispatched: {
+            if (type === "lockUserProfilePage")
+            {
+                userProfilePage.canGoBack = false;
+            }
+        }
+    }
 
     ColumnLayout {
         id: mainColumn

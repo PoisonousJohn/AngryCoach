@@ -7,7 +7,7 @@ import 'singletons'
 Page {
     property bool isEditing: food !== null && food !== undefined
 
-    property var foodAmountModel: DayLogStore.foodAmount
+    property var foodAmountModel: dayLogStore.foodAmount
     property var food: foodAmountModel ? foodAmountModel.Food : null
     property double totalWeight;
     property double foodAmount: {
@@ -227,7 +227,7 @@ Page {
         enabled: Number.fromLocaleString(Qt.locale(), amount.displayText) > 0
         backgroundColor: enabled ? Palette.colors["green"]["A700"] : Palette.colors["grey"]["500"]
         onClicked: {
-            AppActions.acceptFoodAmount(amount.displayText);
+            AppActions.acceptFoodAmount(food.Id, amount.displayText);
             pageStack.pop();
         }
 

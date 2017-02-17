@@ -3,97 +3,30 @@ import QtQuick.Layouts 1.1
 import Material 0.3
 import Material.ListItems 0.1
 import "formHelper.js" as FormHelper
+import "stores"
+import 'singletons'
 
 ScrollablePage {
-    id:addRecipePage
-
-    scrollableContent: mainLayout
+    property bool isEditing: recipeModel !== null
+                                && recipeModel !== undefined
+                                && recipeModel.Id
+    property var ingredients: recipesStore.ingredients
+    property var recipeModel: recipesStore.recipe
 
     signal addIngredient();
-
-    title: isEditing ? qsTr("Edit recipe") : qsTr("Add recipe")
-
-    onGoBack: {
-        recipeId = ""
-        formValuesChanged();
-    }
-
-    property bool isEditing: recipeId.length > 0;
-    property string recipeId;
-    property var ingredients;
-    property var formValues: isEditing ? dataManager.getRecipeValuesForForm(recipeId) : null
-
-    onFormValuesChanged: {
-        title.text = formValues ? formValues["Name"] : "";
-
-        if (ingredients)
-        {
-            ingredients.clear();
-        }
-        else
-        {
-            ingredients = createModel(addRecipePage);
-        }
-
-        if (!formValues)
-        {
-            return;
-        }
-
-        var valueIngredients = formValues["Ingredients"];
-        for (var i = 0; i < valueIngredients.length; ++i)
-        {
-            ingredients.append(valueIngredients[i]);
-        }
-
-    }
-
-    onAddIngredient: {
-        pageStack.push(chooseFoodForRecipe)
-    }
-
-    Component {
-        id: modelComponent
-        ListModel {
-        }
-    }
 
     function createModel(parent) {
         var newModel = modelComponent.createObject(parent);
         return newModel;
     }
 
-    PageLoader {
-        id: chooseFoodAmountForRecipe
-        pagePath: "ChooseFoodAmount.qml"
-        property var food;
-        Connections {
-            target: chooseFoodAmountForRecipe.item
-            onConfirmed: {
-                if (addRecipePage.ingredients === undefined)
-                {
-                    addRecipePage.ingredients = createModel(addRecipePage)
-                }
-
-                addRecipePage.ingredients.append({
-                                     "FoodId": chooseFoodAmountForRecipe.food["Id"],
-                                     "Amount": amount
-                                 });
-                pageStack.pop();
-            }
-        }
+    id:addRecipePage
+    onAddIngredient: {
+        AppActions.openFoodList();
     }
 
-    FoodList {
-        id: chooseFoodForRecipe
-        title: qsTr("Add food to recipe")
-        model: dataManager.food
-
-        onItemSelected: {
-            console.log("search food in recipe item selected")
-            chooseFoodAmountForRecipe.food = item;
-            chooseFoodAmountForRecipe.loadPage({food: item });
-        }
+    onGoBack: {
+        AppActions.discardRecipePage();
     }
 
     actions: [
@@ -116,12 +49,16 @@ ScrollablePage {
                     list.push(ingredient);
                 }
 
-                data["Ingredients"] = list;
-                if (isEditing) {
-                    dataManager.editRecipe(recipeId, data)
-                } else {
-                    dataManager.addRecipe(data);
-                }
+                // ingredients are owned by RecipesStore
+                // let it handle them
+                AppActions.acceptRecipePageValues(data);
+
+//                data["Ingredients"] = list;
+//                if (isEditing) {
+//                    dataManager.editRecipe(recipeId, data)
+//                } else {
+//                    dataManager.addRecipe(data);
+//                }
 
 
 
@@ -130,6 +67,26 @@ ScrollablePage {
         }
 
     ]
+
+    scrollableContent: mainLayout
+
+    title: isEditing ? qsTr("Edit recipe") : qsTr("Add recipe")
+
+    onRecipeModelChanged: {
+        title.text = recipeModel ? recipeModel["Name"] : "";
+
+        if (!recipeModel)
+        {
+            return;
+        }
+    }
+
+
+    Component {
+        id: modelComponent
+        ListModel {
+        }
+    }
 
     ColumnLayout {
         id: mainLayout
@@ -184,7 +141,7 @@ ScrollablePage {
                 }
                 id: servings
                 placeholderText: qsTr("Servings")
-                text: formValues ? formValues["Servings"] : "1"
+                text: recipeModel ? recipeModel["Servings"] : "1"
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
             }
         }

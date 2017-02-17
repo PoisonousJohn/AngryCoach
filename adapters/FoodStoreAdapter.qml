@@ -3,7 +3,7 @@ import '../stores'
 
 Item {
     Component.onCompleted: {
-        FoodStore.waitFor = [DayLogStore.listenerId];
+//        foodStore.waitFor = [dayLogStore.listenerId, recipesStore.listenerId];
     }
 
 }

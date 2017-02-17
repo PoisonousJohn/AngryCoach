@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.4
 import Material 0.3
 import './singletons'
 import './adapters'
+import './stores'
 
 /**
   * todo:
@@ -33,6 +34,32 @@ ApplicationWindow {
         timer.repeat = false;
         timer.triggered.connect(cb);
         timer.start();
+    }
+
+    //contextual stores
+
+    FoodStore {
+        id: foodStore
+    }
+    RecipesStore {
+        id: recipesStore
+    }
+    DayLogStore {
+        id: dayLogStore
+    }
+    UserProfileStore {
+        id: userProfileStore
+    }
+
+    Component {
+        id: modelComponent
+        ListModel {
+        }
+    }
+
+    function createListModel(parent) {
+        var newModel = modelComponent.createObject(parent);
+        return newModel;
     }
 
     visible: false
@@ -71,8 +98,10 @@ ApplicationWindow {
         MainPageStack.pageStack = pageStack
         if (dataManager.userProfile["Weight"] === 0)
         {
-            userProfile.loadPage()
-            userProfile.item.canGoBack = false
+            AppActions.openUserProfile();
+            AppActions.lockUserProfilePage();
+//            userProfile.loadPage()
+//            userProfile.item.canGoBack = false
         }
     }
 
@@ -80,10 +109,6 @@ ApplicationWindow {
         initialPageLoader.setSource("MainPage.qml", {canGoBack: false})
     }
 
-    PageLoader {
-        id:userProfile
-        pagePath: "UserProfile.qml"
-    }
 
     Loader {
         id: initialPageLoader

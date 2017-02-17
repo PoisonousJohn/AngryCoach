@@ -9,7 +9,7 @@ import 'singletons'
 
 ScrollablePage {
     property bool isEditing: formValues["Id"] !== ""
-    property var formValues: FoodStore.food
+    property var formValues: foodStore.food
 
     onFormValuesChanged: {
         name.value = formValues["Name"]
