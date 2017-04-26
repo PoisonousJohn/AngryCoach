@@ -11,7 +11,7 @@ Page {
     property var food: foodAmountModel ? foodAmountModel.Food : null
     property double totalWeight;
     property double foodAmount: {
-        if (!isEditing || amount.displayText.length === 0)
+        if (!isEditing || amount.displayText.length === 0 || !food)
         {
             return 0.000001;
         }

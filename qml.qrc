@@ -56,5 +56,6 @@
         <file>images/free-food-photo20.png</file>
         <file>stores/RecipesStore.qml</file>
         <file>stores/UserProfileStore.qml</file>
+        <file>icons/food.svg</file>
     </qresource>
 </RCC>

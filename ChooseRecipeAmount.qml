@@ -13,7 +13,7 @@ Page {
     property double totalNutritionWeight;
     property double totalRecipeWeight;
     property double totalCalories;
-    property var nutritions;
+    property var nutritions: recipeAmount;
 
     property var recipeAmount: dayLogStore.recipeAmount
     property var recipe: recipeAmount ? recipeAmount.Recipe : null
@@ -185,7 +185,7 @@ Page {
                                 anchors.centerIn: parent
                             }
                             Label {
-                                text: nutritions ? nutritions[modelData] + qsTr(" g") : ""
+                                text: nutritions ? nutritions[modelData] + qsTr(" ggg") : ""
                                 style: "body2"
                                 anchors.top: parent.bottom
                                 anchors.horizontalCenter: parent.horizontalCenter
