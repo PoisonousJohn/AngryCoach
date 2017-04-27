@@ -39,7 +39,6 @@ Page {
     actionBar {
         customContent: MouseArea {
             onClicked: {
-                console.log("Clicked")
                 searchField.forceActiveFocus()
             }
 

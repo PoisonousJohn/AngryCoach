@@ -12,6 +12,7 @@ AppListener {
         var amountFactor = food ? amount / food.Weight : 1;
         return {
             "Index": index, // index in current day log
+            "FoodId": food.Id,
             "Food": food,
             "Amount": amount,
             "Carbs": food ? food.Carbs * amountFactor : 0,

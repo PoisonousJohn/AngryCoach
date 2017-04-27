@@ -29,10 +29,6 @@ AppListener {
     function getRecipeViewModel(recipeId) {
         var recipeObj = recipeId ? dataManager.getRecipeById(recipeId) : null;
 
-        if (recipeId && !recipeObj) {
-            console.log("Recipe model error for id: " + recipeId);
-        }
-
         var ingredients = [];
         var totalCalories = 0;
         var carbs = 0;
@@ -111,10 +107,8 @@ AppListener {
                 break;
             case "acceptFoodAmount":
                 if (recipe) {
-                    ingredients.append({
-                        "FoodId": message.foodId,
-                        "Amount": message.amount
-                    });
+                    var foodAmount = foodStore.getFoodAmountViewModel(ingredients.count, message.foodId, message.amount);
+                    ingredients.append(foodAmount);
                 } else {
                     // forward message to day log
                     AppActions.addFoodAmountToDayLog(message.amount);
@@ -138,13 +132,19 @@ AppListener {
                 recipe = null;
                 break;
             case "acceptRecipePageValues":
+                data = {
+                    "Name": message.Name,
+                    "Servings": message.Servings,
+                    "Ingredients": ingredients
+                };
+
                 if (recipe.Id)
                 {
-                    dataManager.editRecipe(recipe.Id, message.data);
+                    dataManager.editRecipe(recipe.Id, data);
                 }
                 else
                 {
-                    dataManager.addRecipe(recipe.data);
+                    dataManager.addRecipe(data);
                 }
                 recipe = null;
                 break;

@@ -46,7 +46,7 @@ Page {
     }
 
     onRecipeChanged: {
-//        updateStats();
+        updateStats();
     }
 
 
@@ -185,7 +185,7 @@ Page {
                                 anchors.centerIn: parent
                             }
                             Label {
-                                text: nutritions ? nutritions[modelData] + qsTr(" ggg") : ""
+                                text: nutritions ? nutritions[modelData].toFixed(2) + qsTr(" g") : ""
                                 style: "body2"
                                 anchors.top: parent.bottom
                                 anchors.horizontalCenter: parent.horizontalCenter

@@ -43,25 +43,9 @@ ScrollablePage {
                 var data = {};
                 data["Name"] = title.displayText;
                 data["Servings"] = servings.displayText
-                var list = [];
-                for (var i = 0; i < addRecipePage.ingredients.count; ++i) {
-                    var ingredient = addRecipePage.ingredients.get(i);
-                    list.push(ingredient);
-                }
-
                 // ingredients are owned by RecipesStore
                 // let it handle them
                 AppActions.acceptRecipePageValues(data);
-
-//                data["Ingredients"] = list;
-//                if (isEditing) {
-//                    dataManager.editRecipe(recipeId, data)
-//                } else {
-//                    dataManager.addRecipe(data);
-//                }
-
-
-
                 pageStack.pop();
             }
         }
@@ -173,7 +157,7 @@ ScrollablePage {
                     delegate: FoodAmountRow {
                         modelItem: repeater.model.get(index);
                         food: {
-                            modelItem ? dataManager.getFoodById(modelItem["FoodId"]) : undefined
+                            modelItem ? modelItem["Food"] : undefined
                         }
                         onPressAndHold: {
                             deleteIngredientDialog.itemIndex = index;

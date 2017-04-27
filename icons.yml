@@ -1,5 +1,6 @@
 out: icons/core_icons.qrc
 icons:
+  - av/playlist_add
   - navigation/arrow_back
   - navigation/chevron_left
   - navigation/chevron_right
