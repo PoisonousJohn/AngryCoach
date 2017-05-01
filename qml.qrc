@@ -57,5 +57,9 @@
         <file>stores/RecipesStore.qml</file>
         <file>stores/UserProfileStore.qml</file>
         <file>icons/food.svg</file>
+        <file>RecipeIngredients.qml</file>
+        <file>images/serving.png</file>
+        <file>ServingInput.qml</file>
+        <file>InfoHeader.qml</file>
     </qresource>
 </RCC>

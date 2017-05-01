@@ -11,9 +11,9 @@ Subtitled {
     }
 
     implicitHeight: height
-    itemLabel.style: "title"
+//    itemLabel.style: "title"
     text: food ? food["Name"] : ""
-    valueText: food ? Math.round(food.TotalCalories) + qsTr(" kcal") : ""
+    valueText: food ? food.TotalCalories.toFixed(2) + qsTr(" kcal") : ""
     subText:
     {
         if (!modelItem)
@@ -21,6 +21,6 @@ Subtitled {
             return "";
         }
 
-        return modelItem.Amount + qsTr(" g");
+        return modelItem.Amount.toFixed(2) + qsTr(" g");
     }
 }

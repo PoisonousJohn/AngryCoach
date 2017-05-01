@@ -5,18 +5,19 @@ import 'stores'
 import 'singletons'
 
 Page {
-    property bool isEditing: food !== null && food !== undefined
+    id: chooseFoodAmount
+    property bool isEditing: foodAmountModel && foodAmountModel.Index >= 0
 
-    property var foodAmountModel: dayLogStore.foodAmount
-    property var food: foodAmountModel ? foodAmountModel.Food : null
+    property var foodAmountModel: !recipesStore.recipe ? dayLogStore.foodAmount : recipesStore.foodAmount
+    property var food: foodAmountModel && foodAmountModel.Food ? foodAmountModel.Food : null
     property double totalWeight;
     property double foodAmount: {
-        if (!isEditing || amount.displayText.length === 0 || !food)
+        if (amount.value.length === 0 || !food)
         {
             return 0.000001;
         }
 
-        var amountNumber = Number.fromLocaleString(Qt.locale(), amount.displayText);
+        var amountNumber = Number.fromLocaleString(Qt.locale(), amount.value);
         return Math.max(0.000001, amountNumber / food["Weight"]);
     }
 
@@ -54,81 +55,14 @@ Page {
             left: parent.left
             right: parent.right
         }
-        Card {
-            height: dp(120)
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-
-            Rectangle {
-                anchors.fill: parent
-                color: Palette.colors["grey"]["900"]
-            }
-
-            Image {
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                source: "images/free-food-photo20.png"
-            }
-
-
-            Rectangle {
-                anchors.verticalCenter: foodName.verticalCenter
-                anchors.left: parent.left
-                anchors.right: parent.right
-//                anchors.margins: dp(-20)
-                height: foodName.height + dp(20)
-                color: "white"
-                opacity: 0.5
-            }
-            Label {
-                id: foodName
-                x: dp(20)
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: dp(20)
-                text: isEditing ? food["Name"] : ""
-                font.pixelSize: dp(20)
-            }
-
-
-
+        InfoHeader {
+            text: food ? food["Name"] : ""
         }
 
-        Card {
-            anchors {
-                left: parent.left
-                right: parent.right
-            }
-
-            height: servingLayout.implicitHeight + dp(20)
-
-            RowLayout {
-                id: servingLayout
-                x: dp(10)
-                anchors.verticalCenter: parent.verticalCenter
-                Label {
-                    style: "body2"
-                    text: qsTr("Serving: ")
-                }
-
-                TextField {
-                    id: amount
-                    text: isEditing ? foodAmountModel.Amount : "100"
-                    implicitWidth: dp(50)
-                    maximumLength: 9
-                    focus: !isEditing
-                    inputMethodHints: Qt.ImhFormattedNumbersOnly
-                    validator: DoubleValidator {
-                        decimals: 2
-                        bottom: 0
-                    }
-                }
-
-                Label {
-                    text: qsTr("g")
-                }
-            }
+        ServingInput {
+            id: amount
+            defaultValue: foodAmountModel ? foodAmountModel.Amount : "100"
+            focus: !isEditing
         }
 
         Card {
@@ -150,7 +84,9 @@ Page {
 
                 Label {
                     Layout.alignment: Qt.AlignCenter
-                    text: (isEditing ? food.TotalCalories * foodAmount : 0).toFixed(2) + qsTr(" kcal")
+                    text: {
+                        return (food ? food.TotalCalories * foodAmount : 0).toFixed(2) + qsTr(" kcal")
+                    }
                     font.pixelSize: dp(40)
                 }
 
@@ -173,7 +109,7 @@ Page {
 
                         delegate: TwoColorProgressCircle {
                             property double percent: {
-                                if (!isEditing || totalWeight === 0)
+                                if (!food || totalWeight === 0)
                                 {
                                     return 0;
                                 }
@@ -196,7 +132,7 @@ Page {
                             }
                             Label {
                                 text: qsTr(modelData) + "\n" + (
-                                    isEditing
+                                   food
                                         ? (food[modelData] * foodAmount).toFixed(2) + qsTr(" g")
                                         : ""
                                 )
@@ -224,10 +160,10 @@ Page {
             horizontalCenter: undefined
         }
 
-        enabled: Number.fromLocaleString(Qt.locale(), amount.displayText) > 0
+        enabled: Number.fromLocaleString(Qt.locale(), amount.value) > 0
         backgroundColor: enabled ? Palette.colors["green"]["A700"] : Palette.colors["grey"]["500"]
         onClicked: {
-            AppActions.acceptFoodAmount(food.Id, amount.displayText);
+            AppActions.acceptFoodAmount(food.Id, amount.value);
             pageStack.pop();
         }
 

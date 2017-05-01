@@ -9,13 +9,4 @@ FoodList {
     onItemSelected: {
         AppActions.requestAddFoodAmount(item["Id"]);
     }
-
-    AppListener {
-        onDispatched: {
-            if (type === "acceptFoodAmount" ) {
-                MainPageStack.pageStack.pop();
-            }
-        }
-    }
-
 }

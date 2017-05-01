@@ -46,7 +46,7 @@ Card {
             delegate: FoodAmountRow {
                 text: modelItem ? modelItem.Food.Name : ""
                 food: modelItem
-                modelItem: foodList.model.get(index)
+                modelItem: model
 
                 onClicked: {
                     AppActions.requestEditFoodAmount(index);
@@ -71,11 +71,11 @@ Card {
             delegate: FoodAmountRow {
                 text: modelItem ? modelItem.Recipe.Name : ""
                 food: modelItem
-                valueText: modelItem ? modelItem.TotalCalories + qsTr(" kcal") : ""
-                modelItem: recipesList.model.get(index)
+                valueText: modelItem ? modelItem.TotalCalories.toFixed(2) + qsTr(" kcal") : ""
+                modelItem: model
                 subText: {
                     return modelItem
-                            ? modelItem.Amount + qsTr(" serving, ") + modelItem.Weight + qsTr(" g")
+                            ? Math.round(modelItem.Amount, 2) + qsTr(" serving, ") + modelItem.Weight.toFixed(2) + qsTr(" g")
                             : ""
                 }
 

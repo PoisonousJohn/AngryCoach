@@ -22,5 +22,29 @@ EditableItemsList {
         AppActions.askToRemoveFood(itemId);
     }
 
+    AppListener {
+        id: listener
+        onDispatched: {
+            if (type === "acceptFoodAmount") {
+                MainPageStack.pageStack.pop();
+            }
+        }
+    }
+
+    Connections {
+        target: MainPageStack.pageStack
+        onPushed: {
+            if (page === searchFood)
+            {
+                listener.enabled = true;
+            }
+        }
+        onPopped: {
+            if (page === searchFood)
+            {
+                listener.enabled = false;
+            }
+        }
+    }
 
 }

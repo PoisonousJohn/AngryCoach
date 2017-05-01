@@ -134,45 +134,16 @@ ScrollablePage {
             text: qsTr("Ingredients")
         }
 
-
-
-        Card {
-            anchors {
-                left: parent.left
-                right: parent.right
+        RecipeIngredients {
+            ingredients: addRecipePage.ingredients
+            allowAdd: true
+            onClicked: {
+                AppActions.requestEditFoodAmountInRecipe(index)
             }
-
-            implicitHeight: recipesLayout.implicitHeight
-
-            ColumnLayout {
-                id: recipesLayout
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-
-                Repeater {
-                    id: repeater
-                    model: ingredients
-                    delegate: FoodAmountRow {
-                        modelItem: repeater.model.get(index);
-                        food: {
-                            modelItem ? modelItem["Food"] : undefined
-                        }
-                        onPressAndHold: {
-                            deleteIngredientDialog.itemIndex = index;
-                            deleteIngredientDialog.show();
-                        }
-                    }
-                }
-
-                Standard {
-                    text: qsTr("Add ingredient")
-                    iconName: "av/playlist_add"
-                    onClicked: addIngredient()
-                }
+            onPressAndHold: {
+                deleteIngredientDialog.itemIndex = index;
+                deleteIngredientDialog.show();
             }
-
         }
 
     }

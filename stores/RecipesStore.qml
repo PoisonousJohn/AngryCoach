@@ -6,17 +6,24 @@ import '../singletons'
 AppListener {
     property var list: dataManager.recipes
     property var recipe
+    property int foodIndex: -1
+    property var foodAmount
     property var ingredients
 
     function getRecipeAmountViewModel(index, recipeId, amount) {
         var viewModel = {};
         var recipe = getRecipeViewModel(recipeId);
         var amountFactor = recipe ? amount / recipe.Servings : 1;
+        var ingredients = [];
+        recipe.Ingredients.forEach(function(item, i, arr) {
+            ingredients.push(foodStore.getFoodAmountViewModel(i, item.Food.Id, item.Amount * amountFactor));
+        });
 
         return {
             "Index": index, // index in current day log
             "Recipe": recipe,
             "Amount": amount,
+            "Ingredients": ingredients,
             "Carbs": recipe ? recipe.Carbs * amountFactor : 0,
             "Fats": recipe ? recipe.Fats * amountFactor : 0,
             "Proteins": recipe ? recipe.Proteins * amountFactor : 0,
@@ -73,6 +80,13 @@ AppListener {
 
     onDispatched: {
         switch (type) {
+            case "requestEditFoodAmountInRecipe":
+                foodIndex = message.index;
+                recipesStore.foodAmount = foodStore.getFoodAmountViewModel(message.index,
+                                                    ingredients.get(foodIndex).FoodId,
+                                                    ingredients.get(foodIndex).Amount);
+                AppActions.openFoodAmountPage();
+                break;
             case "askToRemoveRecipe":
                 AppActions.openConfirmationDialog(
                             qsTr("Delete this food?"),
@@ -84,6 +98,16 @@ AppListener {
                 break;
             case "removeRecipe":
                 dataManager.removeRecipe(message.recipeId);
+                break;
+
+            case "requestAddFoodAmount":
+                if (!recipesStore.recipe)
+                {
+                    return;
+                }
+                foodIndex = -1;
+                recipesStore.foodAmount = foodStore.getFoodAmountViewModel(-1, message.foodId, 100);
+                AppActions.openFoodAmountPage();
                 break;
 
             case "acceptRecipePageValues":
@@ -104,15 +128,27 @@ AppListener {
                 {
                     dataManager.addRecipe(data);
                 }
+                recipe = null;
                 break;
             case "acceptFoodAmount":
                 if (recipe) {
-                    var foodAmount = foodStore.getFoodAmountViewModel(ingredients.count, message.foodId, message.amount);
-                    ingredients.append(foodAmount);
+
+                    var foodAmount = foodStore.getFoodAmountViewModel(foodIndex, message.foodId, message.amount);
+                    if (foodIndex < 0)
+                    {
+                        ingredients.append(foodAmount);
+                    }
+                    else
+                    {
+                        ingredients.remove(foodAmount.Index);
+                        ingredients.insert(foodAmount.Index, foodAmount);
+                    }
+
                 } else {
                     // forward message to day log
                     AppActions.addFoodAmountToDayLog(message.amount);
                 }
+                foodAmount = null;
                 break;
             case "openRecipePage":
                 recipe = getRecipeViewModel(message.recipeId);

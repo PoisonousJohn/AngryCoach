@@ -18,6 +18,7 @@ ActionCreator {
 
     signal requestAddFoodAmount(string foodId);
     signal requestEditFoodAmount(int index);
+    signal requestEditFoodAmountInRecipe(int index);
     signal openFoodAmountPage();
     signal acceptFoodAmount(string foodId, double amount);
     signal addFoodAmountToDayLog(double amount);

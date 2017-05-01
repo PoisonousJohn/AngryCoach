@@ -88,14 +88,14 @@ ScrollablePage {
             label: qsTr("Total Calories")
             validator: doubleValidator
             suffixText: qsTr("kcal")
-            value: formValues["TotalCalories"]
+            value: isEditing ? formValues["TotalCalories"] : ""
             inputHint: Qt.ImhFormattedNumbersOnly
         }
 
         StandardFormTextField {
             id: carbs
             label: qsTr("Carbs")
-            value: formValues["Carbs"]
+            value: isEditing ? formValues["Carbs"] : ""
             validator: doubleValidator
             suffixText: qsTr("g")
             inputHint: Qt.ImhFormattedNumbersOnly
@@ -104,7 +104,7 @@ ScrollablePage {
         StandardFormTextField {
             id: proteins
             label: qsTr("Proteins")
-            value: formValues["Proteins"]
+            value: isEditing ? formValues["Proteins"] : ""
             validator: doubleValidator
             suffixText: qsTr("g")
             inputHint: Qt.ImhFormattedNumbersOnly
@@ -113,7 +113,7 @@ ScrollablePage {
         StandardFormTextField {
             id: fats
             label: qsTr("Fats")
-            value: formValues["Fats"]
+            value: isEditing ? formValues["Fats"] : ""
             validator: doubleValidator
             suffixText: qsTr("g")
             inputHint: Qt.ImhFormattedNumbersOnly
@@ -122,7 +122,7 @@ ScrollablePage {
         StandardFormTextField {
             id: weight
             label: qsTr("Weight")
-            value: formValues["Weight"]
+            value: isEditing ? formValues["Weight"] : ""
             validator: doubleValidator
             suffixText: qsTr("g")
             inputHint: Qt.ImhFormattedNumbersOnly

@@ -137,6 +137,11 @@ AppListener {
                 AppActions.openRecipeAmountPage();
                 break;
             case "requestAddFoodAmount":
+                if (recipesStore.recipe)
+                {
+                    return;
+                }
+
                 foodAmount = foodStore.getFoodAmountViewModel(-1, message.foodId, 100);
                 AppActions.openFoodAmountPage();
                 break;
@@ -149,7 +154,7 @@ AppListener {
                 break;
             case "acceptRecipeAmount":
                 if (recipeAmount.Index < 0) {
-                    dataManager.addRecipeToLog(	day,
+                    dataManager.addRecipeToLog(day,
                                                 recipeAmount.Recipe.Id,
                                                 message.amount);
                     amountModel = recipesStore.getRecipeAmountViewModel(
@@ -157,7 +162,7 @@ AppListener {
                                     recipeAmount.Recipe.Id,
                                     message.amount);
                     recipesList.append(amountModel);
-                    updateFoodStats(amountModel.Recipe, false);
+                    updateFoodStats(amountModel, false);
                 } else {
                     updateFoodStats(recipesList.get(recipeAmount.Index), true);
                     dataManager.editRecipeAmount(	day,
@@ -169,7 +174,7 @@ AppListener {
                                     message.amount);
                     recipesList.remove(recipeAmount.Index);
                     recipesList.insert(recipeAmount.Index, amountModel);
-                    updateFoodStats(amountModel.Recipe, false);
+                    updateFoodStats(amountModel, false);
                 }
                 recipeAmount = null;
                 break;
