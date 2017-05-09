@@ -13,7 +13,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
 
     qmlRegisterType<AppData>("Fitness", 0, 1, "AppData");
-    engine.addImportPath("material/src");
+    engine.addImportPath(QStringLiteral("qrc:/"));
+
     QPM_INIT(engine)
     engine.rootContext()->setContextProperty("dataManager", new QmlDataProvider());
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

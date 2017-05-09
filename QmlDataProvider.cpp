@@ -146,6 +146,7 @@ QVariantMap QmlDataProvider::getFoodValuesForForm(const QString &foodId)
         return map;
     }
 
+    map["Id"] = food->Id();
     map["Name"] = food->Name();
     map["Carbs"] = getStringFromFloat(food->FoodCalories()->Carbs());
     map["Proteins"] = getStringFromFloat(food->FoodCalories()->Proteins());

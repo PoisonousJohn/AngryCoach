@@ -18,7 +18,7 @@
         <file>SimpleContextMenu.qml</file>
         <file>ChooseFoodAmount.qml</file>
         <file>TwoColorProgressCircle.qml</file>
-        <file>ChooseFood.qml</file>
+        <file>EditableItemsList.qml</file>
         <file>UserProfile.qml</file>
         <file>StandardFormTextField.qml</file>
         <file>fitnessFormula.js</file>
@@ -30,13 +30,12 @@
         <file>StandardFormDropdown.qml</file>
         <file>FloatingMenuButton.qml</file>
         <file>TestPage.qml</file>
-        <file>icons/food.svg</file>
         <file>AddRecipe.qml</file>
         <file>FoodAmountRow.qml</file>
         <file>ChooseRecipeAmount.qml</file>
         <file>UIHelpers.js</file>
-        <file>SearchRecipe.qml</file>
-        <file>SearchFood.qml</file>
+        <file>RecipesList.qml</file>
+        <file>FoodList.qml</file>
         <file>DatePickerPopup.qml</file>
         <file>singletons/MainPageStack.qml</file>
         <file>singletons/qmldir</file>
@@ -46,5 +45,21 @@
         <file>SpriteAnimation.qml</file>
         <file>pig/eat.wav</file>
         <file>pig/overdose.wav</file>
+        <file>singletons/AppActions.qml</file>
+        <file>StandardWithDivider.qml</file>
+        <file>AddFoodToLog.qml</file>
+        <file>stores/qmldir</file>
+        <file>stores/FoodStore.qml</file>
+        <file>PageLoaders.qml</file>
+        <file>stores/DayLogStore.qml</file>
+        <file>adapters/FoodStoreAdapter.qml</file>
+        <file>images/free-food-photo20.png</file>
+        <file>stores/RecipesStore.qml</file>
+        <file>stores/UserProfileStore.qml</file>
+        <file>icons/food.svg</file>
+        <file>RecipeIngredients.qml</file>
+        <file>images/serving.png</file>
+        <file>ServingInput.qml</file>
+        <file>InfoHeader.qml</file>
     </qresource>
 </RCC>

@@ -3,98 +3,30 @@ import QtQuick.Layouts 1.1
 import Material 0.3
 import Material.ListItems 0.1
 import "formHelper.js" as FormHelper
+import "stores"
+import 'singletons'
 
 ScrollablePage {
-    id:addRecipePage
-
-    scrollableContent: mainLayout
+    property bool isEditing: recipeModel !== null
+                                && recipeModel !== undefined
+                                && recipeModel.Id
+    property var ingredients: recipesStore.ingredients
+    property var recipeModel: recipesStore.recipe
 
     signal addIngredient();
-
-    title: isEditing ? qsTr("Edit recipe") : qsTr("Add recipe")
-
-    onGoBack: {
-        recipeId = ""
-        formValuesChanged();
-    }
-
-    property bool isEditing: recipeId.length > 0;
-    property string recipeId;
-    property var ingredients;
-    property var formValues: isEditing ? dataManager.getRecipeValuesForForm(recipeId) : null
-
-    onFormValuesChanged: {
-        title.text = formValues ? formValues["Name"] : "";
-
-        if (ingredients)
-        {
-            ingredients.clear();
-        }
-        else
-        {
-            ingredients = createModel(addRecipePage);
-        }
-
-        if (!formValues)
-        {
-            return;
-        }
-
-        var valueIngredients = formValues["Ingredients"];
-        for (var i = 0; i < valueIngredients.length; ++i)
-        {
-            ingredients.append(valueIngredients[i]);
-        }
-
-    }
-
-    onAddIngredient: {
-        pageStack.push(chooseFoodForRecipe)
-    }
-
-    Component {
-        id: modelComponent
-        ListModel {
-        }
-    }
 
     function createModel(parent) {
         var newModel = modelComponent.createObject(parent);
         return newModel;
     }
 
-    ChooseFoodAmount {
-        id: chooseFoodAmountForRecipe
-        onConfirmed: {
-            if (addRecipePage.ingredients === undefined)
-            {
-                addRecipePage.ingredients = createModel(addRecipePage)
-            }
-
-            addRecipePage.ingredients.append({
-                                 "FoodId": food["Id"],
-                                 "Amount": amount
-                             });
-            pageStack.pop();
-        }
+    id:addRecipePage
+    onAddIngredient: {
+        AppActions.openFoodList();
     }
 
-    ChooseFood {
-        id: chooseFoodForRecipe
-        title: qsTr("Add food to recipe")
-        model: dataManager.food
-        onItemSelected: {
-            chooseFoodAmountForRecipe.food = item;
-            pageStack.push(chooseFoodAmountForRecipe);
-        }
-        onEditItem: {
-            addFood.foodId = itemId;
-            pageStack.push(addFood);
-        }
-        onDeleteItem: {
-            foodDeleteDialog.foodId = itemId
-            foodDeleteDialog.show();
-        }
+    onGoBack: {
+        AppActions.discardRecipePage();
     }
 
     actions: [
@@ -111,26 +43,34 @@ ScrollablePage {
                 var data = {};
                 data["Name"] = title.displayText;
                 data["Servings"] = servings.displayText
-                var list = [];
-                for (var i = 0; i < addRecipePage.ingredients.count; ++i) {
-                    var ingredient = addRecipePage.ingredients.get(i);
-                    list.push(ingredient);
-                }
-
-                data["Ingredients"] = list;
-                if (isEditing) {
-                    dataManager.editRecipe(recipeId, data)
-                } else {
-                    dataManager.addRecipe(data);
-                }
-
-
-
+                // ingredients are owned by RecipesStore
+                // let it handle them
+                AppActions.acceptRecipePageValues(data);
                 pageStack.pop();
             }
         }
 
     ]
+
+    scrollableContent: mainLayout
+
+    title: isEditing ? qsTr("Edit recipe") : qsTr("Add recipe")
+
+    onRecipeModelChanged: {
+        title.text = recipeModel ? recipeModel["Name"] : "";
+
+        if (!recipeModel)
+        {
+            return;
+        }
+    }
+
+
+    Component {
+        id: modelComponent
+        ListModel {
+        }
+    }
 
     ColumnLayout {
         id: mainLayout
@@ -185,7 +125,7 @@ ScrollablePage {
                 }
                 id: servings
                 placeholderText: qsTr("Servings")
-                text: formValues ? formValues["Servings"] : "1"
+                text: recipeModel ? recipeModel["Servings"] : "1"
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
             }
         }
@@ -194,45 +134,16 @@ ScrollablePage {
             text: qsTr("Ingredients")
         }
 
-
-
-        Card {
-            anchors {
-                left: parent.left
-                right: parent.right
+        RecipeIngredients {
+            ingredients: addRecipePage.ingredients
+            allowAdd: true
+            onClicked: {
+                AppActions.requestEditFoodAmountInRecipe(index)
             }
-
-            implicitHeight: recipesLayout.implicitHeight
-
-            ColumnLayout {
-                id: recipesLayout
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-
-                Repeater {
-                    id: repeater
-                    model: ingredients
-                    delegate: FoodAmountRow {
-                        modelItem: repeater.model.get(index);
-                        food: {
-                            modelItem ? dataManager.getFoodById(modelItem["FoodId"]) : undefined
-                        }
-                        onPressAndHold: {
-                            deleteIngredientDialog.itemIndex = index;
-                            deleteIngredientDialog.show();
-                        }
-                    }
-                }
-
-                Standard {
-                    text: qsTr("Add ingredient")
-                    iconName: "av/playlist_add"
-                    onClicked: addIngredient()
-                }
+            onPressAndHold: {
+                deleteIngredientDialog.itemIndex = index;
+                deleteIngredientDialog.show();
             }
-
         }
 
     }

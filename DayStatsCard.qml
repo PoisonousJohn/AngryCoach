@@ -6,25 +6,26 @@ import Material.ListItems 0.1
 import "fitnessFormula.js" as Formula
 import Fitness 0.1
 import "UIHelpers.js" as UIHelpers
+import "singletons"
 
 Card {
 
     id: card
     property var __model;
-    property double totalCalories;
-    property double carbs;
-    property double fats;
-    property double proteins;
+    property double totalCalories: dayLogStore.log.TotalCalories;
+    property double carbs: dayLogStore.log.Carbs;
+    property double proteins: dayLogStore.log.Proteins;
+    property double fats: dayLogStore.log.Fats;
 
-    property double maxTotalCalories;
-    property double maxCarbs;
-    property double maxFats;
-    property double maxProteins;
+    property double maxTotalCalories: userProfileStore.profile.MaxCalories
+    property double maxCarbs: userProfileStore.profile.MaxCarbs
+    property double maxProteins: userProfileStore.profile.MaxProteins
+    property double maxFats: userProfileStore.profile.MaxFats
 
-    Component.onCompleted: {
-        __model = dataManager.getDayLog(dataManager.selectedDate);
-        updateStats()
-    }
+//    Component.onCompleted: {
+//        __model = dataManager.getDayLog(dataManager.selectedDate);
+//        updateStats()
+//    }
 
     function getNutritionDesc(max, curr, unit)
     {
@@ -34,6 +35,7 @@ Card {
 
     function updateStats()
     {
+        return;
         if (!__model)
         {
             return;
@@ -140,7 +142,7 @@ Card {
 
     anchors.left: parent.left
     anchors.right: parent.right
-    height: stats.height + dp(40)
+    height: dp(240)
 
     SimpleContextMenu {
         id: dayStatsMenu
@@ -154,7 +156,8 @@ Card {
         onItemClicked: {
             if (itemIndex === 0)
             {
-                userProfile.loadPage()
+                AppActions.openUserProfile();
+//                userProfile.loadPage()
 //                pageStack.push(userProfile);
             }
         }
@@ -196,8 +199,8 @@ Card {
                 OverflowableProgressCircle {
                     id: totalStatsCircle
                     overflowColor: Palette.colors["red"]["A200"]
-                    width: dp(110)
-                    height: dp(110)
+                    width: dp(150)
+                    height: dp(150)
                     Text {
                         text: getNutritionDesc(maxTotalCalories, totalCalories, "\nKCAL")
                         anchors.centerIn: parent
@@ -206,7 +209,7 @@ Card {
                     anchors.centerIn: parent
                     indeterminate: false
                     value: totalCalories / maxTotalCalories
-                    dashThickness: dp(8)
+                    dashThickness: dp(10)
                 }
             }
         }
@@ -214,7 +217,8 @@ Card {
             property int itemWidth: mainPage.width / 3 -spacing
 
             id: parameters
-            anchors.topMargin: dp(100)
+            anchors.top: totalStats.bottom
+            anchors.topMargin: dp(40)
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.leftMargin: dp(20)
             anchors.rightMargin: dp(20)

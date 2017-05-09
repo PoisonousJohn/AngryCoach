@@ -13,6 +13,7 @@ Item {
         value: Math.min(overflowableProgressBar.value, 1.0)
         color: overflowableProgressBar.color
         width: overflowableProgressBar.width
+        height: dp(5)
         indeterminate: indeterminate
         maximumValue: 1.0
     }
@@ -37,15 +38,5 @@ Item {
         visible: overflowRect.visible
     }
 
-//    ProgressBar {
-//        id: overflowProgressBar
-//        visible: overflowableProgressBar.value > 1.0
-//        value: overflowableProgressBar.value > 1 ? Math.min(overflowableProgressBar.value - 1, 1) : 0
-//        color: overflowColor
-//        width: overflowableProgressBar.width
-//        indeterminate: indeterminate
-//        maximumValue: 1.0
-//        rotation: 180
-//    }
 
 }

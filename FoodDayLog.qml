@@ -4,35 +4,19 @@ import QtQuick.Controls 1.4
 import Material 0.3
 import Material.ListItems 0.1
 import "UIHelpers.js" as UIHelpers
+import 'stores'
+import 'singletons'
 
 Card {
+    property var log: dayLogStore.log
+    property var food: dayLogStore.foodList
+    property var recipes: dayLogStore.recipesList
     property date day: dataManager.selectedDate
-    Component.onCompleted:  {
-        updateDayModel();
-    }
 
     implicitHeight: content.implicitHeight - dp(3)
     anchors {
         left: parent.left
         right: parent.right
-    }
-
-    function updateDayModel() {
-        var log = dataManager.getDayLog(dataManager.selectedDate);
-        listview.model = null;
-        recipesList.model = null;
-        listview.model = log["Food"];
-        recipesList.model = log["Recipes"]
-    }
-    Connections {
-        target: dataManager
-        onDayLogChanged: {
-            updateDayModel();
-        }
-
-        onSelectedDateChanged: {
-            updateDayModel();
-        }
     }
 
     ColumnLayout {
@@ -46,47 +30,30 @@ Card {
 
         Subheader {
             elevation: 1
-            backgroundColor: Palette.colors["purple"]["200"]
+            backgroundColor: Palette.colors["lightBlue"]["100"]
             text: qsTr("Eaten today")
-
-            SpriteAnimation {
-                id: sprite
-                frameSequence: [0,1,2,3,2,3,2,3,1,0]
-                width: dp(64)
-                height: dp(64)
-                source: "pig/eat.png"
-                frameCount: 4
-                frameWidth: 64
-                frameHeight: 64
-                frameRate: 4
-                interpolate: false
-                anchors.right: parent.right
-            }
         }
 
         Repeater {
-            id: listview
+            id: foodList
+            model: food
             clip: true
             anchors {
                 left: parent.left
                 right: parent.right
             }
-            visible: listview.count > 0
+            visible: foodList.count > 0
             delegate: FoodAmountRow {
-                food: getFood()
-                modelItem: modelData
-                function getFood() {
-                    var food = dataManager.getFoodById(modelData["FoodId"]);
-                    return food
-                }
+                text: modelItem ? modelItem.Food.Name : ""
+                food: modelItem
+                modelItem: model
 
                 onClicked: {
-                    chooseFoodAmount.loadPage({ food: getFood(), dayLogIndex: index });
+                    AppActions.requestEditFoodAmount(index);
                 }
 
                 onPressAndHold: {
-                    deleteDialog.itemIndex = index;
-                    deleteDialog.show();
+                    AppActions.askToRemoveFoodFromLog(index);
                 }
             }
         }
@@ -94,6 +61,7 @@ Card {
 
         Repeater {
             id: recipesList
+            model: recipes
             clip: true
             anchors {
                 left: parent.left
@@ -101,63 +69,30 @@ Card {
             }
             visible: recipesList.count > 0
             delegate: FoodAmountRow {
-                property var stats: UIHelpers.getRecipeStats(food, dataManager, modelData["Amount"]);
-                food: dataManager.getRecipeById(modelData["FoodId"]);
-                valueText: stats["calories"] + qsTr(" kcal")
-                modelItem: modelData
+                text: modelItem ? modelItem.Recipe.Name : ""
+                food: modelItem
+                valueText: modelItem ? modelItem.TotalCalories.toFixed(2) + qsTr(" kcal") : ""
+                modelItem: model
                 subText: {
-                    return modelData["Amount"] + qsTr(" serving, ") + stats["recipeWeight"] + qsTr(" g") + " (" + stats["calories"] + qsTr(" kcal") + ")"
+                    return modelItem
+                            ? Math.round(modelItem.Amount, 2) + qsTr(" serving, ") + modelItem.Weight.toFixed(2) + qsTr(" g")
+                            : ""
                 }
 
                 onClicked: {
-                    chooseRecipeAmount.loadPage({ recipe: food, dayLogIndex: index });
+                    AppActions.requestEditRecipeAmount(index);
                 }
 
                 onPressAndHold: {
-                    recipeDeleteDialog.itemIndex = index;
-                    recipeDeleteDialog.show();
+                    AppActions.askToRemoveRecipeFromLog(index);
                 }
             }
         }
 
         Standard {
             text: qsTr("Looks like you've eaten nothing");
-            visible: listview.count == 0 && recipesList.count == 0
+            visible: foodList.count == 0 && recipesList.count == 0
         }
 
     }
-
-    PageLoader {
-        id: chooseFoodAmount
-        pagePath: "ChooseFoodAmount.qml"
-    }
-
-    PageLoader {
-        id: chooseRecipeAmount
-        pagePath: "ChooseRecipeAmount.qml"
-    }
-
-    Dialog {
-        id: deleteDialog
-        property int itemIndex;
-        onAccepted: {
-            dataManager.removeFoodFromLog(day, itemIndex)
-        }
-
-        title: qsTr("Delete item?")
-        text: qsTr("Do you really want to delete this item?")
-    }
-
-    Dialog {
-        id: recipeDeleteDialog
-        property int itemIndex;
-        onAccepted: {
-            dataManager.removeRecipeFromLog(day, itemIndex)
-        }
-
-        title: qsTr("Delete item?")
-        text: qsTr("Do you really want to delete this item?")
-    }
-
-
 }

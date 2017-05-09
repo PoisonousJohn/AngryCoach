@@ -129,6 +129,7 @@ void DataManager::load()
 
 void DataManager::save()
 {
+    qDebug() << "Saving";
     QJsonDocument doc;
     _dataFile->resize(0);
     doc.setObject(jenson::JenSON::serialize(_data));

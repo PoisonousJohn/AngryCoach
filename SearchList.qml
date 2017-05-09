@@ -11,21 +11,18 @@ Page {
     property alias defaultModelField: list.defaultModelValue
     property alias listView: list
     property alias delegateModel: list.delegateModel
+    property alias delegate: list.delegate
     property alias searchGroup: searchFilterGroup
     property alias searchField: searchField
     signal itemSelected(var item)
-
-    DelegateModel {
-        id: delegateModel
-
-    }
 
     onItemSelected: {
         clearSearch();
     }
 
     function clearSearch() {
-        Qt.inputMethod.reset()
+        Qt.inputMethod.reset();
+        searchField.text = "";
     }
 
     actions: [
@@ -40,23 +37,30 @@ Page {
     ]
 
     actionBar {
-       customContent: TextField {
-           id: searchField
-           height: Units.dp * 40
-           color: Palette.colors["white"]["500"]
-           textColor: Palette.colors["white"]["500"]
-           placeholderText: qsTr("Search...")
-           onDisplayTextChanged: {
-               searchFilterGroup.filter = searchField.displayText
-               list.delegateModel.filterOnGroup = searchFilterGroup.filter.length > 0 ? "searchFilter" : "items"
+        customContent: MouseArea {
+            onClicked: {
+                searchField.forceActiveFocus()
+            }
 
-           }
+            anchors.fill: parent
+            TextField {
+                id: searchField
+                height: Units.dp * 30
+                color: Palette.colors["white"]["500"]
+                textColor: Palette.colors["white"]["500"]
+                placeholderText: qsTr("Search...")
+                onDisplayTextChanged: {
+                   searchFilterGroup.filter = searchField.displayText
+                   list.delegateModel.filterOnGroup = searchFilterGroup.filter.length > 0 ? "searchFilter" : "items"
 
-           anchors {
-               left: parent.left
-               right: parent.right
-               verticalCenter: parent.verticalCenter
-           }
+                }
+
+                anchors {
+                   left: parent.left
+                   right: parent.right
+                   verticalCenter: parent.verticalCenter
+                }
+            }
        }
     }
 
@@ -98,6 +102,8 @@ Page {
         }
 
         onItemClicked: {
+            searchField.focus = false;
+            searchField.text = "";
             itemSelected(searchList.model[modelIndex])
         }
     }

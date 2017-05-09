@@ -12,6 +12,11 @@ function notEmpty(textFieldsArray) {
     return true;
 }
 
+function numberToString(value)
+{
+    return Number(value).toLocaleString(Qt.locale(), 'f');
+}
+
 function getFloatFromText(text)
 {
     var number = Number.fromLocaleString(Qt.locale(), text);

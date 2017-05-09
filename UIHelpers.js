@@ -2,6 +2,7 @@
 .pragma library
 
 function getRecipeStats(recipe, dataManager, serving) {
+    return null
     var nutritionModel = ["Carbs", "Proteins", "Fats"];
     var recipeWeight = 0;
     var nutritionWeight = 0;

@@ -3,16 +3,18 @@ import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
 import Material 0.3
-import "./singletons"
+import './singletons'
+import './adapters'
+import './stores'
 
 /**
   * todo:
   * 1. Amount of food when adding to log -- Done
   * 2. Editing of food item -- Done
   * 3. Deleting of food item -- Done
-  * 4. Day switching
+  * 4. Day switching -- Done
   * 5. Body index formula -- Done
-  * 6. Search by food name
+  * 6. Search by food name -- Done
   * 7. Field validation on adding food -- Done
   * 8. Field validation on adding log -- Done
   * 9. ProgressCircle overflow -- Done
@@ -24,6 +26,8 @@ import "./singletons"
 
 
 ApplicationWindow {
+    signal initialLoaded;
+
     function delay(delayTime, cb) {
         timer = new Timer();
         timer.interval = delayTime;
@@ -32,8 +36,33 @@ ApplicationWindow {
         timer.start();
     }
 
+    //contextual stores
+
+    FoodStore {
+        id: foodStore
+    }
+    RecipesStore {
+        id: recipesStore
+    }
+    DayLogStore {
+        id: dayLogStore
+    }
+    UserProfileStore {
+        id: userProfileStore
+    }
+
+    Component {
+        id: modelComponent
+        ListModel {
+        }
+    }
+
+    function createListModel(parent) {
+        var newModel = modelComponent.createObject(parent);
+        return newModel;
+    }
+
     visible: false
-    signal initialLoaded;
     contentItem {
         opacity: 0
         Behavior on opacity {
@@ -43,17 +72,6 @@ ApplicationWindow {
         }
     }
 
-//    Rectangle {
-//        id: colorRect
-//        anchors.fill: parent
-//        color: "red"
-//        Behavior on opacity {
-//            NumberAnimation {
-//                duration:  10000
-//            }
-//        }
-//    }
-
     style: ApplicationWindowStyle {
 
         background: Rectangle {
@@ -62,29 +80,9 @@ ApplicationWindow {
         }
     }
 
-//    backgroundColor: Palette.colors["deepBlue"]["500"]
-
-    PageLoader {
-        id:userProfile
-        pagePath: "UserProfile.qml"
-    }
-
     id: window
     theme.primaryColor: "indigo"
 
-    Loader {
-        id: initialPageLoader
-        asynchronous: false
-//        sourceComponent: MainPage{
-//            visible: false
-//            canGoBack: false
-//        }
-        focus: true
-        anchors.fill: parent
-        onLoaded: {
-            initialLoaded();
-        }
-    }
 
     initialPage: Page {}
 
@@ -100,8 +98,10 @@ ApplicationWindow {
         MainPageStack.pageStack = pageStack
         if (dataManager.userProfile["Weight"] === 0)
         {
-            userProfile.loadPage()
-            userProfile.item.canGoBack = false
+            AppActions.openUserProfile();
+            AppActions.lockUserProfilePage();
+//            userProfile.loadPage()
+//            userProfile.item.canGoBack = false
         }
     }
 
@@ -109,5 +109,17 @@ ApplicationWindow {
         initialPageLoader.setSource("MainPage.qml", {canGoBack: false})
     }
 
+
+    Loader {
+        id: initialPageLoader
+        asynchronous: false
+        focus: true
+        anchors.fill: parent
+        onLoaded: {
+            initialLoaded();
+        }
+    }
+
+    FoodStoreAdapter {}
 
 }

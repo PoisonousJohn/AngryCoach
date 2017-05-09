@@ -22,5 +22,4 @@ Loader {
 
         MainPageStack.pageStack.push(item)
     }
-    
 }

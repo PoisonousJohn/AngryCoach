@@ -19,7 +19,7 @@ SOURCES += $$PWD/thirdParty/jenson/src/*.cpp \
     RecipeMap.cpp
 SOURCES += main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES +=	qml.qrc
 
 INCLUDEPATH += $$PWD/thirdParty
 INCLUDEPATH += $$PWD/thirdParty/jenson/src
@@ -31,8 +31,9 @@ include(quickflux/quickflux.pri)
 # Additional import path used to resolve QML modules in Qt Creator's code model
 #QML_IMPORT_PATH += $$PWD/singletons
 #QML2_IMPORT_PATH += $$PWD/singletons
-QML_IMPORT_PATH += $$PWD/material/src
-QML2_IMPORT_PATH += $$PWD/material/src
+QML_IMPORT_PATH += $$PWD \
+                    $$PWD/qmlComponents
+QML2_IMPORT_PATH += $$QML_IMPORT_PATH
 #QML_IMPORT_PATH += $$PWD/quickflux
 #QML2_IMPORT_PATH += $$PWD/quickflux
 
