@@ -7,8 +7,8 @@ AppListener {
     function getNutritionNorm(calories) {
         return {
             'Carbs' : calories * 0.50 / 4, // 4 kcal/g
-            'Proteins' : calories * 0.20 / 4, // 4 kcal/g
-            'Fats' : calories * 0.30 / 9, // 9 kcal/g
+            'Proteins' : calories * 0.30 / 4, // 4 kcal/g
+            'Fats' : calories * 0.20 / 9, // 9 kcal/g
         }
     }
 

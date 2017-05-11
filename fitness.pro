@@ -5,23 +5,24 @@ QT += core qml quick widgets
 CONFIG += c++11
 
 SOURCES += $$PWD/thirdParty/jenson/src/*.cpp \
-    Ingredient.cpp \
-    Food.cpp \
-    Calories.cpp \
-    DataManager.cpp \
-    DayLog.cpp \
-    AppData.cpp \
-    FoodMap.cpp \
-    DayLogCache.cpp \
+    persistent/Ingredient.cpp \
+    persistent/Food.cpp \
+    persistent/Calories.cpp \
+    persistent/DataManager.cpp \
+    persistent/DayLog.cpp \
+    persistent/AppData.cpp \
+    persistent/FoodMap.cpp \
+    persistent/DayLogCache.cpp \
     QmlDataProvider.cpp \
-    FoodAmount.cpp \
-    FoodRecipe.cpp \
-    RecipeMap.cpp
+    persistent/FoodAmount.cpp \
+    persistent/FoodRecipe.cpp \
+    persistent/RecipeMap.cpp
 SOURCES += main.cpp
 
 RESOURCES +=	qml.qrc
 
 INCLUDEPATH += $$PWD/thirdParty
+INCLUDEPATH += $$PWD/persistent
 INCLUDEPATH += $$PWD/thirdParty/jenson/src
 
 # Default rules for deployment.
@@ -41,20 +42,20 @@ message("import path" $$QML2_IMPORT_PATH)
 
 
 HEADERS += \
-    Ingredient.h \
-    Food.h \
-    Calories.h \
-    DataManager.h \
-    DayLog.h \
-    JensonHelper.h \
-    AppData.h \
-    CustomQHashSerializer.h \
-    FoodMap.h \
-    DayLogCache.h \
+    persistent/Ingredient.h \
+    persistent/Food.h \
+    persistent/Calories.h \
+    persistent/DataManager.h \
+    persistent/DayLog.h \
+    persistent/JensonHelper.h \
+    persistent/AppData.h \
+    persistent/CustomQHashSerializer.h \
+    persistent/FoodMap.h \
+    persistent/DayLogCache.h \
     QmlDataProvider.h \
-    FoodAmount.h \
-    FoodRecipe.h \
-    RecipeMap.h
+    persistent/FoodAmount.h \
+    persistent/FoodRecipe.h \
+    persistent/RecipeMap.h
 
 DISTFILES += \
     android/AndroidManifest.xml \
