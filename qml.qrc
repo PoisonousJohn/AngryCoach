@@ -1,65 +1,65 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>Test.qml</file>
-        <file>MainPage.qml</file>
-        <file>RoundedProgressBarStyle.qml</file>
-        <file>AddCategory.qml</file>
-        <file>StandardActionButton.qml</file>
-        <file>CategoriesList.qml</file>
-        <file>AddFood.qml</file>
-        <file>GridTextFieldStyle.qml</file>
-        <file>TextForm.qml</file>
-        <file>SimpleList.qml</file>
-        <file>SearchList.qml</file>
-        <file>DayStatsCard.qml</file>
-        <file>FoodDayLog.qml</file>
-        <file>ProgressBarWithNameAndDesc.qml</file>
-        <file>SimpleContextMenu.qml</file>
-        <file>ChooseFoodAmount.qml</file>
-        <file>TwoColorProgressCircle.qml</file>
-        <file>EditableItemsList.qml</file>
-        <file>UserProfile.qml</file>
-        <file>StandardFormTextField.qml</file>
+        <file>views/main.qml</file>
+        <file>views/Test.qml</file>
+        <file>views/MainPage.qml</file>
+        <file>views/RoundedProgressBarStyle.qml</file>
+        <file>views/AddCategory.qml</file>
+        <file>views/StandardActionButton.qml</file>
+        <file>views/CategoriesList.qml</file>
+        <file>views/AddFood.qml</file>
+        <file>views/GridTextFieldStyle.qml</file>
+        <file>views/TextForm.qml</file>
+        <file>views/SimpleList.qml</file>
+        <file>views/SearchList.qml</file>
+        <file>views/DayStatsCard.qml</file>
+        <file>views/FoodDayLog.qml</file>
+        <file>views/ProgressBarWithNameAndDesc.qml</file>
+        <file>views/SimpleContextMenu.qml</file>
+        <file>views/ChooseFoodAmount.qml</file>
+        <file>views/TwoColorProgressCircle.qml</file>
+        <file>views/EditableItemsList.qml</file>
+        <file>views/UserProfile.qml</file>
+        <file>views/StandardFormTextField.qml</file>
         <file>fitnessFormula.js</file>
-        <file>StaticProgressCircle.qml</file>
-        <file>OverflowableProgressBar.qml</file>
-        <file>OverflowableProgressCircle.qml</file>
+        <file>views/StaticProgressCircle.qml</file>
+        <file>views/OverflowableProgressBar.qml</file>
+        <file>views/OverflowableProgressCircle.qml</file>
         <file>formHelper.js</file>
-        <file>ScrollablePage.qml</file>
-        <file>StandardFormDropdown.qml</file>
-        <file>FloatingMenuButton.qml</file>
-        <file>TestPage.qml</file>
-        <file>AddRecipe.qml</file>
-        <file>FoodAmountRow.qml</file>
-        <file>ChooseRecipeAmount.qml</file>
+        <file>views/ScrollablePage.qml</file>
+        <file>views/StandardFormDropdown.qml</file>
+        <file>views/FloatingMenuButton.qml</file>
+        <file>views/TestPage.qml</file>
+        <file>views/AddRecipe.qml</file>
+        <file>views/FoodAmountRow.qml</file>
+        <file>views/ChooseRecipeAmount.qml</file>
         <file>UIHelpers.js</file>
-        <file>RecipesList.qml</file>
-        <file>FoodList.qml</file>
-        <file>DatePickerPopup.qml</file>
+        <file>views/RecipesList.qml</file>
+        <file>views/FoodList.qml</file>
+        <file>views/DatePickerPopup.qml</file>
         <file>singletons/MainPageStack.qml</file>
         <file>singletons/qmldir</file>
-        <file>PageLoader.qml</file>
-        <file>DialogLoader.qml</file>
+        <file>views/PageLoader.qml</file>
+        <file>views/DialogLoader.qml</file>
         <file>pig/eat.png</file>
-        <file>SpriteAnimation.qml</file>
+        <file>views/SpriteAnimation.qml</file>
         <file>pig/eat.wav</file>
         <file>pig/overdose.wav</file>
         <file>singletons/AppActions.qml</file>
-        <file>StandardWithDivider.qml</file>
-        <file>AddFoodToLog.qml</file>
+        <file>views/StandardWithDivider.qml</file>
+        <file>views/AddFoodToLog.qml</file>
         <file>stores/qmldir</file>
         <file>stores/FoodStore.qml</file>
-        <file>PageLoaders.qml</file>
+        <file>views/PageLoaders.qml</file>
         <file>stores/DayLogStore.qml</file>
         <file>adapters/FoodStoreAdapter.qml</file>
         <file>images/free-food-photo20.png</file>
         <file>stores/RecipesStore.qml</file>
         <file>stores/UserProfileStore.qml</file>
         <file>icons/food.svg</file>
-        <file>RecipeIngredients.qml</file>
+        <file>views/RecipeIngredients.qml</file>
         <file>images/serving.png</file>
-        <file>ServingInput.qml</file>
-        <file>InfoHeader.qml</file>
+        <file>views/ServingInput.qml</file>
+        <file>views/InfoHeader.qml</file>
     </qresource>
 </RCC>
