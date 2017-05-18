@@ -10,11 +10,11 @@ Features:
 
 Screenshots:
 
-()[doc/AngryCoach1.png]
-()[doc/AngryCoach2.png]
-()[doc/AngryCoach3.png]
-()[doc/AngryCoach4.png]
-()[doc/AngryCoach5.png]
+![](doc/AngryCoach1.png)
+![](doc/AngryCoach2.png)
+![](doc/AngryCoach3.png)
+![](doc/AngryCoach4.png)
+![](doc/AngryCoach5.png)
 
 Roadmap:
 
