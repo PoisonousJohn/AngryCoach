@@ -3,10 +3,8 @@ import QtQuick.Layouts 1.1
 import QtMultimedia 5.0
 import Material 0.3
 import Material.ListItems 0.1
-import "fitnessFormula.js" as Formula
 import Fitness 0.1
-import "UIHelpers.js" as UIHelpers
-import "singletons"
+import '../singletons'
 
 Card {
 
@@ -22,87 +20,18 @@ Card {
     property double maxProteins: userProfileStore.profile.MaxProteins
     property double maxFats: userProfileStore.profile.MaxFats
 
-//    Component.onCompleted: {
-//        __model = dataManager.getDayLog(dataManager.selectedDate);
-//        updateStats()
-//    }
-
     function getNutritionDesc(max, curr, unit)
     {
         var result = max - curr;
         return Math.abs(result).toFixed(2) + qsTr(unit) + " " + (result > 0 ? qsTr("left") : qsTr("over"));
     }
 
-    function updateStats()
-    {
-        return;
-        if (!__model)
-        {
-            return;
-        }
-
-        var userProfile = dataManager.userProfile;
-        totalCalories = 0;
-        carbs = 0;
-        fats = 0;
-        proteins = 0;
-
-        maxTotalCalories = Formula.getDailyCaloriesNorm(
-                    userProfile["Weight"],
-                    userProfile["Height"],
-                    userProfile["Age"],
-                    userProfile["Sex"] === AppData.Male
-                                                ? "Male"
-                                                : "Female"
-        ) * userProfile["MassModifierFactor"];
-
-        // hardcoded physical activity factor
-        maxTotalCalories *= 1.2;
-
-        var nutrition = Formula.getNutritionNorm(maxTotalCalories);
-        maxCarbs = nutrition["Carbs"] * userProfile["MassModifierFactor"];
-        maxFats = nutrition["Fats"] * userProfile["MassModifierFactor"];
-        maxProteins = nutrition["Proteins"] * userProfile["MassModifierFactor"];
-
-        for (var i = 0; i < __model["Food"].length; ++i)
-        {
-            var foodId = __model["Food"][i]["FoodId"];
-            var food = dataManager.getFoodById(foodId);
-            var amountFactor = __model["Food"][i]["Amount"] / 100;
-            totalCalories += food["FoodCalories"]["TotalCalories"] * amountFactor;
-            carbs += food["FoodCalories"]["Carbs"] * amountFactor;
-            fats += food["FoodCalories"]["Fats"] * amountFactor;
-            proteins += food["FoodCalories"]["Proteins"] * amountFactor;
-        }
-
-        for (i = 0; i < __model["Recipes"].length; ++i)
-        {
-            var recipeId = __model["Recipes"][i]["FoodId"];
-            var recipe = dataManager.getRecipeById(recipeId);
-
-            var stats = UIHelpers.getRecipeStats(recipe, dataManager, __model["Recipes"][i]["Amount"]);
-
-            totalCalories += stats["calories"]
-            carbs += stats["nutritions"]["Carbs"];
-            fats += stats["nutritions"]["Fats"];
-            proteins += stats["nutritions"]["Proteins"];
-        }
-    }
-
     Connections {
         target: dataManager
-        onFoodChanged: {
-            updateStats();
-        }
-
-        onUserProfileChanged: {
-            updateStats();
-        }
 
         onSelectedDateChanged: {
             __model = null;
             __model = dataManager.getDayLog(dataManager.selectedDate);
-            updateStats();
         }
 
         onDayLogChanged: {
@@ -112,7 +41,6 @@ Card {
             }
 
             __model = dataManager.getDayLog(dataManager.selectedDate);
-            updateStats();
             if (totalStatsCircle.value > 1.0)
             {
                 overdoseEffect.play();
@@ -136,10 +64,6 @@ Card {
     }
 
 
-    on__ModelChanged: {
-        updateStats();
-    }
-
     anchors.left: parent.left
     anchors.right: parent.right
     height: dp(240)
@@ -157,8 +81,6 @@ Card {
             if (itemIndex === 0)
             {
                 AppActions.openUserProfile();
-//                userProfile.loadPage()
-//                pageStack.push(userProfile);
             }
         }
     }

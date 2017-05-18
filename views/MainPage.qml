@@ -2,8 +2,8 @@ import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import Material 0.3
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
-import 'singletons'
-import 'stores'
+import '../singletons'
+import '../stores'
 
 ScrollablePage {
 

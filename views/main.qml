@@ -3,9 +3,9 @@ import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
 import Material 0.3
-import './singletons'
-import './adapters'
-import './stores'
+import '../singletons'
+import '../adapters'
+import '../stores'
 
 /**
   * todo:

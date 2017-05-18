@@ -2,9 +2,8 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import Material 0.3
 import Material.ListItems 0.1
-import "formHelper.js" as FormHelper
-import "stores"
-import 'singletons'
+import '../stores'
+import '../singletons'
 
 Card {
     property var ingredients

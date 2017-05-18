@@ -1,8 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import Material 0.3
-import 'stores'
-import 'singletons'
+import '../stores'
+import '../singletons'
 
 Card {
     property alias backgroundImage: bg.source
@@ -23,7 +23,7 @@ Card {
         id: bg
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        source: "images/free-food-photo20.png"
+        source: "/images/free-food-photo20.png"
     }
     
     

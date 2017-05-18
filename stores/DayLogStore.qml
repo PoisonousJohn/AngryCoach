@@ -1,7 +1,6 @@
 import QtQuick 2.5
 import QuickFlux 1.1
 import '.'
-import '../formHelper.js' as FormHelper
 import '../singletons'
 
 AppListener {

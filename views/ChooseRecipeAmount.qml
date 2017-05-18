@@ -2,9 +2,8 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import Material 0.3
 import Material.ListItems 0.1
-import "UIHelpers.js" as UIHelpers
-import "stores"
-import "singletons"
+import '../stores'
+import '../singletons'
 
 ScrollablePage {
     property double totalNutritionWeight
@@ -76,7 +75,7 @@ ScrollablePage {
         }
         InfoHeader {
             text: recipe ? recipe.Name : ""
-            backgroundImage: "images/serving.png"
+            backgroundImage: "/images/serving.png"
             height: dp(200)
         }
 

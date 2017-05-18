@@ -3,9 +3,8 @@ import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
 import Material 0.3
 import Material.ListItems 0.1
-import "UIHelpers.js" as UIHelpers
-import 'stores'
-import 'singletons'
+import '../stores'
+import '../singletons'
 
 Card {
     property var log: dayLogStore.log

@@ -33,6 +33,7 @@ include(quickflux/quickflux.pri)
 #QML_IMPORT_PATH += $$PWD/singletons
 #QML2_IMPORT_PATH += $$PWD/singletons
 QML_IMPORT_PATH += $$PWD \
+                    $$PWD/views \
                     $$PWD/qmlComponents
 QML2_IMPORT_PATH += $$QML_IMPORT_PATH
 #QML_IMPORT_PATH += $$PWD/quickflux

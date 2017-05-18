@@ -1,5 +1,4 @@
 import QuickFlux 1.1
-import '../formHelper.js' as FormHelper
 import '../singletons'
 
 AppListener {

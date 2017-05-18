@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.1
 import QuickFlux 1.0
 import Material 0.2
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
-import 'singletons'
+import '../singletons'
 
 EditableItemsList {
     id: recipesList

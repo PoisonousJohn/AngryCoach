@@ -4,8 +4,8 @@ import QuickFlux 1.0
 import Material 0.3
 import Material.ListItems 0.1
 import Fitness 0.1
-import "formHelper.js" as FormHelper
-import "singletons"
+import '/formHelper.js' as FormHelper
+import '../singletons'
 
 ScrollablePage {
     property var massModifierMenu: [

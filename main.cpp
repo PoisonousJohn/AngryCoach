@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     QPM_INIT(engine)
     engine.rootContext()->setContextProperty("dataManager", new QmlDataProvider());
-    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
+    engine.load(QUrl(QStringLiteral("qrc:/views/main.qml")));
 
     return app.exec();
 }

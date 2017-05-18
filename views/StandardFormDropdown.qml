@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.0
 import Material 0.3
 import Material.ListItems 0.1
 import Fitness 0.1
-import "formHelper.js" as FormHelper
 
 Standard {
     property alias label: standardLabel.text

@@ -1,8 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import Material 0.3
-import 'stores'
-import 'singletons'
+import '../stores'
+import '../singletons'
 
 Page {
     id: chooseFoodAmount

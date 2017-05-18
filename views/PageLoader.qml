@@ -1,7 +1,7 @@
 import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import Material 0.3
-import "./singletons"
+import "../singletons"
 import QtQuick.Controls.Styles.Material 0.1 as MaterialStyle
 
 Loader {

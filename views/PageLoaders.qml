@@ -44,8 +44,8 @@ Item {
         function load(title, message, onConfirm)
         {
             acceptedCallback = onConfirm;
-            setSource("Material/Dialog.qml", { title: title, text: message });
-            item.show();
+            setSource("/Material/Dialog.qml", { title: title, text: message });
+            confirmationDialog.item.show();
         }
 
         Connections {
