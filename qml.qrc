@@ -21,7 +21,6 @@
         <file>views/EditableItemsList.qml</file>
         <file>views/UserProfile.qml</file>
         <file>views/StandardFormTextField.qml</file>
-        <file>fitnessFormula.js</file>
         <file>views/StaticProgressCircle.qml</file>
         <file>views/OverflowableProgressBar.qml</file>
         <file>views/OverflowableProgressCircle.qml</file>
