@@ -20,7 +20,7 @@ ScrollablePage {
     ]
 
     id: mainPage
-    title: "PigSum"
+    title: qsTr("AngryCoach")
     scrollableContent: ColumnLayout {
         id: column
         anchors {
