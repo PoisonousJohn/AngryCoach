@@ -9,7 +9,6 @@ Project {
 
         Depends { name: "Qt.core" }
         Depends { name: "Qt.quick" }
-        Depends { name: "Qt.qml" }
 
         // Additional import path used to resolve QML modules in Qt Creator's code model
         property pathList qmlImportPaths: [
