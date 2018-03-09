@@ -6,16 +6,17 @@
 #include <QtQml>
 #include "QmlDataProvider.h"
 #include "AppData.h"
+#include <QuickFlux>
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
+    registerQuickFluxQmlTypes();
     qmlRegisterType<AppData>("Fitness", 0, 1, "AppData");
     engine.addImportPath(QStringLiteral("qrc:/"));
 
-    QPM_INIT(engine)
     engine.rootContext()->setContextProperty("dataManager", new QmlDataProvider());
     engine.load(QUrl(QStringLiteral("qrc:/views/main.qml")));
 

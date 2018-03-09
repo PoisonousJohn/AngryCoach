@@ -1,8 +1,8 @@
 import QtQuick 2.5
-//import QtQuick.Controls 1.4
+import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
-import Material 0.3
+// import Material 0.3
 import '../singletons'
 import '../adapters'
 import '../stores'
@@ -50,6 +50,7 @@ ApplicationWindow {
     UserProfileStore {
         id: userProfileStore
     }
+    FoodStoreAdapter {}
 
     Component {
         id: modelComponent
@@ -62,7 +63,7 @@ ApplicationWindow {
         return newModel;
     }
 
-    visible: false
+    visible: true
     contentItem {
         opacity: 0
         Behavior on opacity {
@@ -72,54 +73,51 @@ ApplicationWindow {
         }
     }
 
-    style: ApplicationWindowStyle {
+    // style: ApplicationWindowStyle {
 
-        background: Rectangle {
-            anchors.fill: parent
-            color: Palette.colors["indigo"]["500"]
-        }
-    }
+    //     background: Rectangle {
+    //         anchors.fill: parent
+    //         color: Palette.colors["indigo"]["500"]
+    //     }
+    // }
 
     id: window
-    theme.primaryColor: "indigo"
+    // theme.primaryColor: "indigo"
 
 
-    initialPage: Page {}
+    // initialPage: Page {}
 
     width: 480
     height: 852
 
-    onInitialLoaded: {
-        console.log("loaded")
-        window.visible = true
-        window.contentItem.opacity = 1
-        pageStack.clear()
-        pageStack.push(initialPageLoader.item)
-        MainPageStack.pageStack = pageStack
-        if (dataManager.userProfile["Weight"] === 0)
-        {
-            AppActions.openUserProfile();
-            AppActions.lockUserProfilePage();
-//            userProfile.loadPage()
-//            userProfile.item.canGoBack = false
-        }
-    }
+    // onInitialLoaded: {
+    //     console.log("loaded")
+    //     window.visible = true
+    //     window.contentItem.opacity = 1
+    //     pageStack.clear()
+    //     pageStack.push(initialPageLoader.item)
+    //     MainPageStack.pageStack = pageStack
+    //     if (dataManager.userProfile["Weight"] === 0)
+    //     {
+    //         AppActions.openUserProfile();
+    //         AppActions.lockUserProfilePage();
+    //     }
+    // }
 
-    Component.onCompleted: {
-        initialPageLoader.setSource("MainPage.qml", {canGoBack: false})
-    }
+    // Component.onCompleted: {
+    //     initialPageLoader.setSource("MainPage.qml", {canGoBack: false})
+    // }
 
 
-    Loader {
-        id: initialPageLoader
-        asynchronous: false
-        focus: true
-        anchors.fill: parent
-        onLoaded: {
-            initialLoaded();
-        }
-    }
+    // Loader {
+    //     id: initialPageLoader
+    //     asynchronous: false
+    //     focus: true
+    //     anchors.fill: parent
+    //     onLoaded: {
+    //         initialLoaded();
+    //     }
+    // }
 
-    FoodStoreAdapter {}
 
 }
