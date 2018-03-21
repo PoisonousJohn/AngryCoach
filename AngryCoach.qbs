@@ -2,10 +2,24 @@ import qbs
 
 Project {
     minimumQbsVersion: "1.7.1"
+    qbsSearchPaths: ["fluid/qbs/shared"]
 
     references: [
-        "quickflux.qbs"
+        "quickflux.qbs",
     ]
+
+    SubProject {
+        filePath: "fluid/fluid.qbs"
+
+        Properties {
+            prefix: ""
+            useSystemQbsShared: false
+            autotestEnabled: false
+            deploymentEnabled: false
+            withDocumentation: false
+            withDemo: false
+        }
+    }
 
     CppApplication {
         Depends { name: "Qt.widgets" }
@@ -13,13 +27,18 @@ Project {
         Depends { name: "Qt.quick" }
         Depends { name: "quickflux" }
 
+
         // Additional import path used to resolve QML modules in Qt Creator's code model
         property pathList qmlImportPaths: [
             "$$PWD",
             "views",
             "qmlComponents",
-            "quickflux"
+            "quickflux",
+            "fluid/qbs/shared"
+//            ,"fluid/qbs/local"
         ]
+
+
 
         cpp.cxxLanguageVersion: "c++11"
         cpp.includePaths: [
@@ -45,39 +64,13 @@ Project {
         ]
 
         files: [
-            "persistent/Ingredient.h",
-            "persistent/Food.h",
-            "persistent/Calories.h",
-            "persistent/DataManager.h",
-            "persistent/DayLog.h",
-            "persistent/JensonHelper.h",
-            "persistent/AppData.h",
-            "persistent/CustomQHashSerializer.h",
-            "persistent/FoodMap.h",
-            "persistent/DayLogCache.h",
-            "QmlDataProvider.h",
-            "persistent/FoodAmount.h",
-            "persistent/FoodRecipe.h",
-            "persistent/RecipeMap.h",
-
-            "thirdParty/jenson/src/jenson.h",
-            "thirdParty/jenson/src/jenson_global.hpp",
-            "thirdParty/jenson/src/qmemory.hpp",
-            "thirdParty/jenson/src/jenson.cpp",
-            "main.cpp",
-            "persistent/Ingredient.cpp",
-            "persistent/Food.cpp",
-            "persistent/Calories.cpp",
-            "persistent/DataManager.cpp",
-            "persistent/DayLog.cpp",
-            "persistent/AppData.cpp",
-            "persistent/FoodMap.cpp",
-            "persistent/DayLogCache.cpp",
-            "QmlDataProvider.cpp",
-            "persistent/FoodAmount.cpp",
-            "persistent/FoodRecipe.cpp",
-            "persistent/RecipeMap.cpp",
-
+            "*.h",
+            "*.cpp",
+            "thirdParty/jenson/src/*.h",
+            "thirdParty/jenson/src/*.hpp",
+            "thirdParty/jenson/src/*.cpp",
+            "persistent/*.h",
+            "persistent/*.cpp",
             "qml.qrc"
         ]
 
